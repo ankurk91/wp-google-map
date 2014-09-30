@@ -1,8 +1,8 @@
 === Ank Google Map ===
-Tags: google map, responsive, light weight, ank, ankur, free
+Tags: google map, responsive, light weight, ank, free,easy map
 Requires at least: 3.5.0
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,33 +16,36 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 1. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Configure this plugin via Settings-->Ank Google Map
-4. Paste the `[ank_google_map]` shortcode in your pages/posts.
+4. Paste the `[ank_google_map]` short-code in your pages/posts.
 
-== Screenshots ==
-
-== Changelog ==
-
-= 1.0 =
-* First public beta
 
 == Frequently Asked Questions ==
-= Options page does not work well? =
-You must have modern browser to configure the map option.
-Old browser will not work well.
+==Why did u call it light weight ?==
+Because it does not depend no jQuery, written in pure Java Script.
+Settings page is also written in pure java script.
+It uses WP dash-icons in Plugin Settings Page.
+We store our settings in database but uses on row.
 
-= Color picker does not work well? =
+= Options page does not work well :( =
+You must have modern browser to configure the map option.
+Old browsers will not work well.
+
+= Color picker does not work well :( =
+This plugin utilize inbuilt WP Color API.
 You must have WordPress v3.5+.
 
+= Changes does not reflect ?=
+Are you using some Cache plugin ? Flush your WP cache.
 
 = Where does it store settings? =
-Database->wp-options. A Single Row, stored in array for faster access.
+Database->wp-options->ank_google_map. A Single Row, stored in array for faster access.
 
-= If i uninstall this plugin? =
+= What if i uninstall this plugin? =
 No worry! It will remove its traces from database.
 You have to remove short-code from pages by yourself.
 
-= Can i modify this plugin? =
-Yes you can.But you can't make money by selling this. You can ask for donation.
+= Can i modify this plugin ? =
+Yes you can. But you can't make money by selling this. You can ask for donation.
 
 = Any plan to support more than one map. =
 Only if i got some time to code.
@@ -54,3 +57,17 @@ Until we break its terms and conditions.
 Localization for Option Page.
 More security approaches.
 More options.
+
+
+== Screenshots ==
+1. Plugin Option page.
+
+== Changelog ==
+
+=1.1=
+*Fix Bugs
+*Sanitize Inputs
+*Allow HTML in info window
+
+= 1.0 =
+* First public beta
