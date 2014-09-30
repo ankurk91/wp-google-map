@@ -16,29 +16,35 @@ if (isset( $_POST['save_agm'] ) )
 {
 check_admin_referer( 'agm_form' );//security check
 $to_update = get_option('ank_google_map');
-//need validation + sanitize here
-$to_update['div_width'] = $_POST['div_width'];
-$to_update['div_height'] = $_POST['div_height'];
-$to_update['div_width_unit'] = $_POST['div_width_unit'];
-$to_update['div_height_unit'] = $_POST['div_height_unit'];
-$to_update['div_border_color'] = $_POST['div_border_color'];
-$to_update['map_Lat'] = sanitize_text_field($_POST['map_Lat']);
-$to_update['map_Lng'] = sanitize_text_field($_POST['map_Lng']);
-$to_update['map_zoom'] = $_POST['map_zoom'];
+//sanitize inputs
+$to_update['div_width'] = sanitize_text_field($_POST['div_width']);
+$to_update['div_height'] = sanitize_text_field($_POST['div_height']);
+$to_update['div_width_unit'] = intval($_POST['div_width_unit']);
+$to_update['div_height_unit'] = intval($_POST['div_height_unit']);
+$to_update['div_border_color'] = sanitize_text_field($_POST['div_border_color']);
+
+$to_update['map_Lat'] = sanitize_text_field(trim($_POST['map_Lat']));
+$to_update['map_Lng'] = sanitize_text_field(trim($_POST['map_Lng']));
+$to_update['map_zoom'] = intval($_POST['map_zoom']);
 if(isset($_POST['map_control_1'])){ $to_update['map_control_1']='1';}else{$to_update['map_control_1']='0';}
 if(isset($_POST['map_control_2'])){ $to_update['map_control_2']='1';}else{$to_update['map_control_2']='0';}
 if(isset($_POST['map_control_3'])){ $to_update['map_control_3']='1';}else{$to_update['map_control_3']='0';}
 if(isset($_POST['map_control_4'])){ $to_update['map_control_4']='1';}else{$to_update['map_control_4']='0';}
 $to_update['map_lang_code'] = sanitize_text_field($_POST['map_lang_code']);
-$to_update['map_type'] = $_POST['map_type'];
+$to_update['map_type'] = intval($_POST['map_type']);
+
 if(isset($_POST['marker_on'])){ $to_update['marker_on']='1';}else{$to_update['marker_on']='0';}
 $to_update['marker_title'] = sanitize_text_field($_POST['marker_title']);
-$to_update['marker_anim'] = $_POST['marker_anim'];
+$to_update['marker_anim'] = intval($_POST['marker_anim']);
 if(isset($_POST['info_on'])){ $to_update['info_on']='1';}else{$to_update['info_on']='0';}
 if(isset($_POST['info_state'])){ $to_update['info_state']='1';}else{$to_update['info_state']='0';}
-$to_update['info_text'] = esc_textarea($_POST['info_text']);
+
+//lets keep some html in info window
+$to_update['info_text'] =balanceTags(wp_kses_data($_POST['info_text']));
+//lastly save data back to db
 update_option('ank_google_map', $to_update);
-echo "<div class='updated'><p>Your settings has been <strong>saved</strong>.&emsp;You can always use <code>[ank_google_map]</code> shortcode. </p></div>";
+
+echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode. </p></div>";
 
 }
 
@@ -74,7 +80,7 @@ $options = get_option('ank_google_map');
             </tr>
             <tr>
                 <td>Border Color:</td>
-                <td><input type="text" class="agm-color-field" name="div_border_color" value="<?php echo esc_attr( $options['div_border_color'] ); ?>"><i style="vertical-align: top">Border will be 1px solid.</i></td>
+                <td><input placeholder="Color" type="text" class="agm-color-field" name="div_border_color" value="<?php echo esc_attr( $options['div_border_color'] ); ?>"><i style="vertical-align: top">Border will be 1px solid.</i></td>
             </tr>
         </table>
         <!--- tab2 start-->
@@ -125,7 +131,7 @@ $options = get_option('ank_google_map');
             </tr>
             <tr>
                 <td>Marker Title:</td>
-                <td><input maxlength="100" type="text" name="marker_title" value="<?php echo esc_attr( $options['marker_title'] ); ?>"></td>
+                <td><input maxlength="50" type="text" name="marker_title" value="<?php echo esc_attr( $options['marker_title'] ); ?>"><i>Don't use html tags here (max 50 chars)</i></td>
             </tr>
             <tr>
                 <td>Marker Animation:</td>
@@ -149,7 +155,7 @@ $options = get_option('ank_google_map');
             </tr>
             <tr>
                 <td>Info Window Text:</td>
-                <td><textarea name="info_text"><?php echo esc_attr( $options['info_text'] ); ?></textarea></td>
+                <td><textarea maxlength="500" name="info_text"><?php echo trim($options['info_text']); ?></textarea><i style="vertical-align: top">Basic html tags allowed here (max 500 chars)</i></td>
             </tr>
         </table>
         <p><input class="button button-primary" type="submit" name="save_agm" value="Save Map Settings »"></p>
@@ -159,13 +165,13 @@ $options = get_option('ank_google_map');
     <h4><i class="dashicons-before dashicons-editor-help" style="color: #52b849"> </i>Instructions:</h4>
     Just save valid settings and use this ShortCode: <code>[ank_google_map]</code><br>
     <ul>Additional Notes:
-        <li>• This plugin support only one map at this time. Please don't use same shortcode twice on a page.</li>
-        <li>• Supported Language Codes can be found <a href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1" target="_blank">here</a></li>
+        <li>• This plugin support only one map at this time. Please don't use same short-code twice on a page.</li>
         <li>• Only one marker supported at this time.</li>
         <li>• Marker position will be same as your map's center.</li>
-        <li>• In order to use Info Window, you have to enable Marker .</li>
+        <li>• In order to use Info Window, you have to enable Marker too .</li>
+        <li>• Supported Language Codes can be found <a href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1" target="_blank">here</a></li>
     </ul>
-    Created with ❤ by <a target="_blank" href="http://www.facebook.com/ankurthetechgeek"> <i>Ankur Kumar</i></a> | Thanks for using .<br>
+    Created with ❤ by <a target="_blank" href="http://ank91.github.io/ank-google-map/"> <i>Ankur Kumar</i></a> | Thanks for using .<br>
 </div>
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&amp;language=en"></script>
 <script type="text/javascript">
@@ -222,5 +228,4 @@ $options = get_option('ank_google_map');
         /*wp inbuilt color picker*/
         jQuery('.agm-color-field').wpColorPicker();
     });
-
 </script>
