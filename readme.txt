@@ -1,19 +1,20 @@
 === Ank Google Map ===
 Tags: google map, responsive, light weight, ank, free,easy map
-Requires at least: 3.5.0
+Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+More info can be found here: http://ank91.github.io/ank-google-map
 
 == Description ==
 One Website <--> One Map <--> One Marker.
 Simple and non-bloated WordPress Google Map Plugin.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 
-
 == Installation ==
-0. Download from here --> http://ank91.github.io/ank-google-map/
+
 1. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Configure this plugin via Settings-->Ank Google Map
