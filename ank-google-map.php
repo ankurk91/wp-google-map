@@ -3,12 +3,12 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.2 (b)
+Version: 1.3
 Author: Ankur Kumar
 Author URI: http://www.ankurkumar.hostreo.com
 License: GPL2
-*/
-/*  Copyright 2014  Ankur Kumar  (http://github.com/ank91)
+
+    Copyright 2014  Ankur Kumar  (http://github.com/ank91)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -32,46 +32,46 @@ class Ank_Google_Map
 
     function __construct()
     {
-        add_filter('plugin_action_links', array($this, 'plugin_actions_links'), 10, 2); //add settings link to plugin list page
-        add_action('admin_menu', array($this, 'settings_menu')); // grant admin permission
-        add_filter('plugin_row_meta', array($this, 'set_plugin_meta'), 10, 2); //additional link
+        add_filter('plugin_action_links', array($this, 'agm_plugin_actions_links'), 10, 2); //add settings link to plugin list page
+        add_action('admin_menu', array($this, 'agm_settings_menu')); // grant admin permission
+        add_filter('plugin_row_meta', array($this, 'agm_set_plugin_meta'), 10, 2); //additional link
 
         if (false == get_option('ank_google_map')) {
-            $this->settings_init(); //save settings first time
+            $this->agm_settings_init(); //save settings first time
         }
-
         add_shortcode('ank_google_map', array($this, 'agm_shortCode')); //create a short code
-        add_action('admin_enqueue_scripts', array($this, 'agm_add_color_picker')); //color picker for settings page
 
     }
 
-    /*  **********add settings link*************** */
-    private function settings_page_url()
+
+
+    private function agm_agm_settings_page_url()
     {
         return add_query_arg('page', 'agm_settings', 'options-general.php');
     }
 
-    function settings_menu()
+    function agm_settings_menu()
     {
-        add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', 'agm_settings', array($this, 'settings_page'));
-
+        $page_hook_suffix =add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', 'agm_settings', array($this, 'agm_settings_page'));
+        //load color picker on plugin options page only
+        add_action('admin_print_scripts-'. $page_hook_suffix, array($this, 'agm_add_color_picker'));
     }
 
-    function plugin_actions_links($links, $file)
+    function agm_plugin_actions_links($links, $file)
     {
         static $plugin;
         $plugin = plugin_basename(__FILE__);
         if ($file == $plugin && current_user_can('manage_options')) {
             array_unshift(
                 $links,
-                sprintf('<a href="%s">%s</a>', esc_attr($this->settings_page_url()), __('Settings'))
+                sprintf('<a href="%s">%s</a>', esc_attr($this->agm_agm_settings_page_url()), __('Settings'))
             );
         }
 
         return $links;
     }
 
-    function set_plugin_meta($links, $file)
+    function agm_set_plugin_meta($links, $file)
     {
         static $plugin;
         $plugin = plugin_basename(__FILE__);
@@ -81,13 +81,13 @@ class Ank_Google_Map
         return $links;
     }
 
-    function settings_page()
+    function agm_settings_page()
     {
-        //get settings page from this file
+       //get settings page from this file
         require('agm_options_page.php');
     }
 
-    function settings_init()
+    function agm_settings_init()
     {
         //save settings in array for faster access
         //these are default settings
@@ -119,14 +119,17 @@ class Ank_Google_Map
 
     function agm_add_color_picker()
     {
-        //available for wp v3.5+
+        //available for wp v3.5+ only
         // Add the color picker js  + css file (for settings page only)
-        wp_enqueue_style('wp-color-picker');
-        wp_enqueue_script('wp-color-picker');
+        if(version_compare($GLOBALS['wp_version'],3.5)>=0){
+            wp_enqueue_style('wp-color-picker');
+            wp_enqueue_script('wp-color-picker');
+        }
+
     }
 
     /* ********* *********  */
-    function write_html_code()
+    function agm_write_html()
     {
         $options = get_option('ank_google_map');
         $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
@@ -134,7 +137,7 @@ class Ank_Google_Map
         echo '<div id="agm_map_canvas" style="width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . $h_unit . ';margin: 0 auto;border:1px solid ' . esc_attr($options["div_border_color"]) . '"></div>';
     }
 
-    function write_js_code()
+    function agm_write_js()
     {
 
         $options = get_option('ank_google_map');
@@ -212,10 +215,10 @@ class Ank_Google_Map
                 }
             }</script>
         <?php
-        echo $this->trim_js(ob_get_clean());
+        echo $this->agm_trim_js(ob_get_clean());
     }
 
-    function trim_js($buffer)
+    function agm_trim_js($buffer)
     {
         /*we don't try to remove comments- can cause malfunction*/
         /* remove tabs, spaces, newlines, etc. */
@@ -228,8 +231,8 @@ class Ank_Google_Map
     function agm_shortCode()
     {
         ob_start();
-        $this->write_html_code(); //write html
-        add_action('wp_footer', array($this, 'write_js_code')); //put js code in footer
+        $this->agm_write_html(); //write html
+        add_action('wp_footer', array($this, 'agm_write_js')); //put js code in footer
         return ob_get_clean();
     }
 
