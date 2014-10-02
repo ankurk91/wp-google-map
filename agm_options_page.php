@@ -5,7 +5,7 @@
  */
 
 if (!class_exists('Ank_Google_Map')) {
-    exit();
+    wp_die(__('Could not find Ank_Google_Map class. This file is the part of ank-google-map plugin.'));
 }
 
 if (!current_user_can('manage_options')) {
@@ -74,13 +74,17 @@ if (isset($_POST['save_agm']))
     //lastly save data back to db
     update_option('ank_google_map', $options);
 
-    echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode. </p></div>";
+    echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode. <br>
+    If your are using any cache plugins. Don't forget to flush your site cache in order to new settings to work.
+    </p></div>";
 
 } else
 {
     $options = get_option('ank_google_map');
 }
-
+if(version_compare($GLOBALS['wp_version'],'3.5','<')){
+    echo "<div class='error'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
+}
 
 ?>
 <style>
@@ -212,6 +216,7 @@ if (isset($_POST['save_agm']))
     <h4><i class="dashicons-before dashicons-editor-help" style="color: #52b849"> </i>Instructions:</h4>
     Just save valid settings and use this ShortCode: <code>[ank_google_map]</code><br>
     <ul>Additional Notes:
+        <li>• If you are using some cache plugin, Flush your site cache after saving settings otherwise settings may not reflect.</li>
         <li>• This plugin support only one map at this time. Please don't use same short-code twice on a page.</li>
         <li>• Only one marker supported at this time.</li>
         <li>• Marker position will be same as your map's center.</li>
@@ -277,8 +282,9 @@ if (isset($_POST['save_agm']))
     agm_zoom.addEventListener("click", function () {
         agm_zoom_show.innerHTML = agm_zoom.value;
     });
+    <?php if(version_compare($GLOBALS['wp_version'],3.5)>=0){ ?>
     jQuery(function () {
         /*wp inbuilt color picker*/
         jQuery('.agm-color-field').wpColorPicker();
-    });
+    });<?php } ?>
 </script>
