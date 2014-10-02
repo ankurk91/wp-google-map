@@ -87,11 +87,14 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
 }
 
 ?>
-<style>
+<style type="text/css">
     input[type=range], select { cursor: pointer }
     .agm_tbl { width: 100%; border: none; border-collapse: collapse}
-    .agm_tbl tr:first-child td:first-child { width: 15% }
+    .agm_tbl tr:first-child td:first-child { width: 15%; }
+    .agm_tbl tr td:first-child { font-weight: bold; padding-left: 2% }
     #agm_map_canvas { height: 220px; width: 90%; border: 1px solid #bcbcbc; }
+    #agm_zoom_show{color: #2f4de9 }
+    .gmnoprint img { max-width: none; }
     @media only screen and (max-width: 768px) { #agm_map_canvas{ width: 99%; } }
 </style>
 <div class="wrap">
@@ -176,7 +179,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             </tr>
             <tr>
                 <td>Marker Title:</td>
-                <td><input maxlength="50" type="text" name="marker_title" value="<?php echo esc_attr($options['marker_title']); ?>"><i>Don't use html tags here (max 50 chars)</i></td>
+                <td><input size="40" maxlength="50" type="text" name="marker_title" value="<?php echo esc_attr($options['marker_title']); ?>"><i>Don't use html tags here (max 50 chars)</i></td>
             </tr>
             <tr>
                 <td>Marker Animation:</td>
@@ -189,13 +192,14 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                     </select></td>
             </tr>
         </table>
-        <!-- tab4 -->
+        <!-- tab4 start-->
         <h3><i class="dashicons-before dashicons-admin-comments" style="color: #988ccc"> </i>Info Window Options</h3>
         <hr>
         <table class="agm_tbl">
             <tr>
                 <td>Enable Info Window:</td>
-                <td><input <?php if (esc_attr($options['info_on']) === '1') echo 'checked' ?> type="checkbox" name="info_on" id="agm_info_on"><label for="agm_info_on"><i>Click to enable (needs marker to be enabled)</i></label></td>
+                <td><input <?php if (esc_attr($options['info_on']) === '1') echo 'checked' ?> type="checkbox" name="info_on" id="agm_info_on">
+                    <label for="agm_info_on"><i>Click to enable (also needs marker to be enabled)</i></label></td>
             </tr>
             <tr>
                 <td>Info Window State:</td>
@@ -203,7 +207,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             </tr>
             <tr>
                 <td>Info Window Text:</td>
-                <td><textarea maxlength="500" name="info_text"><?php echo trim($options['info_text']); ?></textarea>
+                <td><textarea maxlength="500" rows="3" cols="35" name="info_text"><?php echo trim($options['info_text']); ?></textarea>
                     <i style="vertical-align: top">Basic html tags allowed here (max 500 chars)</i></td>
             </tr>
         </table>
@@ -224,8 +228,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
         <li>• Supported Language Codes can be found <a href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1" target="_blank">here</a> </li>
     </ul>
     Created with ❤ by <a target="_blank" href="https://www.ankurkumar.hostreo.com"> <i>Ankur Kumar</i></a> | <a target="_blank" href="http://ank91.github.io/ank-google-map">Plugin Website</a> | Thanks for using
-    .<br>
-</div>
+</div><!-- end wrap-->
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false&amp;language=en"></script>
 <script type="text/javascript">
     function $Id(b) {
@@ -279,12 +282,11 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     else {
         agm_map.innerHTML = '<h4 style="text-align: center;color: #994401">Failed to load Google Map. Refresh this page and try again</h4>'
     }
-    agm_zoom.addEventListener("click", function () {
-        agm_zoom_show.innerHTML = agm_zoom.value;
-    });
+
     <?php if(version_compare($GLOBALS['wp_version'],3.5)>=0){ ?>
     jQuery(function () {
         /*wp inbuilt color picker*/
         jQuery('.agm-color-field').wpColorPicker();
-    });<?php } ?>
+    });
+    <?php } ?>
 </script>
