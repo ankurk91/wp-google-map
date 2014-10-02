@@ -1,13 +1,12 @@
 === Ank Google Map ===
-Tags: google map, responsive, light weight, ank, free,easy map
+Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 More info can be found here: http://ank91.github.io/ank-google-map
-
 == Description ==
 One Website <--> One Map <--> One Marker.
 Simple and non-bloated WordPress Google Map Plugin.
@@ -65,6 +64,14 @@ More options.
 1. Plugin Option page.
 
 == Changelog ==
+
+=1.3=
+*Added notes about flushing cache
+*Load Color API only on Option page
+*Special checks for Color API
+
+=1.2=
+*Fix Bugs
 
 =1.1=
 *Fix Bugs
