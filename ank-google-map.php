@@ -3,7 +3,7 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.3
+Version: 1.4
 Author: Ankur Kumar
 Author URI: http://www.ankurkumar.hostreo.com
 License: GPL2
@@ -40,7 +40,6 @@ class Ank_Google_Map
             $this->agm_settings_init(); //save settings first time
         }
         add_shortcode('ank_google_map', array($this, 'agm_shortCode')); //create a short code
-
     }
 
 
@@ -110,7 +109,7 @@ class Ank_Google_Map
             'marker_title' => 'I am here',
             'marker_anim' => '1',
             'info_on' => '1',
-            'info_text' => 'Your Destination',
+            'info_text' => '<b>Your Destination</b>',
             'info_state' => '0'
         );
 
@@ -135,6 +134,11 @@ class Ank_Google_Map
         $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
         $h_unit = ($options["div_height_unit"] === 1) ? 'px' : '%';
         echo '<div id="agm_map_canvas" style="width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . $h_unit . ';margin: 0 auto;border:1px solid ' . esc_attr($options["div_border_color"]) . '"></div>';
+
+    }
+
+    function agm_write_css(){
+       echo "<style type='text/css'> .gmnoprint img { max-width: none; } </style>";
     }
 
     function agm_write_js()
@@ -204,6 +208,7 @@ class Ank_Google_Map
                         map.setCenter(cn);
                     }, 250);
                 });
+
             }
             var agm = document.getElementById("agm_map_canvas");
             if (agm) {
@@ -232,6 +237,7 @@ class Ank_Google_Map
     {
         ob_start();
         $this->agm_write_html(); //write html
+        $this->agm_write_css(); //write css fixes
         add_action('wp_footer', array($this, 'agm_write_js')); //put js code in footer
         return ob_get_clean();
     }
