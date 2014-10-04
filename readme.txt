@@ -2,11 +2,11 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Contributors:
-Donate link: 
+Contributors:Google, Stack-overflow
+Donate link:I don't need any donation
 
 Download Latest from here : http://ank91.github.io/ank-google-map
 
@@ -25,10 +25,10 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 == Frequently Asked Questions ==
 
-==Why did u call it light weight ?==
+=Why did u call it light weight ?=
 Because it does not depend no jQuery, written in pure Java Script.
-Settings page is also written in pure java script.
-It uses WP dash-icons in Plugin Settings Page.
+Options page utilize inbuilt jQuery and Color Picker.
+It uses WP dash-icons in Plugin Options Page.
 It stores settings in database but uses only one row.
 
 = Options page does not work well :( =
@@ -69,6 +69,10 @@ More options.
 
 
 == Changelog ==
+
+=1.5=
+*Add Search by Address (Auto complete)
+*Add Marker Color option
 
 =1.4=
 *Fix controls appears incorrectly in certain conditions
