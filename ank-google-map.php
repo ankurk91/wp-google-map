@@ -1,325 +1,332 @@
 <?php
 /*
- * Settings Page for "Ank Google Map" Plugin
- *
- */
+Plugin Name: Ank Google Map
+Plugin URI: http://ank91.github.io/ank-google-map
+Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
+Version: 1.5.1
+Author: Ankur Kumar
+Author URI: http://www.ankurkumar.hostreo.com
+License: GPL2
+
+    Copyright 2014  Ankur Kumar  (http://github.com/ank91)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 /* no direct access*/
 if (!defined('ABSPATH')) exit;
 
-if (!class_exists('Ank_Google_Map')) {
-    wp_die(__('Could not find Ank_Google_Map class. This file is the part of ank-google-map plugin.'));
+/*check for duplicate class*/
+if ( ! class_exists( 'Ank_Google_Map' ) ) {
+    return;
 }
 
-if (!current_user_can('manage_options')) {
-    wp_die(__('You do not have sufficient permissions to access this page.'));
+class Ank_Google_Map
+{
+
+    function __construct()
+    {
+        /*
+         * Add settings link to plugin list page
+        */
+        add_filter('plugin_action_links', array($this, 'agm_plugin_actions_links'), 10, 2);
+        /*
+         *  Add settings link under admin>settings menu
+         */
+        add_action('admin_menu', array($this, 'agm_settings_menu'));
+        /*
+         * Additional link
+         */
+        add_filter('plugin_row_meta', array($this, 'agm_set_plugin_meta'), 10, 2);
+        /*
+         * Save settings first time
+         */
+        if (false == get_option('ank_google_map')) {
+            $this->agm_settings_init();
+        }
+        /*
+         * Register our short-code [ank_google_map]
+         */
+        add_shortcode('ank_google_map', array($this, 'agm_shortCode'));
+
+    }
+
+
+
+    private function agm_settings_page_url()
+    {
+        return add_query_arg('page', 'agm_settings', 'options-general.php');
+    }
+
+    function agm_settings_menu()
+    {
+        $page_hook_suffix =add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', 'agm_settings', array($this, 'agm_settings_page'));
+        /*
+         * load color picker on plugin options page only
+         */
+        add_action('admin_print_scripts-'. $page_hook_suffix, array($this, 'agm_add_color_picker'));
+    }
+
+    function agm_plugin_actions_links($links, $file)
+    {
+        static $plugin;
+        $plugin = plugin_basename(__FILE__);
+        if ($file == $plugin && current_user_can('manage_options')) {
+            array_unshift(
+                $links,
+                sprintf('<a href="%s">%s</a>', esc_attr($this->agm_settings_page_url()), __('Settings'))
+            );
+        }
+
+        return $links;
+    }
+
+    function agm_set_plugin_meta($links)
+    {
+        /*
+        * additional link on plugin list page
+        */
+       $links[] = '<a target="_blank" href="' . plugins_url() . '/' . basename(__DIR__) . '/readme.txt">Read Me</a>';
+       return $links;
+    }
+
+    function agm_settings_page()
+    {
+       /*
+        * get settings page from this separate file
+        */
+        require('agm_options_page.php');
+    }
+
+    function agm_settings_init()
+    {
+        /*
+         * these are default settings
+         * save settings in array for faster access
+         */
+
+        $new_options = array(
+            'div_width' => '100',
+            'div_width_unit' => 2,
+            'div_height' => '300',
+            'div_height_unit' => 1,
+            'div_border_color' => '#ccc',
+            'map_Lat' => '29.6969365',
+            'map_Lng' => '77.6766793',
+            'map_zoom' => 2,
+            'map_control_1' => '0',
+            'map_control_2' => '0',
+            'map_control_3' => '0',
+            'map_control_4' => '0',
+            'map_control_5' => '0',
+            'map_lang_code' => 'en',
+            'map_type' => 1,
+            'marker_on' => '1',
+            'marker_title' => 'I am here',
+            'marker_anim' => 1,
+            'marker_color' => 1,
+            'info_on' => '1',
+            'info_text' => '<b>Your Destination</b>',
+            'info_state' => '0'
+        );
+        /*
+         * save default settings to wp_options table
+         *
+         */
+        add_option('ank_google_map', $new_options);
+    }
+
+    function agm_add_color_picker()
+    {
+        /*
+         * Add the color picker js  + css file (for settings page only)
+         * Available for wp v3.5+ only
+         */
+        if(version_compare($GLOBALS['wp_version'],3.5)>=0){
+            wp_enqueue_style('wp-color-picker');
+            wp_enqueue_script('wp-color-picker');
+        }
+
+    }
+
+    function agm_marker_url($id){
+        /**
+         * Depends on Google server for maker images
+         * @source http://ex-ample.blogspot.in/2011/08/all-url-of-markers-used-by-google-maps.html
+         */
+        $path=array(
+            /* 1 is reserved for default */
+            '2'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker.png',
+            '3'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_black.png',
+            '4'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_grey.png',
+            '5'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_orange.png',
+            '6'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_white.png',
+            '7'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_yellow.png',
+            '8'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_purple.png',
+            '9'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_green.png',
+        );
+        return $path[$id];
+    }
+
+    /* ********* front end started *********  */
+    function agm_write_html()
+    {
+        $options = get_option('ank_google_map');
+        /*
+         * Decide some options here
+         */
+        $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
+        $h_unit = ($options["div_height_unit"] === 1) ? 'px' : '%';
+        echo '<div id="agm_map_canvas" style="width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . $h_unit . ';margin: 0 auto;border:1px solid ' . esc_attr($options["div_border_color"]) . '"></div>';
+
+    }
+
+    function agm_write_css(){
+        /*
+         * Special fixes for google map  controls.
+         * They appears incorrectly due to theme style
+         */
+       echo "<style type='text/css'> .gmnoprint img { max-width: none; } </style>";
+    }
+
+    function agm_write_js()
+    {
+
+        $options = get_option('ank_google_map');
+        /*
+         * Decide some options here
+         */
+        $mapType = 'ROADMAP';
+        if ($options['map_type'] === 1) {
+            $mapType = 'ROADMAP';
+        } elseif ($options['map_type'] === 2) {
+            $mapType = 'SATELLITE';
+        } elseif ($options['map_type'] === 3) {
+            $mapType = 'HYBRID';
+        } elseif ($options['map_type'] === 4) {
+            $mapType = 'TERRAIN';
+        }
+        $marker_anim = 'DROP';
+        if ($options['marker_on'] === '1') {
+            if ($options['marker_anim'] == 2) {
+                $marker_anim = 'BOUNCE';
+            } elseif ($options['marker_anim'] == 3) {
+                $marker_anim = 'DROP';
+            }
+        }
+        ?>
+        <script src="//maps.googleapis.com/maps/api/js?language=<?php echo esc_attr($options['map_lang_code']) ?>"></script>
+        <?php
+        /*
+        * using ob_start to get compress buffer at last
+        * Note: Don't use single line comment in java script portion
+        */
+        ob_start();
+        ?>
+        <script type="text/javascript">
+            function Load_agm_Map() {
+                var cn = new google.maps.LatLng(<?php echo $options['map_Lat'].','.$options['map_Lng'] ?>);
+                var op = {
+                    <?php if($options['map_control_1']==='1'){echo " panControl: false, ";} ?>
+                    <?php if($options['map_control_2']==='1'){echo " zoomControl: false, ";} ?>
+                    <?php if($options['map_control_3']==='1'){echo " mapTypeControl: false, ";} ?>
+                    <?php if($options['map_control_4']==='1'){echo " streetViewControl: false, ";} ?>
+                    <?php if($options['map_control_5']==='1'){echo " overviewMapControl: true, ";} ?>
+                    center: cn, zoom: <?php echo intval($options['map_zoom']) ?>, mapTypeId: google.maps.MapTypeId.<?php echo $mapType;?>};
+                var map = new google.maps.Map(agm, op);
+                <?php if($options['marker_on']==='1') {?>
+                var mk = new google.maps.Marker({
+                    <?php
+                    if($options['marker_color']!=='1'){
+                    echo 'icon:"'.$this->agm_marker_url($options['marker_color']).'",';
+                    }
+                    ?>
+                    position: cn, map: map <?php if($options['marker_anim']!==1) { echo ", animation: google.maps.Animation.$marker_anim"; }?>, title: "<?php echo esc_attr($options['marker_title']) ?>" });
+                <?php  if($options['info_on']==='1') {?>
+                var iw = new google.maps.InfoWindow({content: "<?php echo addslashes($options['info_text'])?>"});
+                google.maps.event.addListener(map, 'click', function () {
+                    iw.close();
+                });
+                <?php } ?>
+                <?php } ?>
+                <?php if($options['marker_on']==='1'&&$options['info_on']==='1') {?>
+                google.maps.event.addListener(mk, "click", function () {
+                    iw.open(map, mk);
+                    mk.setAnimation(null);
+                });
+                <?php
+                 if($options['info_state']==='1'){ ?>
+                window.setTimeout(function () {
+                    iw.open(map, mk);
+                    mk.setAnimation(null);
+                }, 2000);
+                <?php } ?>
+                <?php } ?>
+
+                var rT;
+                google.maps.event.addDomListener(window, 'resize', function () {
+                    if (rT) {
+                        clearTimeout(rT);
+                    }
+                    rT = window.setTimeout(function () {
+                        map.setCenter(cn);
+                    }, 300);
+                });
+
+            }
+            var agm = document.getElementById("agm_map_canvas");
+            if (agm) {
+                if (typeof google == "object") {
+                    google.maps.event.addDomListener(window, "load", Load_agm_Map)
+                }
+                else {
+                    agm.innerHTML = '<h4 style="text-align: center">Failed to load Google Map. Please try again.</h4>'
+                }
+            }</script>
+        <?php
+        /*
+         * trim the buffered string, will save a few bytes on fron end
+         */
+        echo $this->agm_trim_js(ob_get_clean());
+    }
+
+    function agm_trim_js($buffer)
+    {
+        /*we don't try to remove comments- can cause malfunction*/
+        /* remove tabs, spaces, newlines, etc. */
+        $buffer = str_replace(array("\r\n", "\r", "\t", "\n", '  ', '    ', '     '), '', $buffer);
+        /* remove other spaces before/after ) */
+        $buffer = preg_replace(array('(( )+\))', '(\)( )+)'), ')', $buffer);
+        return $buffer;
+    }
+
+
+    function agm_shortCode()
+    {
+        ob_start();
+            $this->agm_write_css(); //write css fixes
+            $this->agm_write_html(); //write html
+            add_action('wp_footer', array($this, 'agm_write_js')); //put js code in footer
+        return ob_get_clean();
+    }
+
 }
- /*
- * Empty option array
- */
-    $options=array();
-     /*
-      * Fetch settings from database once
-      */
-    $options = get_option('ank_google_map');
 
-if (isset($_POST['save_agm']))
- {
-     /*
-     * WP inbuilt form security check
-     */
-    check_admin_referer('agm_form');
-    /*
-     * Begin sanitize inputs
-     */
-    $options['div_width'] = sanitize_text_field($_POST['div_width']);
-    $options['div_height'] = sanitize_text_field($_POST['div_height']);
-    $options['div_width_unit'] = intval($_POST['div_width_unit']);
-    $options['div_height_unit'] = intval($_POST['div_height_unit']);
-    $options['div_border_color'] = sanitize_text_field($_POST['div_border_color']);
+//end class
 
-    $options['map_Lat'] = sanitize_text_field(trim($_POST['map_Lat']));
-    $options['map_Lng'] = sanitize_text_field(trim($_POST['map_Lng']));
-    $options['map_zoom'] = intval($_POST['map_zoom']);
+new Ank_Google_Map();
 
-    $options['map_control_1']=(isset($_POST['map_control_1']))?'1':'0';
-    $options['map_control_2']=(isset($_POST['map_control_2']))?'1':'0';
-    $options['map_control_3']=(isset($_POST['map_control_3']))?'1':'0';
-    $options['map_control_4']=(isset($_POST['map_control_4']))?'1':'0';
-    $options['map_control_5']=(isset($_POST['map_control_5']))?'1':'0';
-
-    $options['map_lang_code'] = sanitize_text_field($_POST['map_lang_code']);
-    $options['map_type'] = intval($_POST['map_type']);
-    $options['marker_on']=(isset($_POST['marker_on']))?'1':'0';
-
-    $options['marker_title'] = sanitize_text_field($_POST['marker_title']);
-    $options['marker_anim'] = intval($_POST['marker_anim']);
-    $options['marker_color'] = intval($_POST['marker_color']);
-
-    $options['info_on']=(isset($_POST['info_on']))?'1':'0';
-    $options['info_state']=(isset($_POST['info_state']))?'1':'0';
-
-    /*
-     * Lets allow some html in info window
-     * This is same as like a visitor comments to your posts
-     */
-    $options['info_text'] = balanceTags(wp_kses_data($_POST['info_text']));
-    /*
-     * Save posted data back to database
-     */
-    update_option('ank_google_map', $options);
-    /*
-     * Display a success message
-     */
-   echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
-    /*
-     * Detect if cache is enabled and warn user to flush cache
-     */
-   if(WP_CACHE){
-       echo "<div class='updated'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin's <b>cache</b> to reflect any settings you saved here.</div>";
-   }
-}
-/*
- *
- * Display notice if current wp does not support color picker
- */
-if(version_compare($GLOBALS['wp_version'],'3.5','<')){
-    echo "<div class='error'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
-}
+//use [ank_google_map] short code
 
 ?>
-<style type="text/css">
-    input[type=range], select { cursor: pointer }
-    .agm_tbl { width: 100%; border: none; border-collapse: collapse}
-    .agm_tbl tr:first-child td:first-child { width: 15%; }
-    .agm_tbl tr td:first-child { font-weight: bold; padding-left: 2% }
-    #agm_map_canvas { height: 250px; width: 90%; border: 1px solid #bcbcbc;}
-    #agm_zoom_pre{color: #192be1 }
-    .gmnoprint img { max-width: none; }
-    #agm_auto_holder{ position: relative; }
-    #agm_auto_holder:before{ transform:rotate(720deg);position: absolute; top: -2px; left: 3px; color: #02768c; font-size: 22px; }
-    #agm_auto_holder input[type=text]{ padding-left: 25px; width: 90%;font-weight: bold; }
-</style>
-<div class="wrap">
-    <h2 style="line-height: 1"><i class="dashicons-before dashicons-admin-generic" style="color: #005299"> </i>Ank Google Map Settings</h2>
-    <form action="" method="post">
-        <h3><i class="dashicons-before dashicons-admin-appearance" style="color: #d96400"> </i>Map Canvas Options</h3>
-        <hr>
-        <table class="agm_tbl">
-            <tr>
-                <td>Map Canvas Width:</td>
-                <td><input required type="number" min="1" name="div_width" value="<?php echo esc_attr($options['div_width']); ?>">
-                    <select name="div_width_unit">
-                        <optgroup label="Unit"></optgroup>
-                        <option <?php if (esc_attr($options['div_width_unit']) === '1') echo 'selected' ?> value="1"> px</option>
-                        <option <?php if (esc_attr($options['div_width_unit']) === '2') echo 'selected' ?> value="2"> %</option>
-                    </select> <i>Choose % (percent) to make it responsive</i></td>
-            </tr>
-            <tr>
-                <td>Map Canvas Height:</td>
-                <td><input required type="number" min="1" name="div_height" value="<?php echo esc_attr($options['div_height']); ?>">
-                    <select name="div_height_unit">
-                        <optgroup label="Unit"></optgroup>
-                        <option <?php if (esc_attr($options['div_height_unit']) === '1') echo 'selected' ?> value="1"> px</option>
-                        <option <?php if (esc_attr($options['div_height_unit']) === '2') echo 'selected' ?> value="2"> %</option>
-                    </select></td>
-            </tr>
-            <tr>
-                <td>Border Color:</td>
-                <td><input placeholder="Color" type="text" id="agm_color_field" name="div_border_color" value="<?php echo esc_attr($options['div_border_color']); ?>"><i style="vertical-align: top">Border will be 1px solid.</i></td>
-            </tr>
-        </table>
-        <!--- tab2 start-->
-        <h3><i class="dashicons-before dashicons-admin-settings" style="color: #458eb3"> </i>Configure Map Options</h3>
-        <hr>
-        <table class="agm_tbl">
-            <tr>
-                <td>Latitude:</td>
-                <td><input id="agm_lat" placeholder='eg 33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($options['map_Lat']); ?>"></td>
-                <td rowspan="6">
-                    <span class="dashicons-before dashicons-search" id="agm_auto_holder"><input id="agm_autocomplete" type="text" placeholder="Enter an address here to get instant results" maxlength="200"></span>
-                    <div id="agm_map_canvas"></div>
-                    <i>Quick Tip: Right click on this map to set new Latitude and Longitude values.</i><br>
-                    <i>You can also drag marker to your desired location to set that point as new center of map.</i>
-                </td>
-            </tr>
-            <tr>
-                <td>Longitude:</td>
-                <td><input id="agm_lng" placeholder='eg 77.456789' type="text" required name="map_Lng" value="<?php echo esc_attr($options['map_Lng']); ?>"></td>
-            </tr>
-            <tr>
-                <td>Zoom Level: <b><i id="agm_zoom_pre"><?php echo esc_attr($options['map_zoom']); ?></i></b></td>
-                <td><input title="Hold me and slide to change zoom" id="agm_zoom" type="range" max="21" min="0" required name="map_zoom" value="<?php echo esc_attr($options['map_zoom']); ?>"></td>
-            </tr>
-            <tr>
-                <td>Disable Controls:</td>
-                <td><input <?php if (esc_attr($options['map_control_1']) === '1') echo 'checked' ?> type="checkbox" name="map_control_1" id="map_control_1"><label for="map_control_1">Disable Pan Control</label><br>
-                    <input <?php if (esc_attr($options['map_control_2']) === '1') echo 'checked' ?> type="checkbox" name="map_control_2" id="map_control_2"><label for="map_control_2">Disable Zoom Control</label><br>
-                    <input <?php if (esc_attr($options['map_control_3']) === '1') echo 'checked' ?> type="checkbox" name="map_control_3" id="map_control_3"><label for="map_control_3">Disable MapType Control</label><br>
-                    <input <?php if (esc_attr($options['map_control_4']) === '1') echo 'checked' ?> type="checkbox" name="map_control_4" id="map_control_4"><label for="map_control_4">Disable StreetView Control</label><br>
-                    <input <?php if (esc_attr($options['map_control_5']) === '1') echo 'checked' ?> type="checkbox" name="map_control_5" id="map_control_5"><label for="map_control_5">Enable OverviewMap Control</label>
-                </td>
-            </tr>
-            <tr>
-                <td>Language Code:</td>
-                <td><input placeholder="en (default)" pattern="([A-Za-z\-]){2,5}" title="Valid Language Code Like: en OR en-US" type="text" name="map_lang_code" value="<?php echo esc_attr($options['map_lang_code']); ?>"></td>
-            </tr>
-            <tr>
-                <td>Map Type:</td>
-                <td><select name="map_type">
-                        <optgroup label="Map type to show"></optgroup>
-                        <option <?php if (esc_attr($options['map_type']) === '1') echo 'selected' ?> value="1">ROADMAP</option>
-                        <option <?php if (esc_attr($options['map_type']) === '2') echo 'selected' ?> value="2"> SATELLITE</option>
-                        <option <?php if (esc_attr($options['map_type']) === '3') echo 'selected' ?> value="3">HYBRID</option>
-                        <option <?php if (esc_attr($options['map_type']) === '4') echo 'selected' ?> value="4">TERRAIN</option>
-                    </select></td>
-            </tr>
-        </table>
-        <!--- tab3 start-->
-        <h3><i class="dashicons-before dashicons-location" style="color: #dc1515"> </i>Marker Options</h3>
-        <hr>
-        <table class="agm_tbl">
-            <tr>
-                <td>Enable marker:</td>
-                <td><input <?php if (esc_attr($options['marker_on']) === '1') echo 'checked' ?> type="checkbox" name="marker_on" id="agm_mark_on"><label for="agm_mark_on"><i>Check to enable</i></label></td>
-            </tr>
-            <tr>
-                <td>Marker Title:</td>
-                <td><input size="40" maxlength="200" type="text" name="marker_title" value="<?php echo esc_attr($options['marker_title']); ?>"><i>Don't use html tags here (max 200 chars)</i></td>
-            </tr>
-            <tr>
-                <td>Marker Animation:</td>
-                <td><select name="marker_anim">
-                        <optgroup label="Marker Animation"></optgroup>
-                        <option <?php if (esc_attr($options['marker_anim']) === '1') echo 'selected' ?> value="1">NONE</option>
-                        <option <?php if (esc_attr($options['marker_anim']) === '2') echo 'selected' ?> value="2"> BOUNCE</option>
-                        <option <?php if (esc_attr($options['marker_anim']) === '3') echo 'selected' ?> value="3">DROP</option>
-                    </select></td>
-            </tr>
-            <tr>
-                <td>Marker Color:</td>
-                <td><select name="marker_color">
-                        <optgroup label="Marker Color"></optgroup>
-                        <option <?php if (esc_attr($options['marker_color']) === '1') echo 'selected' ?> value="1">Default</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '2') echo 'selected' ?> value="2">Light Red</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '3') echo 'selected' ?> value="3">Black</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '4') echo 'selected' ?> value="4">Gray</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '5') echo 'selected' ?> value="5">Orange</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '6') echo 'selected' ?> value="6">White</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '7') echo 'selected' ?> value="7">Yellow</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '8') echo 'selected' ?> value="8">Purple</option>
-                        <option <?php if (esc_attr($options['marker_color']) === '9') echo 'selected' ?> value="9">Green</option>
-
-
-                    </select></td>
-            </tr>
-        </table>
-        <!-- tab4 start-->
-        <h3><i class="dashicons-before dashicons-admin-comments" style="color: #988ccc"> </i>Info Window Options</h3>
-        <hr>
-        <table class="agm_tbl">
-            <tr>
-                <td>Enable Info Window:</td>
-                <td><input <?php if (esc_attr($options['info_on']) === '1') echo 'checked' ?> type="checkbox" name="info_on" id="agm_info_on">
-                    <label for="agm_info_on"><i>Click to enable (also needs marker to be enabled)</i></label></td>
-            </tr>
-            <tr>
-                <td>Info Window State:</td>
-                <td><input <?php if (esc_attr($options['info_state']) === '1') echo 'checked' ?> type="checkbox" name="info_state" id="agm_info_state"><label for="agm_info_state"><i>Show by default</i></label></td>
-            </tr>
-            <tr>
-                <td>Info Window Text:</td>
-                <td><textarea maxlength="500" rows="3" cols="35" name="info_text"><?php echo trim($options['info_text']); ?></textarea>
-                    <i style="vertical-align: top">Basic html tags allowed here (max 500 chars)</i></td>
-            </tr>
-        </table>
-        <p>
-            <button class="button button-primary" type="submit" name="save_agm" value="Save »"><i class="dashicons-before dashicons-upload"> </i>Save Map Settings </button>
-        </p>
-        <?php wp_nonce_field('agm_form'); ?>
-    </form>
-    <hr>
-    <h4><i class="dashicons-before dashicons-editor-help" style="color: #52b849"> </i>Instructions:</h4>
-    Just save valid settings and use this ShortCode: <code>[ank_google_map]</code><br>
-    <ul>Additional Notes:
-        <li>• If you are using some cache plugin, Flush your site cache after saving settings otherwise settings may not reflect.</li>
-        <li>• This plugin support only one map at this time. Please don't use same short-code twice on a page.</li>
-        <li>• Only one marker supported at this time, & Marker position will be same as your map's center.</li>
-        <li>• In order to use Info Window, you have to enable Marker too .</li>
-        <li>• Supported Language Codes can be found <a href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1" target="_blank">here</a> </li>
-    </ul>
-    Created with ❤ by <a target="_blank" href="https://www.ankurkumar.hostreo.com"> <i>Ankur Kumar</i></a> | <a target="_blank" href="http://ank91.github.io/ank-google-map">Plugin Website</a> | Thanks for using
-</div><!-- end wrap-->
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&language=en"></script>
-<script type="text/javascript">window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">\x3C/script>')</script>
-<script type="text/javascript">
-    function $ID(a){
-        return document.querySelector('#'+a)||document.getElementById(a);
-    }
-    function Load_agm_Map() {
-        var center = new google.maps.LatLng(<?php echo $options['map_Lat'].','.$options['map_Lng'] ?>);
-        var opt = { overviewMapControl: true, center: center,streetViewControl: false, zoom: <?php echo $options['map_zoom'] ?>, mapTypeId: google.maps.MapTypeId.ROADMAP};
-        var map = new google.maps.Map(agm_map, opt);
-
-        var agm_lat = jQuery('#agm_lat'),
-            agm_lng = jQuery('#agm_lng'),
-            agm_zoom = jQuery('#agm_zoom'),
-            agm_zoom_pre = jQuery('#agm_zoom_pre');
-        var marker = new google.maps.Marker({ draggable: true, position: center, map: map, title: 'Current Position' });
-
-        google.maps.event.addListener(map, 'rightclick', function (event) {
-            agm_lat.val(event.latLng.lat());
-            agm_lng.val(event.latLng.lng());
-            marker.setTitle('Selected Position');
-            marker.setPosition(event.latLng);
-        });
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            agm_lat.val(event.latLng.lat());
-            agm_lng.val(event.latLng.lng());
-        });
-        google.maps.event.addListener(map, 'zoom_changed', function () {
-            agm_zoom.val(map.getZoom());
-            agm_zoom_pre.html(map.getZoom());
-        });
-        google.maps.event.addListener(map, 'center_changed', function () {
-            var location = map.getCenter();
-            agm_lat.val(location.lat());
-            agm_lng.val(location.lng());
-        });
-
-        agm_zoom.click(function () {
-            agm_zoom_pre.html(this.value);
-            map.setZoom(parseInt(agm_zoom.val()));
-        });
-
-        var map_auto = new google.maps.places.Autocomplete($ID('agm_autocomplete'));
-        google.maps.event.addListener(map_auto, 'place_changed', function(){
-            var place = map_auto.getPlace();
-            if (place.geometry) {
-                map.panTo(place.geometry.location);
-                marker.setPosition(place.geometry.location);
-                map.setZoom(15);
-                marker.setTitle(place.formatted_address);
-            }
-        });
-
-    }/* function ends here*/
-    var agm_map = $ID("agm_map_canvas");
-    if (typeof google == "object") {
-        google.maps.event.addDomListener(window, "load", Load_agm_Map)
-    }
-    else {
-        agm_map.innerHTML = '<h4 style="text-align: center;color: #d4060b">Failed to load Google Map. Refresh this page and try again</h4>'
-    }
-
-    <?php if(version_compare($GLOBALS['wp_version'],3.5)>=0){
-    /*
-     * WP v3.5+ inbuilt Color Picker
-     * Docs: https://github.com/automattic/Iris
-     */
-    ?>
-    jQuery(function () {
-        jQuery('#agm_color_field').wpColorPicker();
-    });
-    <?php } ?>
-</script>
