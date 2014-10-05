@@ -88,6 +88,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
 }
 
 ?>
+<!-- agm options page start -->
 <style type="text/css">
     input[type=range], select { cursor: pointer }
     .agm_tbl { width: 100%; border: none; border-collapse: collapse}
@@ -139,7 +140,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                 <td rowspan="6">
                     <span class="dashicons-before dashicons-search" id="agm_auto_holder"><input id="agm_autocomplete" type="text" placeholder="Enter an address here to get instant results" maxlength="200"></span>
                     <div id="agm_map_canvas"></div>
-                    <i>Quick Tip: Right click on this map to set new Latitude and Longitude values.</i><br>
+                    <i><b>Quick Tip</b>: Right click on this map to set new Latitude and Longitude values.</i><br>
                     <i>You can also drag marker to your desired location to set that point as new center of map.</i>
                 </td>
             </tr>
@@ -209,8 +210,6 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                         <option <?php if (esc_attr($options['marker_color']) === '7') echo 'selected' ?> value="7">Yellow</option>
                         <option <?php if (esc_attr($options['marker_color']) === '8') echo 'selected' ?> value="8">Purple</option>
                         <option <?php if (esc_attr($options['marker_color']) === '9') echo 'selected' ?> value="9">Green</option>
-
-
                     </select></td>
             </tr>
         </table>
@@ -291,7 +290,9 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             agm_zoom_pre.html(this.value);
             map.setZoom(parseInt(agm_zoom.val()));
         });
-
+        /*
+         *Auto-complete feature
+         */
         var map_auto = new google.maps.places.Autocomplete($ID('agm_autocomplete'));
         google.maps.event.addListener(map_auto, 'place_changed', function(){
             var place = map_auto.getPlace();
@@ -302,8 +303,19 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                 marker.setTitle(place.formatted_address);
             }
         });
+        /*
+         * Prevent form submission when user press enter key in autocomplete
+         *
+        */
+     jQuery("#agm_autocomplete").keydown(function (e) {
+         if (e.which == 13 ||e.which==13) {
+             e.preventDefault();
+             e.stopPropagation();
+         }
+      });
 
-    }/* function ends here*/
+    }/* main function ends here*/
+
     var agm_map = $ID("agm_map_canvas");
     if (typeof google == "object") {
         google.maps.event.addDomListener(window, "load", Load_agm_Map)
@@ -323,3 +335,4 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     });
     <?php } ?>
 </script>
+<!--agm options page ends here -->
