@@ -3,13 +3,13 @@
 This plugin is based on *One Website , One Map , One Marker* theme.
 However it may support multiple maps in future.
 This is the simplest and non-bloated WordPress Google Map Plugin.Made for noobs.
-Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
+This plugin is written in pure javascript, no jQuery at all. It is responsive, configurable. No ads and 100% Free of cost.
 
 - - -
 
 
 
->**Download the Last version from [here](https://wordpress.org/plugins/ank-google-map)**
+>**Download the Latest version from [here](https://wordpress.org/plugins/ank-google-map)**
 
 
 
