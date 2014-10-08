@@ -132,5 +132,22 @@ Google Map API V3 does not need an API Key.
 * More options.
 
 - - -
+## Change Log
+Change log is available [here](https://wordpress.org/plugins/ank-google-map/changelog/)
 
-Created By: *Ankur Kumar* &copy; 2014
+- - -
+
+## Thanks & Contribution
+- Google, for his awasome API.
+- Stackoverflow.com, to made devs' life easy.
+- Sitepoint.com, for starter guide to WP plugin development.
+- Wordpress.org, for their Open Source approach.
+- Github.com, for free website hosting.
+- Haroopad, free markdown IDE.
+- JetBrains PHP Storm, the best php IDE.
+- TortoiseSVN, free SVN tool
+
+-----
+
+
+**Created By: *Ankur Kumar* &copy; 2014**
