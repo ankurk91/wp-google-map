@@ -3,12 +3,13 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.5.1
+Version: 1.5.2
 Author: Ankur Kumar
-Author URI: http://www.ankurkumar.hostreo.com
+Author URI: http://ank91.github.io/
 License: GPL2
-
-    Copyright 2014  Ankur Kumar  (http://github.com/ank91)
+*/
+/*
+    Copyright 2014  Ankur Kumar  (http://ank91.github.io/)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -28,9 +29,8 @@ License: GPL2
 if (!defined('ABSPATH')) exit;
 
 /*check for duplicate class*/
-if ( ! class_exists( 'Ank_Google_Map' ) ) {
-    return;
-}
+if (!class_exists( 'Ank_Google_Map' ) ) {
+
 
 class Ank_Google_Map
 {
@@ -50,7 +50,7 @@ class Ank_Google_Map
          */
         add_filter('plugin_row_meta', array($this, 'agm_set_plugin_meta'), 10, 2);
         /*
-         * Save settings first time
+         * Save settings if first time
          */
         if (false == get_option('ank_google_map')) {
             $this->agm_settings_init();
@@ -76,6 +76,12 @@ class Ank_Google_Map
          * load color picker on plugin options page only
          */
         add_action('admin_print_scripts-'. $page_hook_suffix, array($this, 'agm_add_color_picker'));
+        /*
+         * add help drop down menu on option page
+         */
+        if ( version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
+            add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
+        }
     }
 
     function agm_plugin_actions_links($links, $file)
@@ -106,7 +112,66 @@ class Ank_Google_Map
        /*
         * get settings page from this separate file
         */
-        require('agm_options_page.php');
+        if(is_file(__DIR__.'/agm_options_page.php')){
+            require('agm_options_page.php');
+        }else{
+            wp_die(__('A required file not found on server. Reinstall this plugin.<br>If problem persist, contact plugin developer.'));
+        }
+
+    }
+    /*
+     * Add a help tab at top of plugin option page
+     */
+    public static function agm_help_menu(){
+        $curr_screen = get_current_screen();
+
+        $curr_screen->add_help_tab(
+            array(
+                'id'		=> 'overview',
+                'title'		=> 'Overview',
+                'content'	=>'<p><strong>Thanks for using "Ank Google Map"</strong><br>
+                This plugin allows you to put a custom Google Map on your website. Just configure options below and
+                save your settings. Copy/paste <code>[ank-google-map]</code> short-code on your page/post/widget to view your map.
+                </p>'
+
+            )
+        );
+
+        $curr_screen->add_help_tab(
+            array(
+                'id'		=> 'troubleshoot',
+                'title'		=> 'Troubleshoot',
+                'content'	=>'<p><strong>Things to remember</strong><br>
+                <ul>
+                <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after  saving settings here.</li>
+                <li>Only one map is supported at this time. Don\'t put short-code twice on the same page.</li>
+                <li>Only one marker supported at this time, Marker position will be same as your map\'s center</li>
+                <li>Info Window needs marker to be enabled first.</li>
+                </ul>
+                </p>'
+
+            )
+        );
+        $curr_screen->add_help_tab(
+            array(
+                'id'		=> 'more-info',
+                'title'		=> 'More',
+                'content'	=>'<p><strong>Need more information ?</strong><br>
+                 A brief FAQ is available on plugin\'s official website.
+                 Click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>
+                 You can report a bug at plugin\'s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.
+                 I will try to reply as soon as possible.
+                </p>'
+
+            )
+        );
+
+        /*help sidebar links */
+        $curr_screen->set_help_sidebar(
+            '<p><strong>Quick Links</strong></p>' .
+            '<p><a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">Plugin FAQ</a></p>' .
+            '<p><a href="http://ank91.github.io/ank-google-map" target="_blank">Plugin Home</a></p>'
+        );
     }
 
     function agm_settings_init()
@@ -120,7 +185,6 @@ class Ank_Google_Map
             'div_width' => '100',
             'div_width_unit' => 2,
             'div_height' => '300',
-            'div_height_unit' => 1,
             'div_border_color' => '#ccc',
             'map_Lat' => '29.6969365',
             'map_Lng' => '77.6766793',
@@ -162,7 +226,7 @@ class Ank_Google_Map
 
     function agm_marker_url($id){
         /**
-         * Depends on Google server for maker images
+         * We depends on Google server for maker images
          * @source http://ex-ample.blogspot.in/2011/08/all-url-of-markers-used-by-google-maps.html
          */
         $path=array(
@@ -176,7 +240,12 @@ class Ank_Google_Map
             '8'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_purple.png',
             '9'=>'https://maps.gstatic.com/intl/en_us/mapfiles/marker_green.png',
         );
-        return $path[$id];
+       if(array_key_exists($id,$path)){
+           return $path[$id];
+       }else{
+           return false;
+       }
+
     }
 
     /* ********* front end started *********  */
@@ -187,15 +256,15 @@ class Ank_Google_Map
          * Decide some options here
          */
         $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
-        $h_unit = ($options["div_height_unit"] === 1) ? 'px' : '%';
-        echo '<div id="agm_map_canvas" style="width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . $h_unit . ';margin: 0 auto;border:1px solid ' . esc_attr($options["div_border_color"]) . '"></div>';
+        $b_color=(esc_attr($options["div_border_color"])==='')? '' : 'border:1px solid '.esc_attr($options["div_border_color"]);
+        echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]).'px;' . $b_color . '"></div>';
 
     }
 
     function agm_write_css(){
         /*
-         * Special fixes for google map  controls.
-         * They appears incorrectly due to theme style
+         * Special fixes for google map controls.
+         * They may appear incorrectly due to theme style
          */
        echo "<style type='text/css'> .gmnoprint img { max-width: none; } </style>";
     }
@@ -225,11 +294,15 @@ class Ank_Google_Map
                 $marker_anim = 'DROP';
             }
         }
+        /*
+         * let browser+google decide the map language if no lang code specified by user
+         */
+        $lang_code=(esc_attr($options['map_lang_code'])==='')? '' : '?language='.esc_attr($options['map_lang_code']);
         ?>
-        <script src="//maps.googleapis.com/maps/api/js?language=<?php echo esc_attr($options['map_lang_code']) ?>"></script>
+        <script src="//maps.googleapis.com/maps/api/js<?php echo $lang_code ?>"></script>
         <?php
         /*
-        * using ob_start to get compress buffer at last
+        * using ob_start to get buffer at last
         * Note: Don't use single line comment in java script portion
         */
         ob_start();
@@ -248,7 +321,7 @@ class Ank_Google_Map
                 <?php if($options['marker_on']==='1') {?>
                 var mk = new google.maps.Marker({
                     <?php
-                    if($options['marker_color']!=='1'){
+                    if($options['marker_color']!==1){
                     echo 'icon:"'.$this->agm_marker_url($options['marker_color']).'",';
                     }
                     ?>
@@ -291,12 +364,12 @@ class Ank_Google_Map
                     google.maps.event.addDomListener(window, "load", Load_agm_Map)
                 }
                 else {
-                    agm.innerHTML = '<h4 style="text-align: center">Failed to load Google Map. Please try again.</h4>'
+                    agm.innerHTML = '<h4 style="text-align: center">Failed to load Google Map.<br>Please try again.</h4>'
                 }
             }</script>
         <?php
         /*
-         * trim the buffered string, will save a few bytes on fron end
+         * trim the buffered string, will save a few bytes on front end
          */
         echo $this->agm_trim_js(ob_get_clean());
     }
@@ -317,16 +390,28 @@ class Ank_Google_Map
         ob_start();
             $this->agm_write_css(); //write css fixes
             $this->agm_write_html(); //write html
-            add_action('wp_footer', array($this, 'agm_write_js')); //put js code in footer
+        /*
+         * put js at footer, also prevent duplicate inclusion
+         */
+
+            add_action('wp_footer', array($this, 'agm_write_js'));
         return ob_get_clean();
     }
 
+} /*end main class*/
+
+
+
+} /*if class exists*/
+
+if ( class_exists( 'Ank_Google_Map' ) ) {
+    /*Init class */
+    new Ank_Google_Map();
 }
 
-//end class
 
-new Ank_Google_Map();
-
-//use [ank_google_map] short code
+/*
+ * use [ank_google_map] short code
+ */
 
 ?>
