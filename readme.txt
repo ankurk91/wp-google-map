@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors:ank91
@@ -15,17 +15,28 @@ Simple and non-bloated WordPress Google Map Plugin.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 Official Site : http://ank91.github.io/ank-google-map
 
+= Some Features =
+* Adjust map canvas height and width.
+* Responsive map, auto center map upon resize.
+* Configure map canvas border color.
+* Disable/Enable map controls.
+* Find your location by typing address (Auto complete)
+* Change map's language eg:Hindi/Urdu
+* Place animated and colorful marker on map
+* Place info window on marker with custom text/markup.
+
+
 == Installation ==
-0. Search for 'ank google map' in WordPress Plugin Directory and Download the .zip file & extract it.
-1. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins List' page in WordPress Admin Area.
-3. Configure this plugin via Settings-->Ank Google Map
-4. Paste the `[ank_google_map]` short-code in your pages/posts/widgets.
+1. Search for 'ank google map' in WordPress Plugin Directory and Download the .zip file & extract it.
+2. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins List' page in WordPress Admin Area.
+4. Configure this plugin via Settings-->Ank Google Map
+5. Paste the `[ank_google_map]` short-code in your pages/posts/widgets.
 
 
 == Frequently Asked Questions ==
 
-= Why did u call it Light Weight ? =
+= Why did you call it Light Weight ? =
 
 Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
@@ -37,9 +48,12 @@ It does not create additional tables in your database, uses inbuilt wp_options t
 There are many of Map plugins in plugin directory, but most of them not written well.
 Means they put lots of java script (uncompressed) code on every page of your website.
 They also loads jquery file before them which effect your page speed.
-This plugin will put its code on the page where it was called only.
-It will write compressed java script code, and does not depends on external js library like:jQuery.
+This plugin will put its code on the required page only.
+It will write compressed java script code, and does not depends on external js library like: jQuery.
 
+= What is the short-code for this plugin =
+
+`[ank_google_map]`
 
 = Options page does not work well :( =
 
@@ -54,18 +68,19 @@ You must have WordPress v3.5+ in order to use this feature.
 = Shortcode does not work in text widget =
 
 Add this line to your theme's functions.php
-add_filter( 'widget_text', 'do_shortcode' );
+`add_filter( 'widget_text', 'do_shortcode' );`
 
 = Changes does not reflect after saving settings ? =
 
-Are you using some Cache/Performance plugin ? Flush your WP cache and refresh target page.
+Are you using some Cache/Performance plugin ?
+Flush your WP cache and refresh target page.
 
 = Where does it store settings and options ? =
 
 WP Database->wp-options->ank_google_map.
-In a Single Row, stored in array for faster access.
+Uses a Single Row, stored in array for faster access.
 
-= From where does it loads additional Marker (color) images ? =
+= From where does it loads additional Marker (colored) images ? =
 
 Every marker image is loaded from official Google Server.
 
@@ -75,14 +90,21 @@ No worry! It will remove its traces from database upon uninstall.
 You have to remove short-code from your pages by yourself.
 
 = How do i enter correct language code ? =
-
-You can get latest supported language code list from here.
-https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
+You can force google to load a specific language for all visitors.
+Get latest supported language code list from [here](https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1).
+If you don't specify language code then google will try to load the language according to your visitor's web browser language.
 
 = How to make it responsive =
 
 Set Map Canvas Width to 100 %.
 
+= I don't want border on map canvas =
+
+Choose a border color that match the map canvas surroundings.
+
+= Did you test it with old version of WordPress ? =
+
+No, tested with v4.0 only. So i recommend you to upgrade to latest WordPress today.
 
 = Do you hate jQuery ? =
 
@@ -113,6 +135,12 @@ Google Map API V3 does not need an API Key.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.5.2 =
+* Option page re-styled.
+* Added Help Menu on top of option page.
+* Removed Map Height Unit Option, Height will be in px always.
+* Bug fix in marker color option.
 
 = 1.5.1 =
 * Prevent form submission when user press Enter in auto complete
@@ -147,4 +175,4 @@ Google Map API V3 does not need an API Key.
 
 
 == Arbitrary section ==
-
+Nothing in this section, Read FAQ.
