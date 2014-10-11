@@ -1,15 +1,15 @@
 
 # Plugin Description
-This plugin is based on *One Website , One Map , One Marker* theme.
+Ank Google Map plugin is based on *One Website , One Map , One Marker* theme.
 However it may support multiple maps in future.
 This is the simplest and non-bloated WordPress Google Map Plugin.Made for noobs.
-This plugin is written in pure javascript, no jQuery at all. It is responsive, configurable. No ads and 100% Free of cost.
+Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 
 - - -
 
 
 
->**Download the Latest version from [here](https://wordpress.org/plugins/ank-google-map)**
+>**You can also download the Latest version from [here](https://wordpress.org/plugins/ank-google-map)**
 
 
 
@@ -32,14 +32,13 @@ This plugin is written in pure javascript, no jQuery at all. It is responsive, c
 
 
 ## Features
-- Configure map height and width.
+- Adjust map height and width.
 - Responsive map, auto center map upon resize.
 - Configure map border color.
 - Disable/Enable map controls.
 - Find location by address (Autocomplete)
 - Change map's language eg:Hindi/Urdu
-- Place animated marker on map
-- Select colorfull Markers
+- Place animated adn colorful marker on map
 - Place info window on marker with custom text/markup.
 
 - - -
@@ -81,12 +80,13 @@ Add this line to your theme's functions.php
 
 **Changes does not reflect after saving settings ?**
 
-Are you using some Cache/Performance plugin ? Flush your WP cache and refresh target page.
+Are you using some Cache/Performance plugin ? 
+Flush your WP cache and refresh target page.
 
 **Where does it store settings and options ?**
 
 WP Database->wp-options->ank_google_map.
-In a Single Row, stored in array for faster access.
+Uses a Single Row, stored in array for faster access.
 
 **From where does it loads additional Marker (color) images ?**
 
@@ -107,6 +107,13 @@ You can get latest supported language code list from [here](https://spreadsheets
 
 Set Map Canvas Width to 100 %.
 
+**I don't want border on map canvas**
+
+Choose a border color that match the map canvas surroundings.
+
+**Did you test it with old version of WordPress**
+
+No, tested with v4.0 only. So i recommend you to upgrade to latest WordPress today.
 
 **Do you hate jQuery ?**
 
@@ -138,14 +145,14 @@ Change log is available [here](https://wordpress.org/plugins/ank-google-map/chan
 - - -
 
 ## Thanks & Contribution
-- Google, for his awasome API.
+- Google, for its awasome API.
 - Stackoverflow.com, to made devs' life easy.
 - Sitepoint.com, for starter guide to WP plugin development.
 - Wordpress.org, for their Open Source approach.
 - Github.com, for free website hosting.
 - Haroopad, free markdown IDE.
 - JetBrains PHP Storm, the best php IDE.
-- TortoiseSVN, free SVN tool
+- TortoiseSVN, free SVN tool.
 
 -----
 
