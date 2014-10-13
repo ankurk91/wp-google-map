@@ -111,6 +111,10 @@ Set Map Canvas Width to 100 %.
 
 Choose a border color that match the map canvas surroundings.
 
+**I don't want css fixes for map controls, how to disable them ?**
+
+Use this short-code `[ank_google_map css_fix=0]`
+
 **Did you test it with old version of WordPress**
 
 No, tested with v4.0 only. So i recommend you to upgrade to latest WordPress today.
