@@ -59,6 +59,10 @@ class Ank_Google_Map
          * Register our short-code [ank_google_map]
          */
         add_shortcode('ank_google_map', array($this, 'agm_shortCode'));
+        /*
+         * Some (Notice) text on top of option page
+         */
+        add_action( 'admin_notices', array($this, 'agm_notice') ) ;
 
     }
 
@@ -82,6 +86,7 @@ class Ank_Google_Map
         if ( version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
             add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
         }
+
     }
 
     function agm_plugin_actions_links($links, $file)
@@ -127,11 +132,11 @@ class Ank_Google_Map
 
         $curr_screen->add_help_tab(
             array(
-                'id'		=> 'overview',
+                'id'		=> 'agm-overview',
                 'title'		=> 'Overview',
                 'content'	=>'<p><strong>Thanks for using "Ank Google Map"</strong><br>
                 This plugin allows you to put a custom Google Map on your website. Just configure options below and
-                save your settings. Copy/paste <code>[ank-google-map]</code> short-code on your page/post/widget to view your map.
+                save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
                 </p>'
 
             )
@@ -139,13 +144,13 @@ class Ank_Google_Map
 
         $curr_screen->add_help_tab(
             array(
-                'id'		=> 'troubleshoot',
+                'id'		=> 'agm-troubleshoot',
                 'title'		=> 'Troubleshoot',
                 'content'	=>'<p><strong>Things to remember</strong><br>
                 <ul>
                 <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after  saving settings here.</li>
                 <li>Only one map is supported at this time. Don\'t put short-code twice on the same page.</li>
-                <li>Only one marker supported at this time, Marker position will be same as your map\'s center</li>
+                <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>
                 <li>Info Window needs marker to be enabled first.</li>
                 </ul>
                 </p>'
@@ -154,7 +159,7 @@ class Ank_Google_Map
         );
         $curr_screen->add_help_tab(
             array(
-                'id'		=> 'more-info',
+                'id'		=> 'agm-more-info',
                 'title'		=> 'More',
                 'content'	=>'<p><strong>Need more information ?</strong><br>
                  A brief FAQ is available on plugin\'s official website.
@@ -224,6 +229,15 @@ class Ank_Google_Map
 
     }
 
+    function agm_notice(){
+        /*
+         *  Print notice on our option page only
+         */
+        $dir = is_rtl() ? 'left' : 'right';
+        if(strpos( get_current_screen()->id, 'agm_settings' ) !== false)
+            echo "<p style='float:".$dir.";margin:0;padding:5px;font-size:12px'>Need help ? Just click here ➡</p>";
+    }
+
     function agm_marker_url($id){
         /**
          * We depends on Google server for maker images
@@ -266,7 +280,7 @@ class Ank_Google_Map
          * Special fixes for google map controls.
          * They may appear incorrectly due to theme style
          */
-       echo "<style type='text/css'> .gmnoprint img { max-width: none; } </style>";
+       echo "<style type='text/css'> .gmnoprint img,#agm_map_canvas img { max-width: none; } </style>";
     }
 
     function agm_write_js()
@@ -299,7 +313,7 @@ class Ank_Google_Map
          */
         $lang_code=(esc_attr($options['map_lang_code'])==='')? '' : '?language='.esc_attr($options['map_lang_code']);
         ?>
-        <script src="//maps.googleapis.com/maps/api/js<?php echo $lang_code ?>"></script>
+        <script type="text/javascript" src="//maps.googleapis.com/maps/api/js<?php echo $lang_code ?>"></script>
         <?php
         /*
         * using ob_start to get buffer at last
@@ -385,10 +399,20 @@ class Ank_Google_Map
     }
 
 
-    function agm_shortCode()
+    function agm_shortCode($params)
     {
+        $params=shortcode_atts(array(
+        'css_fix'=>1
+            ),$params);
         ob_start();
-            $this->agm_write_css(); //write css fixes
+         /*
+         * We accept one parameter in our short-code
+         * [ank_google_map css_fix=0] will disable css-fixes
+         */
+         if($params['css_fix']==1){
+              $this->agm_write_css(); //write css fixes
+          }
+
             $this->agm_write_html(); //write html
         /*
          * put js at footer, also prevent duplicate inclusion
@@ -412,6 +436,8 @@ if ( class_exists( 'Ank_Google_Map' ) ) {
 
 /*
  * use [ank_google_map] short code
+ * OR
+ * use [ank_google_map css_fix=0] to disable writing of css-fixes
  */
 
 ?>
