@@ -14,9 +14,9 @@ if (!class_exists('Ank_Google_Map')) {
 if (!current_user_can('manage_options')) {
     wp_die(__('You do not have sufficient permissions to access this page.'));
 }
- /*
- * Empty option array
- */
+    /*
+    * Empty option array
+    */
     $options=array();
      /*
       * Fetch settings from database once
@@ -34,14 +34,14 @@ if (isset($_POST['save_agm']))
      */
     $options['div_width'] = sanitize_text_field($_POST['div_width']);
     $options['div_height'] = sanitize_text_field($_POST['div_height']);
-    $options['div_width_unit'] = intval($_POST['div_width_unit']);
+    $options['div_width_unit'] = intval(sanitize_text_field($_POST['div_width_unit']));
 
     /* v1.5.2 , $options['div_width_unit'] has been removed */
 
     $options['div_border_color'] = sanitize_text_field($_POST['div_border_color']);
 
-    $options['map_Lat'] = sanitize_text_field(trim($_POST['map_Lat']));
-    $options['map_Lng'] = sanitize_text_field(trim($_POST['map_Lng']));
+    $options['map_Lat'] = sanitize_text_field($_POST['map_Lat']);
+    $options['map_Lng'] = sanitize_text_field($_POST['map_Lng']);
     $options['map_zoom'] = intval($_POST['map_zoom']);
 
     $options['map_control_1']=(isset($_POST['map_control_1']))?'1':'0';
@@ -88,6 +88,7 @@ if (isset($_POST['save_agm']))
  *
  * Display notice if current wp does not support color picker
  */
+
 if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     echo "<div class='error'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
 }
@@ -97,6 +98,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
 <style type="text/css">
     input[type=range], select { cursor: pointer }
     .agm_tbl { width: 100%; border: none; border-collapse: collapse}
+    .agm_tbl td{padding: 2px}
     .agm_tbl tr:first-child td:first-child { width: 15%; }
     .agm_tbl tr td:first-child { font-weight: bold; padding-left: 2% }
     #agm_map_canvas { height: 250px; width: 99%; border: 1px solid #bcbcbc;}
@@ -145,17 +147,17 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             <table class="agm_tbl">
             <tr>
                 <td>Latitude:</td>
-                <td><input id="agm_lat" placeholder='eg 33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($options['map_Lat']); ?>"></td>
+                <td><input id="agm_lat" pattern="[0-9\-.]+" title="Only Numbers [0-9], dash[-] and dot[.]" placeholder='eg 33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($options['map_Lat']); ?>"></td>
                 <td rowspan="6">
                     <span class="dashicons-before dashicons-search" id="agm_auto_holder"><input id="agm_autocomplete" type="text" placeholder="Enter an address here to get instant results" maxlength="200"></span>
                     <div id="agm_map_canvas"></div>
                     <i><b>Quick Tip</b>: Right click on this map to set new Latitude and Longitude values.</i><br>
-                    <i>You can also drag marker to your desired location to set that point as new center of map.</i>
+                    <i>You can also drag marker to your desired location to set that point as the new center of map.</i>
                 </td>
             </tr>
             <tr>
                 <td>Longitude:</td>
-                <td><input id="agm_lng" placeholder='eg 77.456789' type="text" required name="map_Lng" value="<?php echo esc_attr($options['map_Lng']); ?>"></td>
+                <td><input id="agm_lng" pattern="[0-9\-.]+" title="Only Numbers [0-9], dash[-] and dot[.]" placeholder='eg 77.456789' type="text" required name="map_Lng" value="<?php echo esc_attr($options['map_Lng']); ?>"></td>
             </tr>
             <tr>
                 <td>Zoom Level: <b><i id="agm_zoom_pre"><?php echo esc_attr($options['map_zoom']); ?></i></b></td>
@@ -318,7 +320,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
 
     }/* main function ends here*/
     /*
-     * Prevent form submission when user press enter key in autocomplete
+     * Prevent form submission when user press enter key in auto-complete
      *
      */
     jQuery("#agm_autocomplete").keydown(function (e) {
