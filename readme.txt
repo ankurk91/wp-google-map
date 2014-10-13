@@ -42,6 +42,7 @@ Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
 It uses WP dash-icons in Plugin Options Page.
 It does not create additional tables in your database, uses inbuilt wp_options table.
+The whole package is about 50 kb. (~12 kb zipped).
 
 = What do you mean by Non Bloated =
 
@@ -102,9 +103,12 @@ Set Map Canvas Width to 100 %.
 
 Choose a border color that match the map canvas surroundings.
 
+= I don't want css fixes for map controls, how to disable them ? =
+Use this short-code `[ank_google_map css_fix=0]`
+
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.0 only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.0 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Do you hate jQuery ? =
 
@@ -141,6 +145,7 @@ Google Map API V3 does not need an API Key.
 * Added Help Menu on top of option page.
 * Removed Map Height Unit Option, Height will be in px always.
 * Bug fix in marker color option.
+* Options to disable css-fixes. (Read FAQ).
 
 = 1.5.1 =
 * Prevent form submission when user press Enter in auto complete
