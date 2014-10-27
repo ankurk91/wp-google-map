@@ -3,7 +3,7 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.5.2
+Version: 1.5.4
 Author: Ankur Kumar
 Author URI: http://ank91.github.io/
 License: GPL2
@@ -31,18 +31,25 @@ if (!defined('ABSPATH')) exit;
 /*check for duplicate class*/
 if (!class_exists( 'Ank_Google_Map' ) ) {
 
+   if(!defined('AGM_PLUGIN_VERSION')){
+        define('AGM_PLUGIN_VERSION','1.5.4');
+    }
+    if(!defined('AGM_PLUGIN_SLUG')){
+        define('AGM_PLUGIN_SLUG','agm_plugin_settings');
+    }
 
 class Ank_Google_Map
 {
 
     function __construct()
     {
+
         /*
          * Add settings link to plugin list page
         */
         add_filter('plugin_action_links', array($this, 'agm_plugin_actions_links'), 10, 2);
         /*
-         *  Add settings link under admin>settings menu
+         *  Add settings link under admin->settings menu->ank google map
          */
         add_action('admin_menu', array($this, 'agm_settings_menu'));
         /*
@@ -52,6 +59,7 @@ class Ank_Google_Map
         /*
          * Save settings if first time
          */
+
         if (false == get_option('ank_google_map')) {
             $this->agm_settings_init();
         }
@@ -62,20 +70,23 @@ class Ank_Google_Map
         /*
          * Some (Notice) text on top of option page
          */
-        add_action( 'admin_notices', array($this, 'agm_notice') ) ;
+        add_action('admin_notices', array($this, 'agm_notice'));
+         /*add custom screen options panel wp v3.0+*/
+        add_filter('screen_settings', array($this,'agm_screen_options'),10,2);
+        /* register ajax save function */
+        add_action('wp_ajax_save_settings-'.AGM_PLUGIN_SLUG, array(&$this, 'agm_save_screen_options'));
 
-    }
-
+    }/*end constructor*/
 
 
     private function agm_settings_page_url()
     {
-        return add_query_arg('page', 'agm_settings', 'options-general.php');
+        return add_query_arg('page', AGM_PLUGIN_SLUG, 'options-general.php');
     }
 
     function agm_settings_menu()
     {
-        $page_hook_suffix =add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', 'agm_settings', array($this, 'agm_settings_page'));
+        $page_hook_suffix =add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', AGM_PLUGIN_SLUG, array($this, 'agm_settings_page'));
         /*
          * load color picker on plugin options page only
          */
@@ -83,10 +94,7 @@ class Ank_Google_Map
         /*
          * add help drop down menu on option page
          */
-        if ( version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
-            add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
-        }
-
+        add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
     }
 
     function agm_plugin_actions_links($links, $file)
@@ -103,13 +111,18 @@ class Ank_Google_Map
         return $links;
     }
 
-    function agm_set_plugin_meta($links)
+    function agm_set_plugin_meta($links,$file)
     {
         /*
         * additional link on plugin list page
         */
-       $links[] = '<a target="_blank" href="' . plugins_url() . '/' . basename(__DIR__) . '/readme.txt">Read Me</a>';
-       return $links;
+        static $plugin;
+        $plugin = plugin_basename( __FILE__ );
+        if ( $file == $plugin ) {
+            $links[] = '<a target="_blank" href="' . plugins_url() . '/' . basename(dirname(__FILE__)) . '/readme.txt">Read Me</a>';
+            $links[] = '<a target="_blank" href="http://ank91.github.io/ank-google-map">GitHub</a>';
+        }
+         return $links;
     }
 
     function agm_settings_page()
@@ -127,16 +140,18 @@ class Ank_Google_Map
     /*
      * Add a help tab at top of plugin option page
      */
-    public static function agm_help_menu(){
+    public static function agm_help_menu()
+    {
+        /*get current screen obj*/
         $curr_screen = get_current_screen();
 
         $curr_screen->add_help_tab(
             array(
                 'id'		=> 'agm-overview',
                 'title'		=> 'Overview',
-                'content'	=>'<p><strong>Thanks for using "Ank Google Map"</strong><br>
-                This plugin allows you to put a custom Google Map on your website. Just configure options below and
-                save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
+                'content'	=>'<p><strong>Thanks for using "Ank Google Map"</strong><br>'.
+                'This plugin allows you to put a custom Google Map on your website. Just configure options below and'.
+                'save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
                 </p>'
 
             )
@@ -146,10 +161,10 @@ class Ank_Google_Map
             array(
                 'id'		=> 'agm-troubleshoot',
                 'title'		=> 'Troubleshoot',
-                'content'	=>'<p><strong>Things to remember</strong><br>
-                <ul>
+                'content'	=>'<p><strong>Things to remember</strong><br>'.
+                '<ul>
                 <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after  saving settings here.</li>
-                <li>Only one map is supported at this time. Don\'t put short-code twice on the same page.</li>
+                <li>Only one map is supported at this time. Don&apos;t put short-code twice on the same page.</li>
                 <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>
                 <li>Info Window needs marker to be enabled first.</li>
                 </ul>
@@ -161,12 +176,11 @@ class Ank_Google_Map
             array(
                 'id'		=> 'agm-more-info',
                 'title'		=> 'More',
-                'content'	=>'<p><strong>Need more information ?</strong><br>
-                 A brief FAQ is available on plugin\'s official website.
-                 Click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>
-                 You can report a bug at plugin\'s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.
-                 I will try to reply as soon as possible.
-                </p>'
+                'content'	=>'<p><strong>Need more information ?</strong><br>'.
+                 'A brief FAQ is available on plugin&apos;s official website.'.
+                 'Click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>'.
+                 'You can report a bug at plugin&apos;s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.'.
+                 'I will try to reply as soon as possible. </p>'
 
             )
         );
@@ -179,13 +193,88 @@ class Ank_Google_Map
         );
     }
 
+    function agm_notice()
+    {
+        /*
+         *  Print notice text on top of our option page only
+         */
+        $dir = is_rtl() ? 'left' : 'right';
+        if(strpos( get_current_screen()->id, AGM_PLUGIN_SLUG ) !== false)
+            echo "<p class='agm_notice' style='float:".$dir.";'>Explore More, Just click here &Longrightarrow;</p>";
+    }
+
+    function agm_screen_options($current, $screen)
+    {
+        /*
+         * @source http://www.w-shadow.com/blog/2010/06/29/adding-stuff-to-wordpress-screen-options/
+         */
+        if(strpos( $screen->id, AGM_PLUGIN_SLUG ) !== false){
+            $options= get_option('ank_google_map');
+            $current.='<h5>Text Editor Options</h5>';
+            $current.='<div class="metabox-prefs" data-id="'.AGM_PLUGIN_SLUG.'">';
+            $current.='<label for="agm_load_editor"><input ';
+            $current.=($options['te_meta_1']==='1')?' checked ':'';
+            $current.='type="checkbox" name="agm_load_editor" id="agm_load_editor">Load Text Editor</label> ';
+            $current.='<label for="agm_load_media"><input ';
+            $current.=($options['te_meta_2']==='1')?' checked ':'';
+            $current.='type="checkbox" name="agm_load_media" id="agm_load_media">Show Media Uploader</label>';
+            $current.='<label for="agm_load_teeny"><input ';
+            $current.=($options['te_meta_3']==='1')?' checked ':'';
+            $current.='type="checkbox" name="agm_load_teeny" id="agm_load_teeny">Load teeny Editor</label> ';
+            $current.='<span id="agm_meta_ajax_result">&#10004; Settings has been saved, Reload page to see changes.</span>';
+            $current.='<input type="hidden" name="_wpnonce-'.AGM_PLUGIN_SLUG.'" value="'.wp_create_nonce('save_settings-'.AGM_PLUGIN_SLUG).'" />';
+            $current.='</div>';
+        }
+        return $current;
+    }
+
+    function agm_save_screen_options()
+    {
+        if(isset($_POST['action'])&&$_POST['action']==='save_settings-'.AGM_PLUGIN_SLUG){
+            /*
+             * WP inbuilt form security check
+             */
+            check_ajax_referer('save_settings-'.AGM_PLUGIN_SLUG,'_wpnonce-'.AGM_PLUGIN_SLUG);
+            $options = get_option('ank_google_map');
+            $options['te_meta_1']=(isset($_POST['agm_load_editor']))?'1':'0';
+            $options['te_meta_2']=(isset($_POST['agm_load_media']))?'1':'0';
+            $options['te_meta_3']=(isset($_POST['agm_load_teeny']))?'1':'0';
+            update_option('ank_google_map', $options);
+            die('1');
+        }
+    }
+
+    function agm_get_editor($content,$load,$media,$teeny)
+    {
+        /**
+         * decide if browser support editor or not
+         */
+        if ( user_can_richedit() && $load==='1') {
+            $teeny=($teeny=='1')? true:false;
+            $media=($media=='1')? true:false;
+            wp_editor( $content,'agm-info-editor',
+                array(
+                    'media_buttons' => $media,
+                    'textarea_name' => 'info_text',
+                    'textarea_rows' => 5,
+                    'teeny' => $teeny,
+                    'quicktags' =>true
+                ) );
+
+        } else {
+            /*
+             * else Show normal text-area to user
+             */
+            echo '<textarea maxlength="1000" rows="3" cols="35" name="info_text" style="width: 99%">'.$content.'</textarea>';
+        }
+    }
+
     function agm_settings_init()
     {
         /*
          * these are default settings
          * save settings in array for faster access
          */
-
         $new_options = array(
             'div_width' => '100',
             'div_width_unit' => 2,
@@ -207,7 +296,10 @@ class Ank_Google_Map
             'marker_color' => 1,
             'info_on' => '1',
             'info_text' => '<b>Your Destination</b>',
-            'info_state' => '0'
+            'info_state' => '0',
+            'te_meta_1' => '1' ,
+            'te_meta_2' => '0',
+            'te_meta_3' => '0'
         );
         /*
          * save default settings to wp_options table
@@ -229,16 +321,10 @@ class Ank_Google_Map
 
     }
 
-    function agm_notice(){
-        /*
-         *  Print notice on our option page only
-         */
-        $dir = is_rtl() ? 'left' : 'right';
-        if(strpos( get_current_screen()->id, 'agm_settings' ) !== false)
-            echo "<p style='float:".$dir.";margin:0;padding:5px;font-size:12px'>Need help ? Just click here ➡</p>";
-    }
 
-    function agm_marker_url($id){
+
+    function agm_marker_url($id)
+    {
         /**
          * We depends on Google server for maker images
          * @source http://ex-ample.blogspot.in/2011/08/all-url-of-markers-used-by-google-maps.html
@@ -323,7 +409,7 @@ class Ank_Google_Map
         ?>
         <script type="text/javascript">
             function Load_agm_Map() {
-                var cn = new google.maps.LatLng(<?php echo $options['map_Lat'].','.$options['map_Lng'] ?>);
+                var cn = new google.maps.LatLng(<?php echo esc_attr($options['map_Lat']).','.esc_attr($options['map_Lng']) ?>);
                 var op = {
                     <?php if($options['map_control_1']==='1'){echo " panControl: false, ";} ?>
                     <?php if($options['map_control_2']==='1'){echo " zoomControl: false, ";} ?>
@@ -339,9 +425,9 @@ class Ank_Google_Map
                     echo 'icon:"'.$this->agm_marker_url($options['marker_color']).'",';
                     }
                     ?>
-                    position: cn, map: map <?php if($options['marker_anim']!==1) { echo ", animation: google.maps.Animation.$marker_anim"; }?>, title: "<?php echo esc_attr($options['marker_title']) ?>" });
+                    position: cn, map: map <?php if($options['marker_anim']!==1) { echo ", animation: google.maps.Animation.$marker_anim"; }?>, title: "<?php echo esc_js($options['marker_title']) ?>" });
                 <?php  if($options['info_on']==='1') {?>
-                var iw = new google.maps.InfoWindow({content: "<?php echo addslashes($options['info_text'])?>"});
+                var iw = new google.maps.InfoWindow({content: "<?php echo wp_slash($options['info_text'])?>"});
                 google.maps.event.addListener(map, 'click', function () {
                     iw.close();
                 });
@@ -401,43 +487,62 @@ class Ank_Google_Map
 
     function agm_shortCode($params)
     {
-        $params=shortcode_atts(array(
-        'css_fix'=>1
-            ),$params);
-        ob_start();
-         /*
-         * We accept one parameter in our short-code
+        /*
+         * We accept two parameters in our short-code
          * [ank_google_map css_fix=0] will disable css-fixes
+         * [ank_google_map js_order=0] will load map's js before other js files
          */
-         if($params['css_fix']==1){
-              $this->agm_write_css(); //write css fixes
-          }
+        /*
+        * Merge user parameters with default
+        */
+        $params=shortcode_atts(array(
+        'css_fix'=>1, /* 1=apply css fix, 0=don't apply css fix */
+        'js_order'=>1 /* 1=lowest priority, 0=normal priority*/
+            ),$params);
 
-            $this->agm_write_html(); //write html
+        ob_start();/* ob_start is here for a reason */
+
+         if($params['css_fix']==1){
+             /* ==write css fixes== */
+              $this->agm_write_css();
+          }
+             /* ==write html== */
+            $this->agm_write_html();
+
+        /* == decide priority of js code in footer == */
+
+        $js_priority=100;/*default,keep lower priority*/
+
+        if($params['js_order']==0){
+            /* Note: Enqueued scripts are executed at priority level 20.
+            The higher the number, the lower the priority
+            */
+            $js_priority=19;
+        }
         /*
          * put js at footer, also prevent duplicate inclusion
          */
-
-            add_action('wp_footer', array($this, 'agm_write_js'));
+        add_action('wp_footer', array($this, 'agm_write_js'),$js_priority);
         return ob_get_clean();
     }
 
-} /*end main class*/
+} /*end  class ank_google_map*/
 
 
 
-} /*if class exists*/
+} /*end if class exists*/
 
 if ( class_exists( 'Ank_Google_Map' ) ) {
     /*Init class */
-    new Ank_Google_Map();
+    if(!isset($Ank_Google_Map_Obj)){
+    $Ank_Google_Map_Obj=new Ank_Google_Map();
+    }
 }
 
 
 /*
- * use [ank_google_map] short code
+ * use [ank_google_map] short code (default)
  * OR
  * use [ank_google_map css_fix=0] to disable writing of css-fixes
  */
-
 ?>
