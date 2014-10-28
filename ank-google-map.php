@@ -3,7 +3,7 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.5.4
+Version: 1.5.5
 Author: Ankur Kumar
 Author URI: http://ank91.github.io/
 License: GPL2
@@ -24,7 +24,8 @@ License: GPL2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
+ ?>
+<?php
 /* no direct access*/
 if (!defined('ABSPATH')) exit;
 
@@ -32,7 +33,7 @@ if (!defined('ABSPATH')) exit;
 if (!class_exists( 'Ank_Google_Map' ) ) {
 
    if(!defined('AGM_PLUGIN_VERSION')){
-        define('AGM_PLUGIN_VERSION','1.5.4');
+        define('AGM_PLUGIN_VERSION','1.5.5');
     }
     if(!defined('AGM_PLUGIN_SLUG')){
         define('AGM_PLUGIN_SLUG','agm_plugin_settings');
@@ -92,9 +93,12 @@ class Ank_Google_Map
          */
         add_action('admin_print_scripts-'. $page_hook_suffix, array($this, 'agm_add_color_picker'));
         /*
-         * add help drop down menu on option page
+         * add help drop down menu on option page  wp v3.3+
          */
-        add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
+        if ( version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
+            add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu' ) );
+        }
+
     }
 
     function agm_plugin_actions_links($links, $file)
@@ -150,7 +154,7 @@ class Ank_Google_Map
                 'id'		=> 'agm-overview',
                 'title'		=> 'Overview',
                 'content'	=>'<p><strong>Thanks for using "Ank Google Map"</strong><br>'.
-                'This plugin allows you to put a custom Google Map on your website. Just configure options below and'.
+                'This plugin allows you to put a custom Google Map on your website. Just configure options below and '.
                 'save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
                 </p>'
 
@@ -178,7 +182,7 @@ class Ank_Google_Map
                 'title'		=> 'More',
                 'content'	=>'<p><strong>Need more information ?</strong><br>'.
                  'A brief FAQ is available on plugin&apos;s official website.'.
-                 'Click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>'.
+                 'OR click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>'.
                  'You can report a bug at plugin&apos;s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.'.
                  'I will try to reply as soon as possible. </p>'
 
@@ -217,11 +221,12 @@ class Ank_Google_Map
             $current.='type="checkbox" name="agm_load_editor" id="agm_load_editor">Load Text Editor</label> ';
             $current.='<label for="agm_load_media"><input ';
             $current.=($options['te_meta_2']==='1')?' checked ':'';
-            $current.='type="checkbox" name="agm_load_media" id="agm_load_media">Show Media Uploader</label>';
+            $current.='type="checkbox" name="agm_load_media" id="agm_load_media">Show Media Uploader*</label>';
             $current.='<label for="agm_load_teeny"><input ';
             $current.=($options['te_meta_3']==='1')?' checked ':'';
-            $current.='type="checkbox" name="agm_load_teeny" id="agm_load_teeny">Load teeny Editor</label> ';
-            $current.='<span id="agm_meta_ajax_result">&#10004; Settings has been saved, Reload page to see changes.</span>';
+            $current.='type="checkbox" name="agm_load_teeny" id="agm_load_teeny">Load teeny Editor*</label> ';
+            $current.='<span id="agm_meta_ajax_result">&#10004; Settings has been saved, <a href="#" onclick="window.location.reload()">Reload</a> page to see changes.</span>';
+            $current.='<br><i>* Needs 1st option to be enabled.</i>';
             $current.='<input type="hidden" name="_wpnonce-'.AGM_PLUGIN_SLUG.'" value="'.wp_create_nonce('save_settings-'.AGM_PLUGIN_SLUG).'" />';
             $current.='</div>';
         }
@@ -280,8 +285,8 @@ class Ank_Google_Map
             'div_width_unit' => 2,
             'div_height' => '300',
             'div_border_color' => '#ccc',
-            'map_Lat' => '29.6969365',
-            'map_Lng' => '77.6766793',
+            'map_Lat' => '29.453182059948965',
+            'map_Lng' => '77.7068350911577',
             'map_zoom' => 2,
             'map_control_1' => '0',
             'map_control_2' => '0',
@@ -544,5 +549,7 @@ if ( class_exists( 'Ank_Google_Map' ) ) {
  * use [ank_google_map] short code (default)
  * OR
  * use [ank_google_map css_fix=0] to disable writing of css-fixes
+ * OR
+ * use [ank_google_map js_order=0] to load map's js before other js files
  */
 ?>
