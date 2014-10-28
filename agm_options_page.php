@@ -105,7 +105,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     #agm_zoom_pre{color: #2290d1 }
     .gmnoprint img { max-width: none; }
     #agm_auto_holder{ position: relative; }
-    #agm_auto_holder:before{ transform:rotate(720deg);position: absolute; top: -3px; left: 3px; color: #02768c; font-size: 22px; }
+    #agm_auto_holder:before{ transform:rotate(720deg);position: absolute; top: -2px; left: 3px; color: #02768c; font-size: 22px; }
     #agm_auto_holder input[type=text]{ padding-left: 25px; width: 99%;font-weight: bolder; }
     .hndle{ cursor: default!important; background: #F5F5F5; border-bottom-color:#DFDFDF!important; }
     div.warning{border-left-color: #ffd504 !important; }
@@ -363,7 +363,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
         $('#agm_color_field').wpColorPicker();
     <?php } ?>
 
-        $('#screen-options-wrap div#agm_plugin_settings').find('input').change(function(){
+        $('#screen-options-wrap div.metabox-prefs').find('input').change(function(){
             var panel = $(this).parents('div.metabox-prefs');
             var params = panel.find('input').serialize();
             params = params + '&action=save_settings-' + panel.attr('data-id');
