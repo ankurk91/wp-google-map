@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors:ank91
@@ -156,6 +156,9 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.5.5 =
+* Bug Fix - Screen options were not saving settings
 
 = 1.5.4 =
 * Using WP inbuilt text editor to edit info window text.
