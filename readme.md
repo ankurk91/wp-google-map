@@ -115,6 +115,10 @@ Choose a border color that match the map canvas surroundings.
 
 Use this short-code `[ank_google_map css_fix=0]`
 
+**How do i load Map's js before any other js code**
+
+Use this short-code `[ank_google_map js_order=0]`
+
 **Did you test it with old version of WordPress**
 
 No, tested with v4.0 only. So i recommend you to upgrade to latest WordPress today.
