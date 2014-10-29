@@ -65,17 +65,28 @@ if (isset($_POST['save_agm_form']))
      */
     $agm_options['info_text'] = balanceTags(wp_kses_post($_POST['info_text']),true);
 
-    if(strlen($agm_options['info_text'])<=1000){
-        /*
-        * Save posted data back to database
-        */
-    update_option('ank_google_map', $agm_options);
-    echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
+      /*
+       * @Regx => http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
+       */
+     if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $agm_options['map_Lat']))
+     {
+         echo "<div class='error'>Nothing saved, Invalid Latitude Value.</div>";
 
-    }else{
-        echo "<div class='error'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: ".strlen($agm_options['info_text'])."</div>";
+     }
+     elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $agm_options['map_Lng']))
+     {
+         echo "<div class='error'>Nothing saved, Invalid Longitude Value. </div>";
 
-    }
+     }
+     elseif (strlen($agm_options['info_text']) <= 1000) {
+         /* Save posted data back to database */
+         update_option('ank_google_map', $agm_options);
+         echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
+
+     } else {
+         echo "<div class='error'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
+
+     }
     /*
      * Detect if cache is enabled and warn user to flush cache
      */
@@ -98,20 +109,19 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     input[type=range], select { cursor: pointer }
     .agm_tbl { width: 100%; border: none; border-collapse: collapse}
     .agm_tbl td{padding: 2px}
-    .agm_tbl tr:first-child td:first-child { width: 15%; }
-    .agm_tbl tr td:first-child { font-weight: bold; padding-left: 2% }
+    .agm_tbl tr td:first-child { width: 15%;font-weight: bold; padding-left: 2% }
     #agm_map_canvas { height: 250px; width: 99%; border: 1px solid #bcbcbc;}
     option[selected]{color: #0076b3 }
     #agm_zoom_pre{color: #2290d1 }
     .gmnoprint img { max-width: none; }
     #agm_auto_holder{ position: relative; }
-    #agm_auto_holder:before{ transform:rotate(720deg);position: absolute; top: -2px; left: 3px; color: #02768c; font-size: 22px; }
+    #agm_auto_holder:before{ transform:rotate(720deg);position: absolute; top: -3px; left: 3px; color: #02768c; font-size: 22px; }
     #agm_auto_holder input[type=text]{ padding-left: 25px; width: 99%;font-weight: bolder; }
     .hndle{ cursor: default!important; background: #F5F5F5; border-bottom-color:#DFDFDF!important; }
     div.warning{border-left-color: #ffd504 !important; }
-    .agm_notice{margin:0;padding:5px;font-size:12px}
+    p.agm_notice{margin:0;padding:5px;font-size:12px}
     #agm_meta_ajax_result{display: none;font-weight: bold}
-    @media screen and (max-width:782px){.agm_notice{display: none}}
+    @media screen and (max-width:782px){p.agm_notice{display: none}}
 </style>
 <div class="wrap">
     <h2 style="line-height: 1"><i class="dashicons-before dashicons-admin-generic" style="color: #005299"> </i>Ank Google Map Settings</h2>
@@ -150,7 +160,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             <table class="agm_tbl">
             <tr>
                 <td>Latitude:</td>
-                <td><input id="agm_lat" pattern="[0-9\-.]+" title="Only Numbers [0-9], dash[-] and dot[.]" placeholder='eg 33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($agm_options['map_Lat']); ?>"></td>
+                <td><input id="agm_lat" pattern="-?\d{1,3}\.\d+" title="Latitude" placeholder='33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($agm_options['map_Lat']); ?>"></td>
                 <td rowspan="6">
                     <span class="dashicons-before dashicons-search" id="agm_auto_holder"><input id="agm_autocomplete" type="text" placeholder="Enter an address here to get instant results" maxlength="200"></span>
                     <div id="agm_map_canvas"></div>
@@ -160,7 +170,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             </tr>
             <tr>
                 <td>Longitude:</td>
-                <td><input id="agm_lng" pattern="[0-9\-.]+" title="Only Numbers [0-9], dash[-] and dot[.]" placeholder='eg 77.456789' type="text" required name="map_Lng" value="<?php echo esc_attr($agm_options['map_Lng']); ?>"></td>
+                <td><input id="agm_lng" pattern="-?\d{1,3}\.\d+" title="Longitude" placeholder='77.456789' type="text" required name="map_Lng" value="<?php echo esc_attr($agm_options['map_Lng']); ?>"></td>
             </tr>
             <tr>
                 <td>Zoom Level: <b><i id="agm_zoom_pre"><?php echo esc_attr($agm_options['map_zoom']); ?></i></b></td>
@@ -177,7 +187,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
             </tr>
             <tr>
                 <td>Language Code:</td>
-                <td><input placeholder="empty=auto" pattern="([A-Za-z\-]){2,5}" title="Valid Language Code Like: en OR en-US" type="text" name="map_lang_code" value="<?php echo esc_attr($agm_options['map_lang_code']); ?>">
+                <td><input placeholder="empty=auto" pattern="([A-Za-z\-]){2,5}" title="Language Code Like: en OR en-US" type="text" name="map_lang_code" value="<?php echo esc_attr($agm_options['map_lang_code']); ?>">
                     <a title="Language Code List" href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&amp;gid=1" target="_blank" style="text-decoration: none;"><i class="dashicons-before dashicons-editor-help"></i></a></td>
             </tr>
             <tr>
@@ -266,14 +276,15 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
         <?php wp_nonce_field('agm_form','_wpnonce-agm_form'); ?>
     </form>
      </div><!--post stuff ends-->
-    Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> | <a target="_blank" href="http://ank91.github.io/ank-google-map">View on GitHub</a> | <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
-
+    Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
+    <a target="_blank" href="http://ank91.github.io/ank-google-map">View on GitHub</a> |
+    <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
+    <!--dev info ends-->
     <?php if(isset($_GET['debug'])){
         echo '<hr><p><h5>Showing Debugging Info:</h5>';
         var_dump($agm_options);
         echo '</p><hr>';
     }?>
-
 </div><!-- end wrap-->
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script type="text/javascript">window.jQuery || alert('Could not load jQuery.\nThis page needs jQuery to work.')</script>
@@ -333,7 +344,6 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     }/* main function ends here*/
     /*
      * Prevent form submission when user press enter key in auto-complete
-     *
      */
     jQuery("#agm_autocomplete").keydown(function (e) {
         if (e.which == 13 ||e.which==13) {
@@ -342,9 +352,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
         }
     });
 
-    /*
-    *Prepare to load google map
-    */
+    /* Prepare to load google map */
     var agm_map = $ID("agm_map_canvas");
     if (typeof google == "object") {
         google.maps.event.addDomListener(window, "load", Load_agm_Map)
@@ -360,10 +368,9 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
       * @Docs and options: https://github.com/automattic/Iris
       */
      ?>
-        $('#agm_color_field').wpColorPicker();
+     $('#agm_color_field').wpColorPicker();
     <?php } ?>
-
-        $('#screen-options-wrap div.metabox-prefs').find('input').change(function(){
+        $('#screen-options-wrap').find('div.metabox-prefs').find('input').change(function(){
             var panel = $(this).parents('div.metabox-prefs');
             var params = panel.find('input').serialize();
             params = params + '&action=save_settings-' + panel.attr('data-id');
