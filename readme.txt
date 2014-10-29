@@ -158,7 +158,7 @@ It just a matter of a second. It will cost not more than 15 KB.
 == Changelog ==
 
 = 1.5.5 =
-* Bug Fix - Screen options were not saving settings
+* Bug Fix -- Screen options were not saving settings
 
 = 1.5.4 =
 * Using WP inbuilt text editor to edit info window text.
