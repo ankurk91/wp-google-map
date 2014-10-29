@@ -407,7 +407,7 @@ class Ank_Google_Map
         <script type="text/javascript" src="//maps.googleapis.com/maps/api/js<?php echo $lang_code ?>"></script>
         <?php
         /*
-        * using ob_start to get buffer at last
+        * using ob_start to store content in buffer
         * Note: Don't use single line comment in java script portion
         */
         ob_start();
