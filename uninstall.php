@@ -15,3 +15,4 @@ if( !defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
 if(get_option( 'ank_google_map' ) ) {
     delete_option('ank_google_map');
 }
+
