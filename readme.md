@@ -124,13 +124,13 @@ Use this short-code `[ank_google_map css_fix=0]`
 Each time you save map settings , this plugin write processed js code to 'agm-user-js.js' file.
 There may be some chance that plugin unable to create/write this file.This file is essential and map won't work without this file.
 
-###Possible reason are ->
+######Possible reason are :
 
 * Not enough permission to write a file.
 * Plugin malfunction (my fault).
 * You hosting provider has disabled File Handling Function via php.ini (rare).
  
-###How to resolve ->
+######How to resolve :
 
 * Login to your website via your FTP client software. (eg: FileZilla)
   and change file permission of plugins folder.
