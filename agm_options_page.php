@@ -8,7 +8,7 @@
 if (!defined('ABSPATH')) exit;
 
 if (!class_exists('Ank_Google_Map')) {
-    wp_die(__('This file can not be run alone. This file is the part of ank-google-map plugin.'));
+    wp_die(__('This file can not be run alone. This file is the part of <b>ank-google-map</b> plugin.'));
 }
 
 if (!current_user_can('manage_options')) {
@@ -32,6 +32,7 @@ if (isset($_POST['save_agm_form']))
     /*
      * Begin sanitize inputs
      */
+     $agm_options['plugin_ver'] = esc_attr(AGM_PLUGIN_VERSION);
     $agm_options['div_width'] = sanitize_text_field($_POST['div_width']);
     $agm_options['div_height'] = sanitize_text_field($_POST['div_height']);
     $agm_options['div_width_unit'] = intval(sanitize_text_field($_POST['div_width_unit']));
@@ -59,6 +60,7 @@ if (isset($_POST['save_agm_form']))
     $agm_options['info_on']=(isset($_POST['info_on']))?'1':'0';
     $agm_options['info_state']=(isset($_POST['info_state']))?'1':'0';
 
+
     /*
      * Lets allow some html in info window
      * This is same as like we make a new post
@@ -78,22 +80,24 @@ if (isset($_POST['save_agm_form']))
          echo "<div class='error'>Nothing saved, Invalid Longitude Value. </div>";
 
      }
-     elseif (strlen($agm_options['info_text']) <= 1000) {
+     elseif (strlen($agm_options['info_text']) > 1000) {
+         echo "<div class='error'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
+     } else {
          /* Save posted data back to database */
          update_option('ank_google_map', $agm_options);
          echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
-
-     } else {
-         echo "<div class='error'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
-
+         /*create/update a file that contains js code*/
+         if($this->agm_create_js()===false){
+             echo "<div class='error'>Unable to create JS file in plugin directory. Please make this plugin's folder writable.</div>";
+         }
      }
     /*
      * Detect if cache is enabled and warn user to flush cache
      */
    if(WP_CACHE){
-       echo "<div class='error warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect any settings you saved here.</div>";
+       echo "<div class='error warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
    }
-}
+}/*if isset post ends*/
 /*
  *
  * Display notice if current wp installation does not support color picker
@@ -120,8 +124,8 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     .hndle{ cursor: default!important; background: #F5F5F5; border-bottom-color:#DFDFDF!important; }
     div.warning{border-left-color: #ffd504 !important; }
     p.agm_notice{margin:0;padding:5px;font-size:12px}
-    #agm_meta_ajax_result{display: none;font-weight: bold}
     @media screen and (max-width:782px){p.agm_notice{display: none}}
+    #agm_meta_ajax_result{display: none;font-weight: bold}
 </style>
 <div class="wrap">
     <h2 style="line-height: 1"><i class="dashicons-before dashicons-admin-generic" style="color: #005299"> </i>Ank Google Map Settings</h2>
@@ -129,8 +133,7 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
     <form action="" method="post">
         <div class="postbox">
         <h3 class="hndle"><i class="dashicons-before dashicons-admin-appearance" style="color: #02af00"> </i><span>Map Canvas Options</span></h3>
-        <div class="inside">
-        <table class="agm_tbl">
+        <table class="agm_tbl inside">
             <tr>
                 <td>Map Canvas Width:</td>
                 <td><input required type="number" min="1" name="div_width" value="<?php echo esc_attr($agm_options['div_width']); ?>">
@@ -151,13 +154,11 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                 <td><input placeholder="Color" type="text" id="agm_color_field" name="div_border_color" value="<?php echo esc_attr($agm_options['div_border_color']); ?>"><i style="vertical-align: top">Border will be 1px solid.</i></td>
             </tr>
         </table>
-        </div>
         </div><!-- post box ends -->
         <!--- tab2 start-->
         <div class="postbox">
         <h3 class="hndle"><i class="dashicons-before dashicons-admin-settings" style="color: #458eb3"> </i>Configure Map Options</h3>
-        <div class="inside">
-            <table class="agm_tbl">
+          <table class="agm_tbl inside">
             <tr>
                 <td>Latitude:</td>
                 <td><input id="agm_lat" pattern="-?\d{1,3}\.\d+" title="Latitude" placeholder='33.123333' type="text" required name="map_Lat" value="<?php echo esc_attr($agm_options['map_Lat']); ?>"></td>
@@ -201,13 +202,11 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                     </select></td>
             </tr>
         </table>
-        </div>
-        </div><!-- post box ends -->
+      </div><!-- post box ends -->
         <!--- tab3 start-->
         <div class="postbox">
         <h3 class="hndle"><i class="dashicons-before dashicons-location" style="color: #dc1515"> </i>Marker Options</h3>
-        <div class="inside">
-        <table class="agm_tbl">
+        <table class="agm_tbl inside">
             <tr>
                 <td>Enable marker:</td>
                 <td><input <?php if (esc_attr($agm_options['marker_on']) === '1') echo 'checked' ?> type="checkbox" name="marker_on" id="agm_mark_on">
@@ -243,13 +242,11 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                     </select></td>
             </tr>
         </table>
-        </div>
         </div><!-- post box ends -->
         <!-- tab4 start-->
         <div class="postbox">
         <h3 class="hndle"><i class="dashicons-before dashicons-admin-comments" style="color: #988ccc"> </i>Info Window Options</h3>
-        <div class="inside">
-        <table class="agm_tbl">
+        <table class="agm_tbl inside">
             <tr>
                 <td>Enable Info Window:</td>
                 <td><input <?php if (esc_attr($agm_options['info_on']) === '1') echo 'checked' ?> type="checkbox" name="info_on" id="agm_info_on">
@@ -271,15 +268,14 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
                 <td colspan="2" style="text-align: center;"><p><button class="button button-primary" type="submit" name="save_agm_form" value="Save »"><i class="dashicons-before dashicons-upload"> </i>Save Map Settings </button></p></td>
             </tr>
         </table>
-        </div>
         </div><!-- post box ends -->
         <?php wp_nonce_field('agm_form','_wpnonce-agm_form'); ?>
     </form>
-     </div><!--post stuff ends-->
-    Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
-    <a target="_blank" href="http://ank91.github.io/ank-google-map">View on GitHub</a> |
-    <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
-    <!--dev info ends-->
+</div><!--post stuff ends-->
+Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
+<a target="_blank" href="http://ank91.github.io/ank-google-map">View on GitHub</a> |
+<a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
+<!--dev info ends-->
     <?php if(isset($_GET['debug'])){
         echo '<hr><p><h5>Showing Debugging Info:</h5>';
         var_dump($agm_options);
@@ -289,105 +285,14 @@ if(version_compare($GLOBALS['wp_version'],'3.5','<')){
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places"></script>
 <script type="text/javascript">window.jQuery || alert('Could not load jQuery.\nThis page needs jQuery to work.')</script>
 <script type="text/javascript">
-    function $ID(a){
-        return document.querySelector('#'+a)||document.getElementById(a);
-    }
-    function Load_agm_Map() {
-        var center = new google.maps.LatLng(<?php echo esc_attr($agm_options['map_Lat']).','.esc_attr($agm_options['map_Lng']) ?>);
-        var opt = { overviewMapControl: true, center: center,streetViewControl: false, zoom: <?php echo esc_attr($agm_options['map_zoom']) ?>, mapTypeId: google.maps.MapTypeId.ROADMAP};
-        var map = new google.maps.Map(agm_map, opt);
-
-        var agm_lat = jQuery('#agm_lat'),
-            agm_lng = jQuery('#agm_lng'),
-            agm_zoom = jQuery('#agm_zoom'),
-            agm_zoom_pre = jQuery('#agm_zoom_pre');
-        var marker = new google.maps.Marker({ draggable: true, position: center, map: map, title: 'Current Position' });
-
-        google.maps.event.addListener(map, 'rightclick', function (event) {
-            agm_lat.val(event.latLng.lat());
-            agm_lng.val(event.latLng.lng());
-            marker.setTitle('Selected Position');
-            marker.setPosition(event.latLng);
-        });
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            agm_lat.val(event.latLng.lat());
-            agm_lng.val(event.latLng.lng());
-        });
-        google.maps.event.addListener(map, 'zoom_changed', function () {
-            agm_zoom.val(map.getZoom());
-            agm_zoom_pre.html(map.getZoom());
-        });
-        google.maps.event.addListener(map, 'center_changed', function () {
-            var location = map.getCenter();
-            agm_lat.val(location.lat());
-            agm_lng.val(location.lng());
-        });
-        /*zoom slider control*/
-        agm_zoom.on('input click',function () {
-            agm_zoom_pre.html(this.value);
-            map.setZoom(parseInt(agm_zoom.val()));
-        });
-        /*
-         *Auto-complete feature
-         */
-        var map_auto = new google.maps.places.Autocomplete($ID('agm_autocomplete'));
-        google.maps.event.addListener(map_auto, 'place_changed', function(){
-            var place = map_auto.getPlace();
-            if (place.geometry) {
-                map.panTo(place.geometry.location);
-                marker.setPosition(place.geometry.location);
-                map.setZoom(15);
-                marker.setTitle(place.formatted_address);
-            }
-        });
-
-    }/* main function ends here*/
-    /*
-     * Prevent form submission when user press enter key in auto-complete
-     */
-    jQuery("#agm_autocomplete").keydown(function (e) {
-        if (e.which == 13 ||e.which==13) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    });
-
-    /* Prepare to load google map */
-    var agm_map = $ID("agm_map_canvas");
-    if (typeof google == "object") {
-        google.maps.event.addDomListener(window, "load", Load_agm_Map)
-    }
-    else {
-        agm_map.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.</h4>'
-    }
-
-    jQuery(function ($) {
-      <?php if(version_compare($GLOBALS['wp_version'],3.5)>=0){
-     /*
-      * WP v3.5+ inbuilt Color Picker
-      * @Docs and options: https://github.com/automattic/Iris
-      */
-     ?>
-     $('#agm_color_field').wpColorPicker();
-    <?php } ?>
-        $('#screen-options-wrap').find('div.metabox-prefs').find('input').change(function(){
-            var panel = $(this).parents('div.metabox-prefs');
-            var params = panel.find('input').serialize();
-            params = params + '&action=save_settings-' + panel.attr('data-id');
-            var results= $("#agm_meta_ajax_result");
-            results.stop(true,true).fadeOut(0);
-            $.post(
-                'admin-ajax.php',
-                params,
-                function(d,s){
-                    if(d=='1'&&s=='success'){
-                        results.fadeIn(function(){
-                            results.delay('10000').fadeOut(0);
-                        });
-                    }
-                }
-            );
-        });
-    });
+    /* <![CDATA[ */
+    var agm_js_options = {
+        map_Lat: "<?php echo esc_attr($agm_options['map_Lat']) ?>",
+        map_Lng: "<?php echo esc_attr($agm_options['map_Lng']) ?>",
+        map_zoom: <?php echo esc_attr($agm_options['map_zoom']) ?>,
+        color_picker: <?php echo (version_compare($GLOBALS['wp_version'],3.5)>=0)?"1":"0"?>
+    };
+    /* ]]> */
 </script>
+<script type="text/javascript" src="<?php echo plugins_url('agm-admin-js.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
 <!--agm options page ends here -->
