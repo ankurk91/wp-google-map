@@ -20,7 +20,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 - Install the plugin via WordPress interface.
 - Activate the plugin when asked
 - Configure Map options from Settings->Ank Google Map
-- Paste `[ank-google-map`] shortcode in your pages
+- Paste `[ank_google_map]` shortcode in your pages
 
 - - -
 ## Requirements
@@ -51,21 +51,24 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
 It uses WP dash-icons in Plugin Options Page.
-It does not create additional tables in your database, uses inbuilt wp_options table.
+It uses WP text editor on Plugin Options Page.
+It does not create additional tables in your database, uses inbuilt 'wp_options' table.
+The whole package is about 60 kb. (~15 kb zipped).
 
 **What do you mean by Non Bloated**
 
 There are many of Map plugins in plugin directory, but most of them not written well.
 Means they put lots of java script (uncompressed) code on every page of your website.
-They also loads jquery file before them which effect your page speed.
-This plugin will put its code on the page where it was called only.
-It will write compressed java script code, and does not depends on external js library like:jQuery.
+They also loads jquery file before them which effects your page speed.
+This plugin will enqueue its js files on the required page only.
+It will minify all java script code before serving to users.
+It does not depends on external js library like: jQuery.
 
 
 **Options page does not work well :(**
 
 You must have modern browser to configure the map option.
-Old browsers will not work well.
+Old browsers may not work well.
 
 **Color picker could not load :(**
 
@@ -115,9 +118,18 @@ Choose a border color that match the map canvas surroundings.
 
 Use this short-code `[ank_google_map css_fix=0]`
 
-**How do i load Map's js before any other js code**
 
-Use this short-code `[ank_google_map js_order=0]`
+**Error: JS file could be created in plugin folder.**
+
+Each time you save map settings , this plugin write processed js code to 'agm-user-js.js' file.
+There may be some chance that plugin unable to create/write this file.This file is essential and map won't work without this file.
+Possible reason are ->
+* Not enough permission to write a file.
+* Plugin malfunction (my fault).
+* You hosting provider has disabled File Handling Function via php.ini (rare).
+How to resolve ->
+* Login to your website via your FTP client software. (eg: FileZilla)
+  and change file permission of plugins folder.
 
 **Did you test it with old version of WordPress**
 
@@ -142,9 +154,10 @@ Google Map API V3 does not need an API Key.
 
 **Future Plans ?**
 
-* Localization for Option Page.
+* I18n for Option Page.
 * More security approaches.
 * More options.
+* Improved upgrade paths.
 
 - - -
 ## Change Log
