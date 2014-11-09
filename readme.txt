@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors:ank91
@@ -51,8 +51,9 @@ The whole package is about 60 kb. (~15 kb zipped).
 There are many of Map plugins in plugin directory, but most of them not written well.
 Means they put lots of java script (uncompressed) code on every page of your website.
 They also loads jquery file before them which effects your page speed.
-This plugin will put its code on the required page only.
-It will write compressed java script code, and does not depends on external js library like: jQuery.
+This plugin will enqueue its js files on the required page only.
+It will minify all java script code before serving to users.
+It does not depends on external js library like: jQuery.
 
 = What is the short-code for this plugin =
 
@@ -75,8 +76,8 @@ Add this line to your theme's functions.php
 
 = Changes does not reflect after saving settings ? =
 
-Are you using some Cache/Performance plugin ?
-Flush your WP cache and refresh target page.
+Are you using some Cache/Performance plugin (eg:WP Super Cache/W3 Total Cache) ?
+Then flush your WP cache and refresh target page.
 
 = Where does it store settings and options ? =
 
@@ -110,10 +111,17 @@ Leave the color field empty and it will not be applied.
 
 Use this short-code `[ank_google_map css_fix=0]`
 
-= How do i load Map's js before any other js code =
+= Error: JS file could be created in plugin folder. =
 
-Use this short-code `[ank_google_map js_order=0]`
-
+Each time you save map settings , this plugin write processed js code to 'agm-user-js.js' file.
+There may be some chance that plugin unable to create/write this file.This file is essential and map won't work without this file.
+Possible reason are ->
+* Not enough permission to write a file.
+* Plugin malfunction (my fault).
+* You hosting provider has disabled File Handling Function via php.ini (rare).
+How to resolve ->
+* Login to your website via your FTP client software. (eg: FileZilla)
+  and change file permission of plugins folder.
 
 = Did you test it with old version of WordPress ? =
 
@@ -138,14 +146,15 @@ Google Map API V3 does not need an API Key.
 
 = I found some grammar mistakes in plugin docs/page =
 
-See, i have no time to read docs, but i corrects them whenever i find one.
+See, developers have no time to read docs, but i corrects them whenever i find one.
 And, I am not fluid with english language also.
 
 = Future Plans ? =
 
-* Localization for Option Page.
+* I18n for Option Page.
 * More security approaches.
 * More options.
+* Improved upgrade paths.
 
 == Upgrade Notice ==
 
@@ -157,8 +166,16 @@ It just a matter of a second. It will cost not more than 15 KB.
 
 == Changelog ==
 
+= 1.5.6 =
+* Add Plugin version to database for future use.
+* Java Script Localization for options page.
+* Store options page JS code to a separate file. (allow browsers to cache this file)
+* Now we enqueue our main JS file on target page. (allow browsers to cache this file)
+* JS priority parameter has been removed from short-code.
+* Code optimization and many other improvements.
+
 = 1.5.5 =
-* Bug Fix -- Screen options were not saving settings
+* Bug Fix - Screen options were not saving settings
 
 = 1.5.4 =
 * Using WP inbuilt text editor to edit info window text.
