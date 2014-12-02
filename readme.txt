@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.0
-Stable tag: 1.5.6
+Stable tag: 1.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors:ank91
@@ -41,8 +41,8 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
-It uses WP dash-icons in Plugin Options Page.
-It uses WP text editor on Plugin Options Page.
+It uses inbuilt WP dash-icons in Plugin Options Page.
+It uses inbuilt WP text editor on Plugin Options Page.
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.
 The whole package is about 60 kb. (~15 kb zipped).
 
@@ -101,7 +101,7 @@ If you don't specify language code then google will try to load the language req
 
 = How to make it responsive =
 
-Set Map Canvas Width to 100 %.
+Set Map Canvas Width to 100 %. Map will auto center upon resize.
 
 = I don't want border on map canvas =
 
@@ -115,11 +115,11 @@ Use this short-code `[ank_google_map css_fix=0]`
 
 Each time you save map settings , this plugin write processed js code to 'agm-user-js.js' file.
 There may be some chance that plugin unable to create/write this file.This file is essential and map won't work without this file.
-Possible reason are ->
+* Possible reason are ->
 * Not enough permission to write a file.
 * Plugin malfunction (my fault).
 * You hosting provider has disabled File Handling Function via php.ini (rare).
-How to resolve ->
+* How to resolve ->
 * Login to your website via your FTP client software. (eg: FileZilla)
   and change file permission of plugins folder.
 
@@ -135,10 +135,6 @@ No, I love it as like you. But I prefer faster websites.
 
 Yes you can. But you can't make money by selling this. You can ask for donation.
 
-= Any plan to support more than one map. =
-
-Only if i got some time to code.
-
 = Is Google Map API is free. =
 
 Until we break its terms and conditions.
@@ -152,8 +148,7 @@ And, I am not fluid with english language also.
 = Future Plans ? =
 
 * I18n for Option Page.
-* More security approaches.
-* More options.
+* Multiple Maps with Multiple Markers.
 * Improved upgrade paths.
 
 == Upgrade Notice ==
@@ -165,6 +160,11 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.5.7 =
+* Option page has it own separate class  (easy to manage code)
+* Few More Improvements
+* 'agm-user-js.js' not longer packed with plugin, will be created when needed
 
 = 1.5.6 =
 * Add Plugin version to database for future use.
