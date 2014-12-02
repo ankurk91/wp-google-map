@@ -2,8 +2,8 @@ function $By_ID(a){
     return document.querySelector('#'+a)||document.getElementById(a);
 }
 function Load_agm_Map() {
-    var center = new google.maps.LatLng(agm_js_options.map_Lat,agm_js_options.map_Lng);
-    var opt = { overviewMapControl: true, center: center,streetViewControl: false, zoom: agm_js_options.map_zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
+    var center = new google.maps.LatLng(agm_opt.map_Lat,agm_opt.map_Lng);
+    var opt = { overviewMapControl: true, center: center,streetViewControl: false, zoom: agm_opt.map_zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
     var map = new google.maps.Map(agm_map, opt);
 
     var agm_lat = jQuery('#agm_lat'),
@@ -36,9 +36,7 @@ function Load_agm_Map() {
         agm_zoom_pre.html(this.value);
         map.setZoom(parseInt(agm_zoom.val()));
     });
-    /*
-     *Auto-complete feature
-     */
+    /* Auto-complete feature */
     var map_auto = new google.maps.places.Autocomplete($By_ID('agm_autocomplete'));
     google.maps.event.addListener(map_auto, 'place_changed', function(){
         var place = map_auto.getPlace();
@@ -51,15 +49,6 @@ function Load_agm_Map() {
     });
 
 }/* main function ends here*/
-/*
- * Prevent form submission when user press enter key in auto-complete
- */
-jQuery("#agm_autocomplete").keydown(function (e) {
-    if (e.which == 13 ||e.which==13) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-});
 
 /* Prepare to load google map */
 var agm_map = $By_ID("agm_map_canvas");
@@ -71,14 +60,26 @@ else {
 }
 
 jQuery(function ($) {
-    if (agm_js_options.color_picker) { $('#agm_color_field').wpColorPicker(); }
+    /* Prevent form submission when user press enter key in auto-complete */
+    $("#agm_autocomplete").keydown(function (e) {
+        if (e.which == 13 ||e.which==13) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    });
+    $("#agm_info_on").click(function(){
+        if($(this).is(":checked"))
+      $(this).next('label').find('i:not(:visible)').fadeIn();
+    });
+    /*check if color picker is available*/
+    if (agm_opt.color_picker) { $('#agm_color_field').wpColorPicker(); }
     /*save screen options*/
     $('#screen-options-wrap').find('div.agm_meta_box').find('input').change(function(){
         var params = $(this).parents('div.agm_meta_box').find('input').serialize();
         var results= $("#agm_meta_ajax_result");
         results.stop(true,true).fadeOut(0);
         $.ajax({
-            url:'admin-ajax.php',
+            url:agm_opt.ajax_url,
             data:params,
             success:function(d,s){
                 if(d=='1'&&s=='success'){
