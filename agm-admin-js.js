@@ -56,7 +56,7 @@ if (typeof google == "object") {
     google.maps.event.addDomListener(window, "load", Load_agm_Map)
 }
 else {
-    agm_map.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.</h4>'
+    agm_map.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
 }
 
 jQuery(function ($) {
@@ -96,7 +96,7 @@ jQuery(function ($) {
                       err="Connection Timeout ! Try Again..";
                    }
                     else {
-                      err="Unknown error occured.";
+                      err="Unknown error.";
                    }
                 }
                 results.html('&#10008; '+err).show();
