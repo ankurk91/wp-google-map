@@ -3,7 +3,7 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.5.7
+Version: 1.5.9
 Author: Ankur Kumar
 Author URI: http://ank91.github.io/
 License: GPL2
@@ -17,21 +17,17 @@ if (!defined('ABSPATH')) exit;
 /*check for duplicate class*/
 if (!class_exists( 'Ank_Google_Map' ) ) {
 
-    if(!defined('AGM_PLUGIN_VERSION')){
-        define('AGM_PLUGIN_VERSION','1.5.7');
-    }
-    if(!defined('AGM_PLUGIN_SLUG')){
+        define('AGM_PLUGIN_VERSION','1.5.9');
         define('AGM_PLUGIN_SLUG','agm_plugin_settings');
-    }
-    if(!defined('AGM_AJAX_ACTION')){
         define('AGM_AJAX_ACTION','agm_meta_settings');
-    }
+
 
     class Ank_Google_Map
     {
 
         function __construct()
         {
+            if(is_admin()){
             /*
              * Add settings link to plugin list page
             */
@@ -40,6 +36,7 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
              * Additional link
              */
             add_filter('plugin_row_meta', array($this, 'agm_plugin_meta_links'), 10, 2);
+            }
             /* Save settings if first time */
             if (false == get_option('ank_google_map')) {
                 $this->agm_settings_init();
@@ -108,10 +105,10 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
                 'map_control_3' => '0',
                 'map_control_4' => '0',
                 'map_control_5' => '0',
-                'map_lang_code' => 'en',
+                'map_lang_code' => '',
                 'map_type' => 1,
                 'marker_on' => '1',
-                'marker_title' => 'I am here',
+                'marker_title' => 'We are here',
                 'marker_anim' => 1,
                 'marker_color' => 1,
                 'info_on' => '1',
@@ -166,16 +163,17 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
              * Decide some options here
              */
             $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
-            $b_color=(esc_attr($options["div_border_color"])==='')? '' : 'border:1px solid '.esc_attr($options["div_border_color"]);
+            $b_color=($options["div_border_color"]==='')? '' : 'border:1px solid '.esc_attr($options["div_border_color"]);
             echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]).'px;' . $b_color . '"></div>';
 
         }
 
-        function agm_write_css(){
+        function agm_write_css()
+        {
             /*
              * Special fixes for google map controls.
              * They may appear incorrectly due to theme style
-             */ ?> <style type='text/css'> .gmnoprint img,#agm_map_canvas img { max-width: none; } </style> <?php
+             */ ?><style type='text/css'> .gmnoprint img,#agm_map_canvas img { max-width: none; } </style><?php
         }
 
         function agm_build_js()
@@ -248,7 +246,6 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
                 }, 2000);
             <?php } ?>
         <?php } ?>
-
             var rT;
             google.maps.event.addDomListener(window, 'resize', function () {
             if (rT) {
@@ -266,7 +263,8 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
             google.maps.event.addDomListener(window, "load", Load_agm_Map)
             }
             else {
-            agm_div.innerHTML = '<h4 style="text-align: center">Failed to load Google Map.<br>Please try again.</h4>'
+            agm_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
+            agm_div.style.height="auto";
             }
             }
             <?php
@@ -352,28 +350,23 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
 
     } /*end  class ank_google_map*/
 
-
-
-} /*end if class exists*/
-
-
-/* Include Options Page */
-require(trailingslashit(dirname(__FILE__)) . "agm_options_page.php");
-
-if ( class_exists( 'Ank_Google_Map' ) ) {
     /*Init class */
     if(!isset($Ank_Google_Map_Obj)){
         $Ank_Google_Map_Obj=new Ank_Google_Map();
     }
-}
 
-if ( class_exists( 'Ank_Google_Map_Option_Page' )&&isset($Ank_Google_Map_Obj) ) {
-    /*Init option page class class */
-    if(!isset($Ank_Google_Map_Option_Page_Obj)){
-        $Ank_Google_Map_Option_Page_Obj=new Ank_Google_Map_Option_Page();
-    }
-}
+} /*end if class exists*/
 
+
+    //load only to wp-admin area
+   if (isset($Ank_Google_Map_Obj)&& is_admin() ) {
+       /* Include Options Page */
+       require(trailingslashit(dirname(__FILE__)) . "agm_options_page.php");
+        /*Init option page class class */
+        if(!isset($Ank_Google_Map_Option_Page_Obj)){
+           $Ank_Google_Map_Option_Page_Obj=new Ank_Google_Map_Option_Page();
+       }
+   }
 
 /*
  * use [ank_google_map] short code (default)

@@ -12,7 +12,6 @@ if( !defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
 /*
  * remove the database entry created by this plugin
  */
-if(get_option( 'ank_google_map' ) ) {
+if(get_option( 'ank_google_map' )) {
     delete_option('ank_google_map');
 }
-

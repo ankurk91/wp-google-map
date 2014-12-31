@@ -8,7 +8,7 @@
 if (!defined('ABSPATH')) exit;
 
 if (!class_exists('Ank_Google_Map')) {
-    wp_die(__('This file can not be run alone. This file is the part of <b>ank-google-map</b> plugin.'));
+    wp_die(__('This file can not be run alone. This file is the part of <b>Ank-Google-Map</b> plugin.'));
 }
 
 if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
@@ -131,29 +131,31 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                         if($Ank_Google_Map_Obj->agm_create_js_file()===false){
                             echo "<div class='error'>Unable to create JS file in plugin directory. Please make this plugin's folder writable.</div>";
                         }
+                    }else{
+                        wp_die('test');
                     }
                 }
-                /* Detect if cache is enabled and warn user to flush cache */
-                if(WP_CACHE){
-                    echo "<div class='error warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
-                }
-            }/*if isset post ends*/
-            /*
-             *
-             * Display notice if current wp installation does not support color picker
-             */
 
-            if(version_compare($GLOBALS['wp_version'],'3.5','<')){
-                echo "<div class='error'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
-            }
+            }/*if isset post ends*/
 
             ?>
   <!-- lets print admin-css here -->
-  <style type="text/css"><?php include(__DIR__.'/agm-admin-css.css') ?></style>
+<style type="text/css"><?php include(__DIR__.'/agm-admin-css.css') ?></style>
   <!-- agm options page start -->
-  <div class="wrap">
-                <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt" style="color: #df630d;"> </i>Ank Google Map <i><small>(v<?php echo @AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
-                <div id="poststuff">
+<div class="wrap">
+     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt" style="color: #df630d;"> </i>Ank Google Map <i><small>(v<?php echo @AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
+      <?php
+
+      /* Detect if cache is enabled and warn user to flush cache */
+      if(WP_CACHE&&isset($_POST['save_agm_form'])){
+          echo "<div class='notice notice-warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
+      }
+      /* Display notice if current wp installation does not support color picker */
+      if(version_compare($GLOBALS['wp_version'],'3.5','<')){
+          echo "<div class='notice notice-info'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
+      }
+      ?>
+        <div id="poststuff">
                     <form action="" method="post">
                         <div class="postbox">
                             <h3 class="hndle"><i class="dashicons-before dashicons-admin-appearance" style="color: #02af00"> </i><span>Map Canvas Options</span></h3>
@@ -163,8 +165,8 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                                     <td><input required type="number" min="1" name="div_width" value="<?php echo esc_attr($agm_options['div_width']); ?>">
                                         <select name="div_width_unit">
                                             <optgroup label="Unit"></optgroup>
-                                            <option <?php if (esc_attr($agm_options['div_width_unit']) === '1') echo 'selected' ?> value="1"> px</option>
-                                            <option <?php if (esc_attr($agm_options['div_width_unit']) === '2') echo 'selected' ?> value="2"> %</option>
+                                            <option <?php selected($agm_options['div_width_unit'],'1')  ?> value="1"> px</option>
+                                            <option <?php selected($agm_options['div_width_unit'],'2')  ?> value="2"> %</option>
                                         </select> <i>Choose % (percent) to make it responsive</i></td>
                                 </tr>
                                 <tr>
@@ -197,11 +199,11 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                                 </tr>
                                 <tr>
                                     <td>Disable Controls:</td>
-                                    <td><input <?php if (esc_attr($agm_options['map_control_1']) === '1') echo 'checked' ?> type="checkbox" name="map_control_1" id="map_control_1"><label for="map_control_1">Disable Pan Control</label><br>
-                                        <input <?php if (esc_attr($agm_options['map_control_2']) === '1') echo 'checked' ?> type="checkbox" name="map_control_2" id="map_control_2"><label for="map_control_2">Disable Zoom Control</label><br>
-                                        <input <?php if (esc_attr($agm_options['map_control_3']) === '1') echo 'checked' ?> type="checkbox" name="map_control_3" id="map_control_3"><label for="map_control_3">Disable MapType Control</label><br>
-                                        <input <?php if (esc_attr($agm_options['map_control_4']) === '1') echo 'checked' ?> type="checkbox" name="map_control_4" id="map_control_4"><label for="map_control_4">Disable StreetView Control</label><br>
-                                        <input <?php if (esc_attr($agm_options['map_control_5']) === '1') echo 'checked' ?> type="checkbox" name="map_control_5" id="map_control_5"><label for="map_control_5">Enable OverviewMap Control</label>
+                                    <td><input <?php checked($agm_options['map_control_1'],'1')  ?> type="checkbox" name="map_control_1" id="map_control_1"><label for="map_control_1">Disable Pan Control</label><br>
+                                        <input <?php checked($agm_options['map_control_2'], '1')  ?> type="checkbox" name="map_control_2" id="map_control_2"><label for="map_control_2">Disable Zoom Control</label><br>
+                                        <input <?php checked($agm_options['map_control_3'],'1')  ?> type="checkbox" name="map_control_3" id="map_control_3"><label for="map_control_3">Disable MapType Control</label><br>
+                                        <input <?php checked($agm_options['map_control_4'],'1') ?> type="checkbox" name="map_control_4" id="map_control_4"><label for="map_control_4">Disable StreetView Control</label><br>
+                                        <input <?php checked($agm_options['map_control_5'],'1')  ?> type="checkbox" name="map_control_5" id="map_control_5"><label for="map_control_5">Enable OverviewMap Control</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -213,10 +215,10 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                                     <td>Map Type:</td>
                                     <td><select name="map_type">
                                             <optgroup label="Map type to show"></optgroup>
-                                            <option <?php if (esc_attr($agm_options['map_type']) === '1') echo 'selected' ?> value="1">ROADMAP</option>
-                                            <option <?php if (esc_attr($agm_options['map_type']) === '2') echo 'selected' ?> value="2"> SATELLITE</option>
-                                            <option <?php if (esc_attr($agm_options['map_type']) === '3') echo 'selected' ?> value="3">HYBRID</option>
-                                            <option <?php if (esc_attr($agm_options['map_type']) === '4') echo 'selected' ?> value="4">TERRAIN</option>
+                                            <option <?php selected($agm_options['map_type'],'1')?> value="1">ROADMAP</option>
+                                            <option <?php selected($agm_options['map_type'], '2')?> value="2">SATELLITE</option>
+                                            <option <?php selected($agm_options['map_type'],'3') ?> value="3">HYBRID</option>
+                                            <option <?php selected($agm_options['map_type'], '4') ?> value="4">TERRAIN</option>
                                         </select></td>
                                 </tr>
                             </table>
@@ -236,7 +238,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                             <table class="agm_tbl inside">
                                 <tr>
                                     <td>Enable marker:</td>
-                                    <td><input <?php if (esc_attr($agm_options['marker_on']) === '1') echo 'checked' ?> type="checkbox" name="marker_on" id="agm_mark_on">
+                                    <td><input <?php checked($agm_options['marker_on'], '1') ?> type="checkbox" name="marker_on" id="agm_mark_on">
                                         <label for="agm_mark_on">Check to enable</label></td>
                                 </tr>
                                 <tr>
@@ -248,24 +250,24 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                                     <td>Marker Animation:</td>
                                     <td><select name="marker_anim">
                                             <optgroup label="Marker Animation"></optgroup>
-                                            <option <?php if (esc_attr($agm_options['marker_anim']) === '1') echo 'selected' ?> value="1">NONE</option>
-                                            <option <?php if (esc_attr($agm_options['marker_anim']) === '2') echo 'selected' ?> value="2"> BOUNCE</option>
-                                            <option <?php if (esc_attr($agm_options['marker_anim']) === '3') echo 'selected' ?> value="3">DROP</option>
+                                            <option <?php selected($agm_options['marker_anim'],'1') ?> value="1">NONE</option>
+                                            <option <?php selected($agm_options['marker_anim'], '2') ?> value="2"> BOUNCE</option>
+                                            <option <?php selected($agm_options['marker_anim'], '3') ?> value="3">DROP</option>
                                         </select></td>
                                 </tr>
                                 <tr>
                                     <td>Marker Color:</td>
                                     <td><select name="marker_color">
                                             <optgroup label="Marker Color"></optgroup>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '1') echo 'selected' ?> value="1">Default</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '2') echo 'selected' ?> value="2">Light Red</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '3') echo 'selected' ?> value="3">Black</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '4') echo 'selected' ?> value="4">Gray</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '5') echo 'selected' ?> value="5">Orange</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '6') echo 'selected' ?> value="6">White</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '7') echo 'selected' ?> value="7">Yellow</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '8') echo 'selected' ?> value="8">Purple</option>
-                                            <option <?php if (esc_attr($agm_options['marker_color']) === '9') echo 'selected' ?> value="9">Green</option>
+                                            <option <?php selected($agm_options['marker_color'], '1')  ?> value="1">Default</option>
+                                            <option <?php selected($agm_options['marker_color'],'2')  ?> value="2">Light Red</option>
+                                            <option <?php selected($agm_options['marker_color'],'3')  ?> value="3">Black</option>
+                                            <option <?php selected($agm_options['marker_color'], '4')  ?> value="4">Gray</option>
+                                            <option <?php selected($agm_options['marker_color'], '5') ?> value="5">Orange</option>
+                                            <option <?php selected($agm_options['marker_color'],'6')  ?> value="6">White</option>
+                                            <option <?php selected($agm_options['marker_color'], '7') ?> value="7">Yellow</option>
+                                            <option <?php selected($agm_options['marker_color'], '8') ?> value="8">Purple</option>
+                                            <option <?php selected($agm_options['marker_color'], '9')  ?> value="9">Green</option>
                                         </select></td>
                                 </tr>
                             </table>
@@ -276,12 +278,12 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                             <table class="agm_tbl inside">
                                 <tr>
                                     <td>Enable Info Window:</td>
-                                    <td><input <?php if (esc_attr($agm_options['info_on']) === '1') echo 'checked' ?> type="checkbox" name="info_on" id="agm_info_on">
+                                    <td><input <?php checked($agm_options['info_on'],'1')?> type="checkbox" name="info_on" id="agm_info_on">
                                         <label for="agm_info_on">Check to enable <i style="display: none">(also needs marker to be enabled)</i></label></td>
                                 </tr>
                                 <tr>
                                     <td>Info Window State:</td>
-                                    <td><input <?php if (esc_attr($agm_options['info_state']) === '1') echo 'checked' ?> type="checkbox" name="info_state" id="agm_info_state">
+                                    <td><input <?php checked($agm_options['info_state'],'1')  ?> type="checkbox" name="info_state" id="agm_info_state">
                                         <label for="agm_info_state">Show by default</label></td>
                                 </tr>
                                 <tr>
@@ -299,9 +301,10 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                         <?php wp_nonce_field('agm_form','_wpnonce-agm_form'); ?>
                     </form>
                 </div><!--post stuff ends-->
-  <p class="dev-info">Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
+ <p class="dev-info">Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
  <a target="_blank" href="http://ank91.github.io/ank-google-map">Fork on GitHub</a> |
- <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a></p>
+ <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
+  </p>
   <!--dev info ends-->
    <?php if(isset($_GET['debug'])){
        echo '<hr><p><h5>Showing Debugging Info:</h5>';
@@ -321,8 +324,8 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
          };
          /* ]]> */
 </script>
-<script type="text/javascript">window.jQuery || alert('Could not load jQuery.\nThis page needs jQuery to work.')</script>
-<script type="text/javascript" src="<?php echo plugins_url('agm-admin-js.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
+<script type="text/javascript">window.jQuery || console.log('Could not load jQuery. This plugin page needs jQuery to work.')</script>
+<script type="text/javascript" src="<?php echo plugins_url('agm-admin-js.min.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
 <!--agm options page ends here -->
 <?php
 
@@ -354,7 +357,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                     'title'		=> 'Troubleshoot',
                     'content'	=>'<p><strong>Things to remember</strong><br>'.
                         '<ul>
-                <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after  saving settings here.</li>
+                <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after saving settings here.</li>
                 <li>Only one map is supported at this time. Don&apos;t put short-code twice on the same page.</li>
                 <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>
                 <li>Info Window needs marker to be enabled first.</li>
@@ -438,7 +441,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
             }
         }
 
-        function agm_get_editor($content,$load,$media,$teeny)
+        function agm_get_editor($content='',$load,$media=0,$teeny=0)
         {
             /**
              * decide if browser support editor or not
