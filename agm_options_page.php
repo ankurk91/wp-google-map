@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /*
  * Settings Page for "Ank Google Map" Plugin
  *
@@ -302,7 +302,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                     </form>
                 </div><!--post stuff ends-->
  <p class="dev-info">Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
- <a target="_blank" href="http://ank91.github.io/ank-google-map">Fork on GitHub</a> |
+ <a target="_blank" href="https://github.com/ank91/ank-google-map">Fork on GitHub</a> |
  <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
   </p>
   <!--dev info ends-->
@@ -384,7 +384,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
             $curr_screen->set_help_sidebar(
                 '<p><strong>Quick Links</strong></p>' .
                 '<p><a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">Plugin FAQ</a></p>' .
-                '<p><a href="http://ank91.github.io/ank-google-map" target="_blank">Plugin Home</a></p>'
+                '<p><a href="https://github.com/ank91/ank-google-map" target="_blank">Plugin Home</a></p>'
             );
         }
 
