@@ -1,7 +1,7 @@
 === Ank Google Map ===
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
-Tested up to: 4.1
+Tested up to: 4.2.2
 Stable tag: 1.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,6 @@ One Website , One Map , One Marker.
 Simple and non-bloated WordPress Google Map Plugin.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 
-> Official Site : http://ank91.github.io/ank-google-map
 
 = Some Features =
 * Adjust map canvas height and width.
@@ -131,19 +130,12 @@ No, tested with v4.0+ (latest as of now) only. So i recommend you to upgrade to 
 
 No, I love it as like you. But I prefer faster websites.
 
-= Can i modify this plugin ? =
-
-Yes you can. But you can't make money by selling this. You can ask for donation.
 
 = Is Google Map API is free. =
 
 Until we break its terms and conditions.
 Google Map API V3 does not need an API Key.
 
-= I found some grammar mistakes in plugin docs/page =
-
-See, developers have no time to read docs, but i corrects them whenever i find one.
-And, I am not fluid with english language also.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -156,6 +148,7 @@ This plugin has a problem/bug. (Report it now).
 
 * I18n for Option Page.
 * Multiple Maps with Multiple Markers.
+* Multi-site support
 * Improved upgrade paths.
 
 == Upgrade Notice ==
