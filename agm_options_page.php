@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * Settings Page for "Ank Google Map" Plugin
  *
@@ -109,27 +109,27 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                  */
                 if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $agm_options['map_Lat']))
                 {
-                    echo "<div class='error'>Nothing saved, Invalid Latitude Value.</div>";
+                    echo "<div class='error notice is-dismissible'>Nothing saved, Invalid Latitude Value.</div>";
 
                 }
                 elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $agm_options['map_Lng']))
                 {
-                    echo "<div class='error'>Nothing saved, Invalid Longitude Value. </div>";
+                    echo "<div class='error notice is-dismissible'>Nothing saved, Invalid Longitude Value. </div>";
 
                 } elseif (strlen($agm_options['info_text']) > 1000)
                 {
-                    echo "<div class='error'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
+                    echo "<div class='error notice is-dismissible'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
                 }
                 else {
                     /* Save posted data back to database */
                     update_option('ank_google_map', $agm_options);
-                    echo "<div class='updated'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
+                    echo "<div class='updated notice is-dismissible'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
 
                     /*create/update a file that contains js code*/
                     global $Ank_Google_Map_Obj;
                     if(isset($Ank_Google_Map_Obj)&&is_object($Ank_Google_Map_Obj)){
                         if($Ank_Google_Map_Obj->agm_create_js_file()===false){
-                            echo "<div class='error'>Unable to create JS file in plugin directory. Please make this plugin's folder writable.</div>";
+                            echo "<div class='error notice is-dismissible'>Unable to create JS file in plugin directory. Please make this plugin's folder writable.</div>";
                         }
                     }else{
                         wp_die('test');
@@ -148,11 +148,11 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
 
       /* Detect if cache is enabled and warn user to flush cache */
       if(WP_CACHE&&isset($_POST['save_agm_form'])){
-          echo "<div class='notice notice-warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
+          echo "<div class='notice notice-warning is-dismissible'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
       }
       /* Display notice if current wp installation does not support color picker */
       if(version_compare($GLOBALS['wp_version'],'3.5','<')){
-          echo "<div class='notice notice-info'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
+          echo "<div class='notice notice-info is-dismissible'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
       }
       ?>
         <div id="poststuff">

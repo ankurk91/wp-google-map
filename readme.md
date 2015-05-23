@@ -1,6 +1,6 @@
 
 # Plugin Description
-Ank Google Map plugin is based on *One Website , One Map , One Marker* theme.
+Ank Google Map plugin is based on *One Website , One Map , One Marker* approach.
 However it may support multiple maps in future.
 This is the simplest and non-bloated WordPress Google Map Plugin.Made for noobs.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
@@ -36,7 +36,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 - Responsive map, auto center map upon resize.
 - Configure map border color.
 - Disable/Enable map controls.
-- Find location by address (Autocomplete)
+- Find location by address (Auto-complete)
 - Change map's language eg:Hindi/Urdu
 - Place animated adn colorful marker on map
 - Place info window on marker with custom text/markup.
@@ -51,7 +51,7 @@ Change log is available [here](https://wordpress.org/plugins/ank-google-map/chan
 - - -
 
 ## Thanks & Contribution
-- Google, for its awasome API.
+- Google, for its awasome map API.
 - Stackoverflow.com, to made devs' life easy.
 - Sitepoint.com, for starter guide to WP plugin development.
 - Wordpress.org, for their Open Source approach.
@@ -63,4 +63,4 @@ Change log is available [here](https://wordpress.org/plugins/ank-google-map/chan
 -----
 
 
-**Created By: *Ankur Kumar* **
+**Created By: *Ank91* **

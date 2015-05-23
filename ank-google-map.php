@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) exit;
 /*check for duplicate class*/
 if (!class_exists( 'Ank_Google_Map' ) ) {
 
-        define('AGM_PLUGIN_VERSION','1.5.9');
+        define('AGM_PLUGIN_VERSION','1.6.0');
         define('AGM_PLUGIN_SLUG','agm_plugin_settings');
         define('AGM_AJAX_ACTION','agm_meta_settings');
 
