@@ -6,7 +6,9 @@ This is the simplest and non-bloated WordPress Google Map Plugin.Made for noobs.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 - - -
 [![WordPress](https://img.shields.io/wordpress/plugin/dt/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
-[![WordPress support](https://img.shields.io/badge/tested%20upto-WordPress%204.2.2-green.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map) [![lICENSE](https://img.shields.io/badge/lincense-GPL%20-blue.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
+[![WordPress tested](https://img.shields.io/wordpress/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
+[![WordPress plugin](https://img.shields.io/wordpress/plugin/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
+[![WordPress rating](https://img.shields.io/wordpress/plugin/r/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 - - -
 
 
