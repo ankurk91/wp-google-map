@@ -9,6 +9,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 [![WordPress compatable](https://img.shields.io/wordpress/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress plugin version](https://img.shields.io/wordpress/plugin/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress rating](https://img.shields.io/wordpress/plugin/r/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ank91/ank-google-map/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 - - -
 
 
