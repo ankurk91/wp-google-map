@@ -48,7 +48,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Disable dragging on mobile devices
 * Disable mouse wheel zoom
 
-- - -
+
 
 
 - - -
