@@ -3,7 +3,7 @@
 Plugin Name: Ank Google Map
 Plugin URI: http://ank91.github.io/ank-google-map
 Description: Simple, light weight, and non-bloated WordPress Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
-Version: 1.6.0
+Version: 1.6.1
 Author: Ankur Kumar
 Author URI: http://ank91.github.io/
 License: GPL2
@@ -14,13 +14,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 /* no direct access*/
 if (!defined('ABSPATH')) exit;
 
-/*check for duplicate class*/
-if (!class_exists( 'Ank_Google_Map' ) ) {
-
-        define('AGM_PLUGIN_VERSION','1.6.0');
-        define('AGM_PLUGIN_SLUG','agm_plugin_settings');
-        define('AGM_AJAX_ACTION','agm_meta_settings');
-
+define('AGM_PLUGIN_VERSION', '1.6.1');
+define('AGM_PLUGIN_SLUG', 'agm_plugin_settings');
+define('AGM_AJAX_ACTION', 'agm_meta_settings');
 
     class Ank_Google_Map
     {
@@ -118,6 +114,9 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
                 'te_meta_2' => '0',
                 'te_meta_3' => '0',
                 'plugin_ver' => AGM_PLUGIN_VERSION,
+                'disable_mouse_wheel'  => '0',
+                'disable_drag_mobile'  => '1',
+
 
             );
             /*
@@ -208,44 +207,68 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
             * Note: Don't use single line comment in java script portion
             */
             ob_start();
-            ?>function Load_agm_Map() {
-            var cn = new google.maps.LatLng(<?php echo esc_attr($options['map_Lat']).','.esc_attr($options['map_Lng']) ?>);
+            ?>
+            function loadAgmMap() {
+            var wd = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+            var cn = new google.maps.LatLng(<?php echo esc_attr($options['map_Lat']) . ',' . esc_attr($options['map_Lng']) ?>);
             var op = {
-            <?php if($options['map_control_1']==='1'){echo " panControl: false, ";} ?>
-            <?php if($options['map_control_2']==='1'){echo " zoomControl: false, ";} ?>
-            <?php if($options['map_control_3']==='1'){echo " mapTypeControl: false, ";} ?>
-            <?php if($options['map_control_4']==='1'){echo " streetViewControl: false, ";} ?>
-            <?php if($options['map_control_5']==='1'){echo " overviewMapControl: true, ";} ?>
-            center: cn, zoom: <?php echo intval($options['map_zoom']) ?>, mapTypeId: google.maps.MapTypeId.<?php echo $mapType;?>};
-            var map = new google.maps.Map(agm_div, op);
-            <?php if($options['marker_on']==='1') {?>
-            var mk = new google.maps.Marker({
             <?php
-            if($options['marker_color']!==1){
-                echo 'icon:"'.$this->agm_marker_url($options['marker_color']).'",';
+            if ($options['map_control_1'] === '1') {
+                echo " panControl: false, ";
+            }
+            if ($options['map_control_2'] === '1') {
+                echo " zoomControl: false, ";
+            }
+            if ($options['map_control_3'] === '1') {
+                echo " mapTypeControl: false, ";
+            }
+            if ($options['map_control_4'] === '1') {
+                echo " streetViewControl: false, ";
+            }
+            if ($options['map_control_5'] === '1') {
+                echo " overviewMapControl: true, ";
+            }
+            if ($options['disable_mouse_wheel'] === '1') {
+                echo " scrollwheel: false, ";
+            }
+
+            if ($options['disable_drag_mobile'] === '1') {
+                echo " draggable: wd > 480 ? true : false, ";
             }
             ?>
-            position: cn, map: map <?php if($options['marker_anim']!==1) { echo ", animation: google.maps.Animation.$marker_anim"; }?>, title: "<?php echo esc_js($options['marker_title']) ?>" });
-            <?php  if($options['info_on']==='1') {?>
-                var iw = new google.maps.InfoWindow({content: "<?php echo wp_slash($options['info_text'])?>"});
+            center: cn, zoom: <?php echo intval($options['map_zoom']) ?>, mapTypeId: google.maps.MapTypeId.<?php echo $mapType; ?>};
+            var map = new google.maps.Map(agm_div, op);
+            <?php if ($options['marker_on'] === '1') { ?>
+            var mk = new google.maps.Marker({
+            <?php
+            if ($options['marker_color'] !== 1) {
+                echo 'icon:"' . $this->agm_marker_url($options['marker_color']) . '",';
+            }
+            ?>
+            position: cn, map: map <?php if ($options['marker_anim'] !== 1) {
+                echo ", animation: google.maps.Animation.$marker_anim";
+            } ?>, title: "<?php echo esc_js($options['marker_title']) ?>" });
+            <?php if ($options['info_on'] === '1') { ?>
+                var iw = new google.maps.InfoWindow({content: "<?php echo wp_slash($options['info_text']) ?>"});
                 google.maps.event.addListener(map, 'click', function () {
                 iw.close();
                 });
-            <?php } ?>
-        <?php } ?>
-            <?php if($options['marker_on']==='1'&&$options['info_on']==='1') {?>
+            <?php }
+              } ?>
+            <?php if ($options['marker_on'] === '1' && $options['info_on'] === '1') { ?>
             google.maps.event.addListener(mk, "click", function () {
             iw.open(map, mk);
             mk.setAnimation(null);
             });
             <?php
-            if($options['info_state']==='1'){ ?>
+            if ($options['info_state'] === '1') {
+                ?>
                 window.setTimeout(function () {
                 iw.open(map, mk);
                 mk.setAnimation(null);
                 }, 2000);
-            <?php } ?>
-        <?php } ?>
+            <?php }
+             } ?>
             var rT;
             google.maps.event.addDomListener(window, 'resize', function () {
             if (rT) {
@@ -255,16 +278,15 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
             map.setCenter(cn);
             }, 300);
             });
-
             }
             var agm_div = document.getElementById("agm_map_canvas");
             if (agm_div) {
             if (typeof google == "object") {
-            google.maps.event.addDomListener(window, "load", Load_agm_Map)
+            google.maps.event.addDomListener(window, "load", loadAgmMap)
             }
             else {
             agm_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
-            agm_div.style.height="auto";
+            agm_div.style.height = "auto";
             }
             }
             <?php
@@ -350,27 +372,23 @@ if (!class_exists( 'Ank_Google_Map' ) ) {
 
     } /*end  class ank_google_map*/
 
-    /*Init class */
-    if(!isset($Ank_Google_Map_Obj)){
-        $Ank_Google_Map_Obj=new Ank_Google_Map();
-    }
-
-} /*end if class exists*/
+/*Init front end class */
+global $Ank_Google_Map_Obj;
+$Ank_Google_Map_Obj = new Ank_Google_Map();
 
 
-    //load only to wp-admin area
-   if (isset($Ank_Google_Map_Obj)&& is_admin() ) {
-       /* Include Options Page */
-       require(trailingslashit(dirname(__FILE__)) . "agm_options_page.php");
-        /*Init option page class class */
-        if(!isset($Ank_Google_Map_Option_Page_Obj)){
-           $Ank_Google_Map_Option_Page_Obj=new Ank_Google_Map_Option_Page();
-       }
-   }
+//load only to wp-admin area
+if (isset($Ank_Google_Map_Obj) && is_admin()) {
+    /* Include Options Page */
+    require(trailingslashit(dirname(__FILE__)) . "agm-options-page.php");
+    /*Init option page class class */
+    global $Ank_Google_Map_Option_Page_Obj;
+    $Ank_Google_Map_Option_Page_Obj = new Ank_Google_Map_Option_Page();
+
+}
 
 /*
  * use [ank_google_map] short code (default)
  * OR
  * use [ank_google_map css_fix=0] to disable css fixes
  */
-?>
