@@ -11,41 +11,38 @@ if (!class_exists('Ank_Google_Map')) {
     wp_die(__('This file can not be run alone. This file is the part of <b>Ank-Google-Map</b> plugin.'));
 }
 
-if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
 
-    class Ank_Google_Map_Option_Page {
+class Ank_Google_Map_Option_Page
+{
 
-        function __construct()
-        {
-            /* Add settings link under admin->settings menu->ank google map */
-            add_action('admin_menu', array($this, 'agm_settings_menu'));
-            /* Some (Notice) text on top of option page */
-            add_action('admin_notices', array($this, 'agm_admin_notice'));
-            /*add custom screen options panel wp v3.0+*/
-            add_filter('screen_settings', array($this,'agm_print_screen_options'),10,2);
-            /* register ajax save function */
-            if ( is_admin() ) {
-                add_action('wp_ajax_' . AGM_AJAX_ACTION, array(&$this, 'agm_save_screen_options'));
-            }
+    function __construct()
+    {
+        /* Add settings link under admin->settings menu->ank google map */
+        add_action('admin_menu', array($this, 'agm_settings_menu'));
+        /* Some (Notice) text on top of option page */
+        add_action('admin_notices', array($this, 'agm_admin_notice'));
+        /*add custom screen options panel wp v3.0+*/
+        add_filter('screen_settings', array($this, 'agm_print_screen_options'), 10, 2);
+        /* register ajax save function */
+        add_action('wp_ajax_' . AGM_AJAX_ACTION, array(&$this, 'agm_save_screen_options'));
 
-        } /*END construct*/
+    } /*END construct*/
 
-        function agm_settings_menu()
-        {
-            $page_hook_suffix =add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', AGM_PLUGIN_SLUG, array($this, 'AGM_Option_Page'));
-            /* load color picker on plugin options page only */
-            add_action('admin_print_scripts-'. $page_hook_suffix, array($this, 'agm_add_color_picker'));
-            /* add help drop down menu on option page  wp v3.3+ */
-            if ( version_compare( $GLOBALS['wp_version'], '3.3', '>=' ) ) {
-                add_action( "load-$page_hook_suffix", array( $this, 'agm_help_menu_tab' ) );
-            }
-
+    function agm_settings_menu()
+    {
+        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', AGM_PLUGIN_SLUG, array($this, 'AGM_Option_Page'));
+        /* load color picker on plugin options page only */
+        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'agm_add_color_picker'));
+        /* add help drop down menu on option page  wp v3.3+ */
+        if (version_compare($GLOBALS['wp_version'], '3.3', '>=')) {
+            add_action("load-$page_hook_suffix", array($this, 'agm_help_menu_tab'));
         }
 
+    }
 
 
 
-        function AGM_Option_Page(){
+     function AGM_Option_Page(){
 
             if (!current_user_can('manage_options')) {
                 wp_die(__('You do not have sufficient permissions to access this page.'));
@@ -75,6 +72,9 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                 $agm_options['div_width_unit'] = intval(sanitize_text_field($_POST['div_width_unit']));
 
                 $agm_options['div_border_color'] = sanitize_text_field($_POST['div_border_color']);
+
+                $agm_options['disable_mouse_wheel']=(isset($_POST['disable_mouse_wheel']))?'1':'0';
+                $agm_options['disable_drag_mobile']=(isset($_POST['disable_drag_mobile']))?'1':'0';
 
                 $agm_options['map_Lat'] = sanitize_text_field($_POST['map_Lat']);
                 $agm_options['map_Lng'] = sanitize_text_field($_POST['map_Lng']);
@@ -139,20 +139,20 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
             }/*if isset post ends*/
 
             ?>
-  <!-- lets print admin-css here -->
-<style type="text/css"><?php include(__DIR__.'/agm-admin-css.css') ?></style>
+  <!-- lets add admin-css here -->
+<link rel="stylesheet" href="<?php echo plugins_url('css/agm-admin-css.min.css',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>" media="all">
   <!-- agm options page start -->
 <div class="wrap">
-     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt" style="color: #df630d;"> </i>Ank Google Map <i><small>(v<?php echo @AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
+     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt" style="color: #df630d;"> </i>Ank Google Map <i><small>(v<?php echo AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
       <?php
 
       /* Detect if cache is enabled and warn user to flush cache */
-      if(WP_CACHE&&isset($_POST['save_agm_form'])){
-          echo "<div class='notice notice-warning is-dismissible'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
+      if(WP_CACHE && isset($_POST['save_agm_form'])){
+          echo "<div class='notice notice-warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
       }
       /* Display notice if current wp installation does not support color picker */
       if(version_compare($GLOBALS['wp_version'],'3.5','<')){
-          echo "<div class='notice notice-info is-dismissible'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
+          echo "<div class='notice notice-info'>Color Picker won't work here. Please upgrade your WordPress to latest (v3.5+).</div>";
       }
       ?>
         <div id="poststuff">
@@ -177,7 +177,15 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
                                 </tr>
                                 <tr>
                                     <td>Border Color:</td>
-                                    <td><input placeholder="Color" type="text" id="agm_color_field" name="div_border_color" value="<?php echo esc_attr($agm_options['div_border_color']); ?>"><i style="vertical-align: top">Border will be 1px solid.</i></td>
+                                    <td><input placeholder="Color" type="text" id="agm_color_field" name="div_border_color" value="<?php echo esc_attr($agm_options['div_border_color']); ?>"><i style="vertical-align: top">Border will be 1px solid. Leave empty to disable.</i></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><label><input <?php checked($agm_options['disable_mouse_wheel'], '1')  ?> type="checkbox" name="disable_mouse_wheel">Disable Mouse Wheel Zoom</label></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><label><input <?php checked($agm_options['disable_drag_mobile'], '1')  ?> type="checkbox" name="disable_drag_mobile">Disable Dragging on Mobile Devices</label></td>
                                 </tr>
                             </table>
                         </div><!-- post box ends -->
@@ -306,7 +314,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
  <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
   </p>
   <!--dev info ends-->
-   <?php if(isset($_GET['debug'])){
+   <?php if(isset($_GET['debug']) || WP_DEBUG){
        echo '<hr><p><h5>Showing Debugging Info:</h5>';
        var_dump($agm_options);
          echo '</p><hr>';
@@ -325,7 +333,7 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
          /* ]]> */
 </script>
 <script type="text/javascript">window.jQuery || console.log('Could not load jQuery. This plugin page needs jQuery to work.')</script>
-<script type="text/javascript" src="<?php echo plugins_url('agm-admin-js.min.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
+<script type="text/javascript" src="<?php echo plugins_url('js/agm-admin-js.min.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
 <!--agm options page ends here -->
 <?php
 
@@ -482,6 +490,5 @@ if (!class_exists( 'Ank_Google_Map_Option_Page' ) ) {
 
 
     } /*end class agm option page*/
-} /*end if isset class exists*/
 
 ?>

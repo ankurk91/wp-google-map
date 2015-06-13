@@ -45,6 +45,8 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 - Change map's language eg:Hindi/Urdu
 - Place animated adn colorful marker on map
 - Place info window on marker with custom text/markup.
+* Disable dragging on mobile devices
+* Disable mouse wheel zoom
 
 - - -
 
