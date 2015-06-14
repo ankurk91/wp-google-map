@@ -208,7 +208,7 @@ define('AGM_AJAX_ACTION', 'agm_meta_settings');
             */
             ob_start();
             ?>
-            function loadAgmMap() {
+            function _loadAgmMap() {
             var wd = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
             var cn = new google.maps.LatLng(<?php echo esc_attr($options['map_Lat']) . ',' . esc_attr($options['map_Lng']) ?>);
             var op = {
@@ -282,7 +282,7 @@ define('AGM_AJAX_ACTION', 'agm_meta_settings');
             var agm_div = document.getElementById("agm_map_canvas");
             if (agm_div) {
             if (typeof google == "object") {
-            google.maps.event.addDomListener(window, "load", loadAgmMap)
+            google.maps.event.addDomListener(window, "load", _loadAgmMap)
             }
             else {
             agm_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';

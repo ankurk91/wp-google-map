@@ -2,8 +2,9 @@ function $By_ID(a){
     return document.querySelector('#'+a)||document.getElementById(a);
 }
 function Load_agm_Map() {
+    var wd = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var center = new google.maps.LatLng(agm_opt.map_Lat,agm_opt.map_Lng);
-    var opt = { overviewMapControl: true, center: center,streetViewControl: false, zoom: agm_opt.map_zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
+    var opt = { draggable: wd > 480 ? true : false, overviewMapControl: true, center: center,streetViewControl: false, zoom: agm_opt.map_zoom, mapTypeId: google.maps.MapTypeId.ROADMAP};
     var map = new google.maps.Map(agm_map, opt);
 
     var agm_lat = jQuery('#agm_lat'),
