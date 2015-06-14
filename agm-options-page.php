@@ -143,7 +143,7 @@ class Ank_Google_Map_Option_Page
 <link rel="stylesheet" href="<?php echo plugins_url('css/agm-admin-css.min.css',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>" media="all">
   <!-- agm options page start -->
 <div class="wrap">
-     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt" style="color: #df630d;"> </i>Ank Google Map <i><small>(v<?php echo AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
+     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt"> </i>Ank Google Map <i><small>(v<?php echo AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
       <?php
 
       /* Detect if cache is enabled and warn user to flush cache */
@@ -309,9 +309,10 @@ class Ank_Google_Map_Option_Page
                         <?php wp_nonce_field('agm_form','_wpnonce-agm_form'); ?>
                     </form>
                 </div><!--post stuff ends-->
- <p class="dev-info">Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
- <a target="_blank" href="https://github.com/ank91/ank-google-map">Fork on GitHub</a> |
- <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">View on WordPress.org</a>
+ <p class="dev-info">
+     Created with &hearts; by <a target="_blank" href="http://ank91.github.io/"> Ankur Kumar</a> |
+     Fork on <a target="_blank" href="https://github.com/ank91/ank-google-map">GitHub</a> |
+     Rate on <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">WordPress</a>
   </p>
   <!--dev info ends-->
    <?php if(isset($_GET['debug']) || WP_DEBUG){
@@ -379,8 +380,8 @@ class Ank_Google_Map_Option_Page
                     'id'		=> 'agm-more-info',
                     'title'		=> 'More',
                     'content'	=>'<p><strong>Need more information ?</strong><br>'.
-                        'A brief FAQ is available on plugin&apos;s official website.'.
-                        'OR click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>'.
+                        'A brief FAQ is available, '.
+                        'click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>'.
                         'Support is only available on WordPress Forums, click <a href="https://wordpress.org/support/plugin/ank-google-map" target="_blank">here</a> to ask anything about this plugin.<br>'.
                         'You can also report a bug at plugin&apos;s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.'.
                         'I will try to reply as soon as possible. </p>'
