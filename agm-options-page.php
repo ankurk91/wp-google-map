@@ -143,7 +143,7 @@ class Ank_Google_Map_Option_Page
 <link rel="stylesheet" href="<?php echo plugins_url('css/agm-admin-css.min.css',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>" media="all">
   <!-- agm options page start -->
 <div class="wrap">
-     <h2 style="line-height: 1"><i class="dashicons-before dashicons-location-alt"> </i>Ank Google Map <i><small>(v<?php echo AGM_PLUGIN_VERSION;?>)</small></i> Settings</h2>
+     <h2>Ank Google Map <small>(v<?php echo AGM_PLUGIN_VERSION;?>)</small> Settings</h2>
       <?php
 
       /* Detect if cache is enabled and warn user to flush cache */
