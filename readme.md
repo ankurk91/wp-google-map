@@ -62,7 +62,7 @@ Change log is available [here](https://wordpress.org/plugins/ank-google-map/chan
 - Stackoverflow.com, to made devs' life easy.
 - Sitepoint.com, for starter guide to WP plugin development.
 - Wordpress.org, for their Open Source approach.
-- Github.com, for free website hosting.
+- Github.com, for free VCS.
 - Haroopad, free markdown IDE.
 - JetBrains PHP Storm, the best php IDE.
 - TortoiseSVN, free SVN tool.
@@ -70,4 +70,3 @@ Change log is available [here](https://wordpress.org/plugins/ank-google-map/chan
 -----
 
 
-**Created By: *Ank91* **
