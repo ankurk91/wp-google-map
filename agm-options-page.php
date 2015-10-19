@@ -1,8 +1,8 @@
 <?php
-/*
+/**
  * Settings Page for "Ank Google Map" Plugin
- *
  */
+
 
 /* no direct access*/
 if (!defined('ABSPATH')) exit;
@@ -217,7 +217,7 @@ class Ank_Google_Map_Option_Page
                                 <tr>
                                     <td>Language Code:</td>
                                     <td><input placeholder="empty=auto" pattern="([A-Za-z\-]){2,5}" title="Language Code Like: en OR en-US" type="text" name="map_lang_code" value="<?php echo esc_attr($agm_options['map_lang_code']); ?>">
-                                        <a title="Language Code List" href="https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&amp;gid=1" target="_blank" style="text-decoration: none;"><i class="dashicons-before dashicons-editor-help"></i></a></td>
+                                        <a title="Language Code List" href="https://developers.google.com/maps/faq#languagesupport" target="_blank" style="text-decoration: none;"><i class="dashicons-before dashicons-editor-help"></i></a></td>
                                 </tr>
                                 <tr>
                                     <td>Map Type:</td>
@@ -333,8 +333,8 @@ class Ank_Google_Map_Option_Page
          };
          /* ]]> */
 </script>
-<script type="text/javascript">window.jQuery || console.log('Could not load jQuery. This plugin page needs jQuery to work.')</script>
-<script type="text/javascript" src="<?php echo plugins_url('js/agm-admin-js.min.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
+<script type="text/javascript">window.jQuery || console.log('Could not load jQuery. Ank Google Map option page needs jQuery to work.')</script>
+<script type="text/javascript" src="<?php  $is_min = ( WP_DEBUG == 1) ? '' : '.min'; echo plugins_url('js/agm-admin-js.'.$is_min.'js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
 <!--agm options page ends here -->
 <?php
 
@@ -492,4 +492,3 @@ class Ank_Google_Map_Option_Page
 
     } /*end class agm option page*/
 
-?>
