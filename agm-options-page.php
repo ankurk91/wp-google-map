@@ -333,7 +333,7 @@ class Ank_Google_Map_Option_Page
          };
          /* ]]> */
 </script>
-<script type="text/javascript">window.jQuery || console.log('Could not load jQuery. Ank Google Map option page needs jQuery to work.')</script>
+<script type="text/javascript">window.jQuery || console.error('Could not load jQuery. Ank Google Map option page needs jQuery to work.')</script>
 <script type="text/javascript" src="<?php  $is_min = ( WP_DEBUG == 1) ? '' : '.min'; echo plugins_url('js/agm-admin-js'.$is_min.'.js',__FILE__).'?ver='.esc_attr(AGM_PLUGIN_VERSION) ?>"></script>
 <!--agm options page ends here -->
 <?php
