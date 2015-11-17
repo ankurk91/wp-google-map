@@ -1,4 +1,4 @@
-(function (window,document, jQuery,google) {
+(function (window, document, jQuery, google) {
     'use strict';
     var agm_opt = window.agm_opt;
 
@@ -8,13 +8,13 @@
 
     function load_google_map() {
         var wd = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var center = new google.maps.LatLng(parseFloat(agm_opt.map_Lat), parseFloat(agm_opt.map_Lng));
+        var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
         var opt = {
             draggable: wd > 480,
             overviewMapControl: true,
             center: center,
             streetViewControl: false,
-            zoom: parseInt(agm_opt.map_zoom),
+            zoom: parseInt(agm_opt.map.zoom),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: true,
             zoomControlOptions: {
@@ -89,20 +89,28 @@
     }
 
     jQuery(function ($) {
-        /* Prevent form submission when user press enter key in auto-complete */
+        /**
+         * Prevent form submission when user press enter key in auto-complete
+         */
         $("#agm_autocomplete").keydown(function (e) {
             if (e.which == 13 || e.which == 13) {
                 e.preventDefault();
                 e.stopPropagation();
             }
         });
+        /**
+         * Show a message
+         * Info window needs marker to enabled first
+         */
         $("#agm_info_on").click(function () {
             if ($(this).is(":checked"))
                 $(this).next('label').find('i:not(:visible)').fadeIn();
         });
-        /*check if color picker is available*/
-        if (agm_opt.color_picker==1) {
+        /**
+         * Check if color picker is available
+         */
+        if (agm_opt.color_picker == 1) {
             $('#agm_color_field').wpColorPicker();
         }
     });
-})(window,document, jQuery,google);
+})(window, document, jQuery, google);
