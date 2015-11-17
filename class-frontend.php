@@ -46,7 +46,7 @@ class Ank_Google_Map_Frontend
      * Returns dynamic javascript options to be used by frontend js
      * @return array
      */
-    function get_js_options()
+    private function get_js_options()
     {
         $options = $this->db_options;
 
@@ -137,7 +137,7 @@ class Ank_Google_Map_Frontend
     }
 
 
-    function get_marker_url($id)
+    private function get_marker_url($id)
     {
         /**
          * We depends on Google server for maker images
