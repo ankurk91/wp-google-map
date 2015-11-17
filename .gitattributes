@@ -7,3 +7,6 @@
 
 # Don't diff or textually merge source maps
 *.map   binary
+
+# Avoid unreadable diffs for generated text files, eg: *.min.js
+*.min.* binary

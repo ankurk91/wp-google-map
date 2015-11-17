@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.3.1
-Stable tag: 1.6.3
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors:ank91
@@ -64,11 +64,6 @@ It does not depends on external js library like: jQuery.
 You must have modern browser to configure the map option.
 Old browsers may not work well.
 
-= Color picker could not load :( =
-
-This plugin utilize inbuilt WP Color API.
-You must have WordPress v3.5+ in order to use this feature.
-
 = Shortcode does not work in text widget =
 
 Add this line to your theme's functions.php
@@ -96,7 +91,7 @@ You have to remove short-code from your pages by yourself.
 = How do i enter correct language code ? =
 
 You can force google to load a specific language for all visitors.
-Get latest supported language code list from [here](https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1).
+Get latest supported language code list from [here](https://developers.google.com/maps/faq#languagesupport).
 If you don't specify language code then google will try to load the language requested by visitor's web browser.
 
 = How to make it responsive =
@@ -110,22 +105,6 @@ Leave the color field empty and it will not be applied.
 = I don't want css fixes for map controls, how to disable them ? =
 
 Use this short-code `[ank_google_map css_fix=0]`
-
-= Error: JS file could be created in plugin folder. =
-
-Each time you save map settings , this plugin write processed js code to 'agm-user-js.js' file.
-There may be some chance that plugin unable to create/write this file.This file is essential and map won't work without this file.
-
-Possible reasons are ->
-
-* Not enough permission to write a file.
-* Plugin malfunction (my fault).
-* You hosting provider has disabled File Handling Function via php.ini (rare).
-
-How to resolve ->
-
-* Login to your website via your FTP client software. (eg: FileZilla)
-  and change file permission of plugins folder.
 
 = Did you test it with old version of WordPress ? =
 
@@ -170,6 +149,11 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.0 =
+* Min php version 5.3.0
+* Removed screen options
+* Removed bloated code, speed improvement
 
 = 1.6.3 =
 * Fix Option page not working due to wrong js url

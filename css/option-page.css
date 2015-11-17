@@ -63,17 +63,6 @@ option[selected] {
     border-bottom-color: #DFDFDF !important;
 }
 
-p.agm_notice {
-    margin: 0;
-    padding: 5px;
-    font-size: 12px
-}
-
-#agm_meta_ajax_result {
-    display: none;
-    font-weight: bold
-}
-
 table.inside {
     margin: 15px 10px !important;
 }
@@ -110,9 +99,6 @@ table.inside {
 }
 
 @media screen and (max-width: 782px) {
-    p.agm_notice {
-        display: none
-    }
 
     .agm_tbl td:first-child {
         width: 25% !important;
