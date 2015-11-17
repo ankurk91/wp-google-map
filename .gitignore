@@ -46,6 +46,3 @@ node_modules/
 # bower packages
 bower_components/
 
-
-#never include this file
-agm-user-js.js
