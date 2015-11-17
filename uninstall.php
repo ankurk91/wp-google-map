@@ -12,7 +12,7 @@ if( !defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN') )
     exit;
 
 /*
- * remove the database entry created by this plugin
+ * Remove the database entry created by this plugin
  */
 
 delete_option('ank_google_map');

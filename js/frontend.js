@@ -2,6 +2,7 @@
     'use strict';
 
     var opt = window.agm_opt;
+    console.log(opt);
     /**
      * If options not found then return early
      */
@@ -13,13 +14,13 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
         var options = {
-            panControl: opt.controls.panControl,
-            zoomControl: opt.controls.zoomControl,
-            mapTypeControl: opt.controls.mapTypeControl,
-            streetViewControl: opt.controls.streetViewControl,
-            overviewMapControl: opt.controls.overviewMapControl,
-            scrollwheel: (opt.mobile.scrollwheel == 1),
-            draggable: (opt.mobile.draggeble == 1 && width > 480),
+            panControl: !opt.controls.panControl,
+            zoomControl: !opt.controls.zoomControl,
+            mapTypeControl: !opt.controls.mapTypeControl,
+            streetViewControl: !opt.controls.streetViewControl,
+            overviewMapControl: !opt.controls.overviewMapControl,
+            scrollwheel: !opt.mobile.scrollwheel,
+            draggable: (!opt.mobile.draggable && width > 480),
             center: center,
             zoom: parseInt(opt.map.zoom),
             mapTypeId: google.maps.MapTypeId[opt.map.type],
@@ -40,9 +41,11 @@
             var marker = new google.maps.Marker({
                 position: center,
                 map: map,
-                title: opt.marker.title,
-                animation: google.maps.Animation[opt.marker.animation]
+                title: opt.marker.title
             });
+            if (opt.marker.animation !== 'NONE') {
+                marker.setAnimation(google.maps.Animation[opt.marker.animation])
+            }
             if (opt.marker.color !== false) {
                 marker.setIcon(opt.marker.color);
             }
