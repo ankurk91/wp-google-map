@@ -197,7 +197,7 @@ class Ank_Google_Map_Admin
      * Decides whether to load text editor or not
      * @param string $content
      */
-    function get_text_editor($content = '')
+    private function get_text_editor($content = '')
     {
         /**
          * decide if browser support editor or not
@@ -241,9 +241,11 @@ class Ank_Google_Map_Admin
         $agm_options = get_option('ank_google_map');
 
         return array(
-            'map_Lat' => esc_attr($agm_options['map_Lat']),
-            'map_Lng' => esc_attr($agm_options['map_Lng']),
-            'map_zoom' => absint($agm_options['map_zoom']),
+            'map' => array(
+                'lat' => esc_attr($agm_options['map_Lat']),
+                'lng' => esc_attr($agm_options['map_Lng']),
+                'zoom' => absint($agm_options['map_zoom']),
+            ),
             'color_picker' => (version_compare($GLOBALS['wp_version'], 3.5) >= 0),
             'ajax_url' => admin_url('admin-ajax.php')
         );
