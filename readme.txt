@@ -52,7 +52,6 @@ There are many of Map plugins in plugin directory, but most of them not written 
 Means they put lots of java script (uncompressed) code on every page of your website.
 They also loads jquery file before them which effects your page speed.
 This plugin will enqueue its js files on the required page only.
-It will minify all java script code before serving to users.
 It does not depends on external js library like: jQuery.
 
 = What is the short-code for this plugin =
@@ -152,7 +151,7 @@ It just a matter of a second. It will cost not more than 15 KB.
 
 = 1.7.0 =
 * Min php version 5.3.0
-* Removed screen options
+* Removed screen options, always load text editor
 * Removed bloated code, speed improvement
 
 = 1.6.3 =
