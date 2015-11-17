@@ -58,7 +58,7 @@ class Ank_Google_Map_Frontend
         );
 
         $marker_anim_array = array(
-            1 => 'DROP',
+            1 => 'NONE',//none
             2 => 'BOUNCE',
             3 => 'DROP',
         );

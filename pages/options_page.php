@@ -169,7 +169,7 @@
                                 <optgroup label="Marker Animation"></optgroup>
                                 <option <?php selected($agm_options['marker_anim'], '1') ?> value="1">NONE
                                 </option>
-                                <option <?php selected($agm_options['marker_anim'], '2') ?> value="2"> BOUNCE
+                                <option <?php selected($agm_options['marker_anim'], '2') ?> value="2">BOUNCE
                                 </option>
                                 <option <?php selected($agm_options['marker_anim'], '3') ?> value="3">DROP
                                 </option>
