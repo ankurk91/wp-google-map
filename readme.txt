@@ -5,7 +5,7 @@ Tested up to: 4.3.1
 Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Contributors:ank91
+Contributors: ank91
 
 Simple and non-bloated WordPress Google Map Plugin.
 
@@ -58,7 +58,7 @@ It does not depends on external js library like: jQuery.
 
 `[ank_google_map]`
 
-= Map does not shown well on front-end =
+= Map controls does not shown correctly on front-end =
 
 Add this css code to your theme's style.css file to fix this
 
@@ -116,7 +116,6 @@ No, I love it as like you. But I prefer faster websites.
 = Is Google Map API is free. =
 
 Until we break its terms and conditions.
-
 Google Map API V3 does not need an API Key.
 
 
@@ -127,7 +126,7 @@ It means 'Google Map API' is not loaded.
 Possible reasons are -
 
 * No internet connection. (Internet is must).
-* Other Plugin's java script conflict. (Try disabling them one by one).
+* Other plugin's java script conflict. (Try disabling them one by one).
 * This plugin has a problem/bug. (Report it now).
 
 
@@ -149,8 +148,8 @@ It just a matter of a second. It will cost not more than 15 KB.
 == Changelog ==
 
 = 1.7.0 =
-* Min php version 5.3.0
-* Removed screen options, always load text editor
+* Minimum php requirement : version 5.3.0
+* Removed top screen options, always load text editor
 * Removed bloated code, speed improvement
 
 = 1.6.3 =
