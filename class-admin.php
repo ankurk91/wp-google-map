@@ -6,6 +6,7 @@ namespace Ank91\Ank_Google_Map_Plugin;
  */
 class Ank_Google_Map_Admin
 {
+    const PLUGIN_SLUG = 'ank-google-map-options';
 
     function __construct()
     {
@@ -30,6 +31,7 @@ class Ank_Google_Map_Admin
     {
 
         $default_options = array(
+            'plugin_ver' => AGM_PLUGIN_VERSION,
             'div_width' => '100',
             'div_width_unit' => 2,
             'div_height' => '300',
@@ -51,14 +53,8 @@ class Ank_Google_Map_Admin
             'info_on' => '1',
             'info_text' => '<b>Your Destination</b>',
             'info_state' => '0',
-            'te_meta_1' => '1',
-            'te_meta_2' => '0',
-            'te_meta_3' => '0',
-            'plugin_ver' => AGM_PLUGIN_VERSION,
             'disable_mouse_wheel' => '0',
             'disable_drag_mobile' => '1',
-
-
         );
 
         return $default_options;
@@ -74,7 +70,7 @@ class Ank_Google_Map_Admin
     {
 
         if (current_user_can('manage_options')) {
-            $build_url = add_query_arg('page', AGM_PLUGIN_SLUG, 'options-general.php');
+            $build_url = add_query_arg('page', self::PLUGIN_SLUG, 'options-general.php');
             array_unshift(
                 $links,
                 sprintf('<a href="%s">%s</a>', $build_url, __('Settings'))
@@ -89,7 +85,7 @@ class Ank_Google_Map_Admin
      */
     function add_submenu_page()
     {
-        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', AGM_PLUGIN_SLUG, array($this, 'AGM_Option_Page'));
+        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'AGM_Option_Page'));
         /*
         * Add the color picker js  + css file (for settings page only)
         * Available for wp v3.5+ only
@@ -186,8 +182,8 @@ class Ank_Google_Map_Admin
                 echo "<div class='updated notice is-dismissible'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
             }
 
-        }/*if isset post ends*/
-        //load option page
+        }
+        //load option page view
         require_once(__DIR__ . '/pages/options_page.php');
 
     }
@@ -320,4 +316,3 @@ class Ank_Google_Map_Admin
     }
 
 }
-
