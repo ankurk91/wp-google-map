@@ -29,7 +29,7 @@ class Ank_Google_Map_Admin
     function get_default_options()
     {
 
-        $new_options = array(
+        $default_options = array(
             'div_width' => '100',
             'div_width_unit' => 2,
             'div_height' => '300',
@@ -61,7 +61,7 @@ class Ank_Google_Map_Admin
 
         );
 
-        return $new_options;
+        return $default_options;
     }
 
     /**
@@ -238,16 +238,15 @@ class Ank_Google_Map_Admin
      */
     private function get_js_options()
     {
-        $agm_options = get_option('ank_google_map');
+        $options = get_option('ank_google_map');
 
         return array(
             'map' => array(
-                'lat' => esc_attr($agm_options['map_Lat']),
-                'lng' => esc_attr($agm_options['map_Lng']),
-                'zoom' => absint($agm_options['map_zoom']),
+                'lat' => esc_attr($options['map_Lat']),
+                'lng' => esc_attr($options['map_Lng']),
+                'zoom' => absint($options['map_zoom']),
             ),
-            'color_picker' => (version_compare($GLOBALS['wp_version'], 3.5) >= 0),
-            'ajax_url' => admin_url('admin-ajax.php')
+            'color_picker' => (version_compare($GLOBALS['wp_version'], 3.5) >= 0)
         );
     }
 
@@ -261,7 +260,7 @@ class Ank_Google_Map_Admin
         wp_enqueue_script('agm-google-map', '//maps.googleapis.com/maps/api/js?libraries=places', array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", __FILE__), array('jquery'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
-        wp_localize_script('agm-admin-js', 'agm_opt', $this->get_js_options());
+        wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
     }
 
     /*

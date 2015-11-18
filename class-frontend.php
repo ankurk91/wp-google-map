@@ -13,34 +13,11 @@ class Ank_Google_Map_Frontend
     {
 
         /* Register our short-code [ank_google_map] */
-        add_shortcode('ank_google_map', array($this, 'do_shortcode'));
+        add_shortcode('ank_google_map', array($this, 'process_shortcode'));
         /* Store database options*/
         $this->db_options = get_option('ank_google_map');
     }
 
-
-    /**
-     * Print canvas related html to fontend
-     */
-    function print_canvas_html()
-    {
-        $options = $this->db_options;
-        $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
-        $b_color = ($options["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($options["div_border_color"]);
-        echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
-
-    }
-
-    /**
-     * Some special fixes , because map controls map appear incorrectly due to theme's css
-     */
-    function print_css_fix()
-    {
-        ?>
-        <style type='text/css'> .gmnoprint img, #agm_map_canvas img {
-                max-width: none;
-            } </style><?php
-    }
 
     /**
      * Returns dynamic javascript options to be used by frontend js
@@ -81,6 +58,7 @@ class Ank_Google_Map_Frontend
                 'text' => wp_slash($options['info_text']),
                 'state' => absint($options['info_state']),
             ),
+            //disabled controls, 1=disabled
             'controls' => array(
                 'panControl' => absint($options['map_control_1']),
                 'zoomControl' => absint($options['map_control_2']),
@@ -100,39 +78,30 @@ class Ank_Google_Map_Frontend
 
     /**
      * Function runs behind our short-code
-     * @param $params
+     * @param $params array does not accept any parameters
      * @return string
      */
-    function do_shortcode($params)
+    function process_shortcode($params)
     {
-        /* We accept one parameter in short-code
-        * [ank_google_map css_fix=0] will disable css-fixes
-        * Lets Merge user parameters with default
-        */
-        $params = shortcode_atts(array(
-            'css_fix' => 1, /* 1=apply css fix(default), 0=don't apply css fix */
-        ), $params);
-
 
         ob_start();/* ob_start is here for a reason */
         $options = $this->db_options;
 
-        if ($params['css_fix'] === 1) {
-            /* ==write css fixes if== */
-            $this->print_css_fix();
-        }
-
         /* Write canvas html always */
-        $this->print_canvas_html();
+        $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
+        $b_color = ($options["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($options["div_border_color"]);
+        echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
 
         /* Enqueue google map api*/
         $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '?language=' . esc_attr($options['map_lang_code']);
         wp_enqueue_script('agm-google-map-api', "//maps.googleapis.com/maps/api/js" . $lang_code, array(), null, true);
+
         /*Enqueue frontend js file*/
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
         wp_enqueue_script('agm-frontend-js', plugins_url('js/frontend' . $is_min . '.js', __FILE__), array('agm-google-map-api'), AGM_PLUGIN_VERSION, true);
+
         //wp inbuilt hack to print js options object just before this script
-        wp_localize_script('agm-frontend-js', 'agm_opt', $this->get_js_options());
+        wp_localize_script('agm-frontend-js', '_agm_opt', $this->get_js_options());
         return ob_get_clean();
     }
 
