@@ -10,16 +10,27 @@ class Ank_Google_Map_Admin
 
     function __construct()
     {
-        /* Save settings if first time */
-        if (false == get_option('ank_google_map')) {
-            add_option('ank_google_map', $this->get_default_options());
-        }
+        /* To save default options upon activation */
+        register_activation_hook(AGM_BASE_FILE, array($this, 'do_upon_plugin_activation'));
+
 
         /* Add settings link to plugin list page */
         add_filter('plugin_action_links_' . AGM_BASE_FILE, array($this, 'add_plugin_actions_links'), 10, 2);
 
         /* Add settings link under admin->settings menu->ank google map */
         add_action('admin_menu', array($this, 'add_submenu_page'));
+
+    }
+
+    /*
+        * Save default settings upon plugin activation
+        */
+    function do_upon_plugin_activation()
+    {
+
+        if (false == get_option('ank_google_map')) {
+            add_option('ank_google_map', $this->get_default_options());
+        }
 
     }
 
