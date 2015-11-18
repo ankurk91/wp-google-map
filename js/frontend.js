@@ -13,14 +13,15 @@
     function _loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
-        var options = {
+
+        var map_options = {
             panControl: !opt.controls.panControl,
             zoomControl: !opt.controls.zoomControl,
             mapTypeControl: !opt.controls.mapTypeControl,
             streetViewControl: !opt.controls.streetViewControl,
             overviewMapControl: !opt.controls.overviewMapControl,
             scrollwheel: !opt.mobile.scrollwheel,
-            draggable: (!opt.mobile.draggable && width > 480),
+            draggable: true,
             center: center,
             zoom: parseInt(opt.map.zoom),
             mapTypeId: google.maps.MapTypeId[opt.map.type],
@@ -32,7 +33,12 @@
                 position: google.maps.ControlPosition.LEFT_CENTER
             }
         };
-        var map = new google.maps.Map(agm_div, options);
+        var map = new google.maps.Map(agm_div, map_options);
+
+        if (opt.mobile.draggable) {
+            map.setOptions({draggable: (width > 480)});
+        }
+
 
         /**
          * If marker is enabled
