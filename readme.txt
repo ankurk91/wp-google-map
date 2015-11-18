@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.3.1
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: ank91
@@ -146,6 +146,10 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.2 =
+* Removed some more unused code
+* More adjustment due to recent changes
 
 = 1.7.1 =
 * Fix drag on mobile option stopped working
