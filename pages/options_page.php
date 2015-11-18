@@ -3,19 +3,11 @@
         <small>(v<?php echo AGM_PLUGIN_VERSION; ?>)</small>
         Settings
     </h2>
-    <?php
-
-    /* Detect if cache is enabled and warn user to flush cache */
-    if (WP_CACHE && isset($_POST['save_agm_form'])) {
-        echo "<div class='notice notice-warning'>It seems that a caching/performance plugin is active on this site. Please manually <b>invalidate/flush</b> that plugin <b>cache</b> to reflect the settings you saved here.</div>";
-    }
-
-    ?>
     <div id="poststuff">
         <form action="" method="post">
             <div class="postbox">
                 <h3 class="hndle"><i class="dashicons-before dashicons-admin-appearance"
-                                     style="color: #02af00"> </i><span>Map Canvas Options</span></h3>
+                    > </i><span>Map Canvas Options</span></h3>
                 <table class="agm_tbl inside">
                     <tr>
                         <td>Map Canvas Width:</td>
@@ -60,7 +52,7 @@
             <!--- tab2 start-->
             <div class="postbox agm-left-col">
                 <h3 class="hndle"><i class="dashicons-before dashicons-admin-settings"
-                                     style="color: #458eb3"> </i>Configure Map Options</h3>
+                    > </i>Configure Map Options</h3>
                 <table class="agm_tbl inside">
                     <tr>
                         <td>Latitude:</td>
@@ -147,7 +139,7 @@
             </p>
             <!--- tab3 start-->
             <div class="postbox">
-                <h3 class="hndle"><i class="dashicons-before dashicons-location" style="color: #dc1515"> </i>Marker
+                <h3 class="hndle"><i class="dashicons-before dashicons-location"> </i>Marker
                     Options</h3>
                 <table class="agm_tbl inside">
                     <tr>
@@ -205,7 +197,7 @@
             <!-- tab4 start-->
             <div class="postbox">
                 <h3 class="hndle"><i class="dashicons-before dashicons-admin-comments"
-                                     style="color: #988ccc"> </i>Info Window Options</h3>
+                    > </i>Info Window Options</h3>
                 <table class="agm_tbl inside">
                     <tr>
                         <td>Enable Info Window:</td>
@@ -231,7 +223,9 @@
                     <tr>
                         <td colspan="2" style="text-align: center;">
                             <p>
-                                <button class="button button-primary" type="submit" name="save_agm_form" value="Save »"> Save Map Settings</button>
+                                <button class="button button-primary" type="submit" name="save_agm_form" value="Save »">
+                                    Save Map Settings
+                                </button>
                             </p>
                         </td>
                     </tr>
@@ -252,4 +246,6 @@
         echo '</p><hr>';
     } ?>
 </div><!-- end wrap-->
-<script type="text/javascript">window.jQuery || console.error('Could not find jQuery. Ank Google Map option page needs jQuery to work.')</script>
+<script type="text/javascript">
+    window.jQuery || console.error('Could not find jQuery. Ank Google Map option page needs jQuery to work.')
+</script>
