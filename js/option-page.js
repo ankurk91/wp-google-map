@@ -7,11 +7,11 @@
         return document.querySelector('#' + a) || document.getElementById(a);
     }
 
-    function load_google_map() {
-        var wd = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    function _loadGoogleMap() {
+        var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
-        var opt = {
-            draggable: wd > 480,
+        var map_options = {
+            draggable: width > 480,
             overviewMapControl: true,
             center: center,
             streetViewControl: false,
@@ -27,7 +27,7 @@
                 position: google.maps.ControlPosition.TOP_RIGHT
             }
         };
-        var map = new google.maps.Map(agm_map, opt);
+        var map = new google.maps.Map(map_canvas_div, map_options);
 
         var agm_lat = jQuery('#agm_lat'),
             agm_lng = jQuery('#agm_lng'),
@@ -81,12 +81,12 @@
 
 
     /* Prepare to load google map */
-    var agm_map = $By_ID("agm_map_canvas");
+    var map_canvas_div = $By_ID("agm_map_canvas");
     if (typeof google == "object" && google.maps) {
-        google.maps.event.addDomListener(window, "load", load_google_map)
+        google.maps.event.addDomListener(window, "load", _loadGoogleMap)
     }
     else {
-        agm_map.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
+        map_canvas_div.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
     }
 
     jQuery(function ($) {
