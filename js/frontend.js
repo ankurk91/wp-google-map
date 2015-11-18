@@ -33,7 +33,7 @@
                 position: google.maps.ControlPosition.LEFT_CENTER
             }
         };
-        var map = new google.maps.Map(agm_div, map_options);
+        var map = new google.maps.Map(map_canvas_div, map_options);
 
         if (opt.mobile.draggable) {
             map.setOptions({draggable: (width > 480)});
@@ -107,14 +107,14 @@
     }
 
 
-    var agm_div = document.getElementById("agm_map_canvas");
-    if (typeof agm_div !== 'undefined') {
+    var map_canvas_div = document.getElementById("agm_map_canvas");
+    if (typeof map_canvas_div !== 'undefined') {
         if (typeof google == "object" && google.maps) {
             google.maps.event.addDomListener(window, "load", _loadGoogleMap)
         }
         else {
-            agm_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
-            agm_div.style.height = "auto";
+            map_canvas_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
+            map_canvas_div.style.height = "auto";
         }
     }
 
