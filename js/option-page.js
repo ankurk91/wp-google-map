@@ -1,6 +1,7 @@
 (function (window, document, jQuery, google) {
     'use strict';
-    var agm_opt = window.agm_opt;
+
+    var agm_opt = window._agm_opt;
 
     function $By_ID(a) {
         return document.querySelector('#' + a) || document.getElementById(a);
@@ -77,11 +78,11 @@
 
     }
 
-    /* main function ends here*/
+
 
     /* Prepare to load google map */
     var agm_map = $By_ID("agm_map_canvas");
-    if (typeof google == "object") {
+    if (typeof google == "object" && google.maps) {
         google.maps.event.addDomListener(window, "load", load_google_map)
     }
     else {

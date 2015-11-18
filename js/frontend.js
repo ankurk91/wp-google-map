@@ -1,14 +1,14 @@
 (function (window, document, google) {
     'use strict';
 
-    var opt = window.agm_opt;
-    console.log(opt);
     /**
      * If options not found then return early
      */
-    if (typeof window.agm_opt === 'undefined') {
+    if (typeof window._agm_opt === 'undefined') {
         return;
     }
+    var opt = window._agm_opt;
+
 
     function _loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -37,7 +37,7 @@
         /**
          * If marker is enabled
          */
-        if (opt.marker.enabled == 1) {
+        if (opt.marker.enabled === 1) {
             var marker = new google.maps.Marker({
                 position: center,
                 map: map,
@@ -53,10 +53,10 @@
             /**
              * Info window needs marker to be enabled first
              */
-            if (opt.info_window.enabled == 1) {
+            if (opt.info_window.enabled === 1) {
                 var infoWindow = new google.maps.InfoWindow({content: opt.info_window.text});
                 /**
-                 * Clicking on map will close infowindow
+                 * Clicking on map will close info-window
                  */
                 google.maps.event.addListener(map, 'click', function () {
                     infoWindow.close();
@@ -64,7 +64,7 @@
             }
         }
 
-        if (opt.marker.enabled == 1 && opt.info_window.enabled == 1) {
+        if (opt.marker.enabled === 1 && opt.info_window.enabled === 1) {
             /**
              * Clicking on marker will show info-window
              */
@@ -75,7 +75,7 @@
             /**
              * If info window enabled by default
              */
-            if (opt.info_window.state == 1) {
+            if (opt.info_window.state === 1) {
                 window.setTimeout(function () {
                     infoWindow.open(map, marker);
                     marker.setAnimation(null);
@@ -103,7 +103,7 @@
 
     var agm_div = document.getElementById("agm_map_canvas");
     if (typeof agm_div !== 'undefined') {
-        if (typeof google == "object") {
+        if (typeof google == "object" && google.maps) {
             google.maps.event.addDomListener(window, "load", _loadGoogleMap)
         }
         else {

@@ -58,11 +58,14 @@ It does not depends on external js library like: jQuery.
 
 `[ank_google_map]`
 
-= Options page does not work well :( =
+= Map does not shown well on front-end =
 
-You must have modern browser to configure the map option.
-Old browsers may not work well.
+Add this css code to your theme's style.css file to fix this
 
+`
+.gmnoprint img, #agm_map_canvas img { max-width: none; }
+
+`
 = Shortcode does not work in text widget =
 
 Add this line to your theme's functions.php
@@ -100,10 +103,6 @@ Set Map Canvas Width to 100 %. Map will auto center upon resize.
 = I don't want border on map canvas =
 
 Leave the color field empty and it will not be applied.
-
-= I don't want css fixes for map controls, how to disable them ? =
-
-Use this short-code `[ank_google_map css_fix=0]`
 
 = Did you test it with old version of WordPress ? =
 
