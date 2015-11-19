@@ -148,11 +148,11 @@ It just a matter of a second. It will cost not more than 15 KB.
 == Changelog ==
 
 = 1.7.2 =
-* Removed some more unused code
-* More adjustment due to recent changes
+* More adjustment due to recent changes, remove unused code
 * Using WP inbuilt Settings API to handle form data
 * Updated to Google Map API v3.22, read more [here](https://developers.google.com/maps/articles/v322-controls-diff)
 * Removed options : Pan control, Overview Map control
+
 = 1.7.1 =
 * Fix drag on mobile option stopped working
 
