@@ -60,11 +60,9 @@ class Ank_Google_Map_Frontend
             ),
             //disabled controls, 1=disabled
             'controls' => array(
-                'panControl' => absint($options['map_control_1']),
                 'zoomControl' => absint($options['map_control_2']),
                 'mapTypeControl' => absint($options['map_control_3']),
                 'streetViewControl' => absint($options['map_control_4']),
-                'overviewMapControl' => absint($options['map_control_5']),
             ),
             'mobile' => array(
                 'scrollwheel' => absint($options['disable_mouse_wheel']),
@@ -94,7 +92,7 @@ class Ank_Google_Map_Frontend
 
         // Enqueue google map api
         $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '?language=' . esc_attr($options['map_lang_code']);
-        wp_enqueue_script('agm-google-map-api', "//maps.googleapis.com/maps/api/js" . $lang_code, array(), null, true);
+        wp_enqueue_script('agm-google-map-api', "//maps.googleapis.com/maps/api/js?v=3.22" . $lang_code, array(), null, true);
 
         // Enqueue frontend js file
         $is_min = (WP_DEBUG == 1) ? '' : '.min';

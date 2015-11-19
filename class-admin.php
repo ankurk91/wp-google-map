@@ -23,11 +23,13 @@ class Ank_Google_Map_Admin
         /* Add settings link under admin->settings menu->ank google map */
         add_action('admin_menu', array($this, 'add_submenu_page'));
 
+        /* Check for database upgrades*/
+        add_action('plugins_loaded', array($this, 'check_for_db_options'));
     }
 
     /*
-        * Save default settings upon plugin activation
-        */
+    * Save default settings upon plugin activation
+    */
     function do_upon_plugin_activation()
     {
 
@@ -35,6 +37,14 @@ class Ank_Google_Map_Admin
             add_option('ank_google_map', $this->get_default_options());
         }
 
+    }
+
+    /**
+     * Check if db options exists and create if not found
+     */
+    function check_for_db_options()
+    {
+        $this->do_upon_plugin_activation();
     }
 
     /**
@@ -59,14 +69,12 @@ class Ank_Google_Map_Admin
             'div_width_unit' => 2,
             'div_height' => '300',
             'div_border_color' => '#ccc',
-            'map_Lat' => '29.453182059948965',
-            'map_Lng' => '77.7068350911577',
+            'map_Lat' => '28.613939100000003',
+            'map_Lng' => '77.20902120000005',
             'map_zoom' => 2,
-            'map_control_1' => '0',
             'map_control_2' => '0',
             'map_control_3' => '0',
             'map_control_4' => '0',
-            'map_control_5' => '0',
             'map_lang_code' => '',
             'map_type' => 1,
             'marker_on' => '1',
@@ -125,6 +133,11 @@ class Ank_Google_Map_Admin
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_js'));
     }
 
+    /**
+     * Validate form $_POST data
+     * @param $in array
+     * @return array Validated array
+     */
     function validate_form_post($in)
     {
 
@@ -137,30 +150,23 @@ class Ank_Google_Map_Admin
         $out['div_width_unit'] = intval($in['div_width_unit']);
         $out['div_border_color'] = sanitize_text_field($in['div_border_color']);
 
-        $out['disable_mouse_wheel'] = (isset($in['disable_mouse_wheel'])) ? '1' : '0';
-        $out['disable_drag_mobile'] = (isset($in['disable_drag_mobile'])) ? '1' : '0';
-
         $out['map_Lat'] = sanitize_text_field($in['map_Lat']);
         $out['map_Lng'] = sanitize_text_field($in['map_Lng']);
         $out['map_zoom'] = intval($in['map_zoom']);
 
-        $out['map_control_1'] = (isset($in['map_control_1'])) ? '1' : '0';
-        $out['map_control_2'] = (isset($in['map_control_2'])) ? '1' : '0';
-        $out['map_control_3'] = (isset($in['map_control_3'])) ? '1' : '0';
-        $out['map_control_4'] = (isset($in['map_control_4'])) ? '1' : '0';
-        $out['map_control_5'] = (isset($in['map_control_5'])) ? '1' : '0';
-
         $out['map_lang_code'] = sanitize_text_field($in['map_lang_code']);
         $out['map_type'] = intval($in['map_type']);
-        $out['marker_on'] = (isset($in['marker_on'])) ? '1' : '0';
 
         $out['marker_title'] = sanitize_text_field($in['marker_title']);
         $out['marker_anim'] = intval($in['marker_anim']);
         $out['marker_color'] = intval($in['marker_color']);
 
-        $out['info_on'] = (isset($in['info_on'])) ? '1' : '0';
-        $out['info_state'] = (isset($in['info_state'])) ? '1' : '0';
 
+        $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'marker_on', 'info_on', 'info_state');
+
+        foreach ($choices_array as $choice) {
+            $out[$choice] = (isset($in[$choice])) ? '1' : '0';
+        }
         /*
         * Lets allow some html in info window
         * This is same as like we make a new post
@@ -182,6 +188,10 @@ class Ank_Google_Map_Admin
         return $out;
     }
 
+    /**
+     * Load plugin option page view
+     * @throws \Exception
+     */
     function load_option_page()
     {
         if (!current_user_can('manage_options')) {
@@ -261,7 +271,7 @@ class Ank_Google_Map_Admin
     {
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
         wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', __FILE__), array(), AGM_PLUGIN_VERSION, 'all');
-        wp_enqueue_script('agm-google-map', '//maps.googleapis.com/maps/api/js?libraries=places', array(), null, true);
+        wp_enqueue_script('agm-google-map', '//maps.googleapis.com/maps/api/js?v=3.22&libraries=places', array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", __FILE__), array('jquery'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
