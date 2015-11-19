@@ -98,6 +98,10 @@ table.inside {
     text-align: center
 }
 
+p.submit {
+    text-align: center!important;
+}
+
 @media screen and (max-width: 782px) {
 
     .agm_tbl td:first-child {

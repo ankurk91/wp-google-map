@@ -50,7 +50,7 @@ function ank_google_map_autoloader($class_name)
     }
 }
 
-if (is_admin()) {
+if (is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
     new Ank_Google_Map_Admin();
 
 } else {
