@@ -6,13 +6,16 @@ namespace Ank91\Ank_Google_Map_Plugin;
  */
 class Ank_Google_Map_Admin
 {
-    const PLUGIN_SLUG = 'ank-google-map-options';
+    const PLUGIN_SLUG = 'agm_options_page';
+    const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
 
     function __construct()
     {
         /* To save default options upon activation */
         register_activation_hook(AGM_BASE_FILE, array($this, 'do_upon_plugin_activation'));
 
+        /* For register setting */
+        add_action('admin_init', array($this, 'register_plugin_settings'));
 
         /* Add settings link to plugin list page */
         add_filter('plugin_action_links_' . AGM_BASE_FILE, array($this, 'add_plugin_actions_links'), 10, 2);
@@ -33,6 +36,15 @@ class Ank_Google_Map_Admin
         }
 
     }
+
+    /**
+     * Register plugin settings, using WP settings API
+     */
+    function register_plugin_settings()
+    {
+        register_setting(self::PLUGIN_OPTION_GROUP, 'ank_google_map', array($this, 'validate_form_post'));
+    }
+
 
     /**
      * Returns default plugin db options
@@ -96,7 +108,7 @@ class Ank_Google_Map_Admin
      */
     function add_submenu_page()
     {
-        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'AGM_Option_Page'));
+        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
         /*
         * Add the color picker js  + css file (for settings page only)
         * Available for wp v3.5+ only
@@ -113,89 +125,76 @@ class Ank_Google_Map_Admin
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_js'));
     }
 
-
-    function AGM_Option_Page()
+    function validate_form_post($in)
     {
 
+        $out = array();
+        //always store plugin version to db
+        $out['plugin_ver'] = esc_attr(AGM_PLUGIN_VERSION);;
+
+        $out['div_width'] = sanitize_text_field($in['div_width']);
+        $out['div_height'] = sanitize_text_field($in['div_height']);
+        $out['div_width_unit'] = intval($in['div_width_unit']);
+        $out['div_border_color'] = sanitize_text_field($in['div_border_color']);
+
+        $out['disable_mouse_wheel'] = (isset($in['disable_mouse_wheel'])) ? '1' : '0';
+        $out['disable_drag_mobile'] = (isset($in['disable_drag_mobile'])) ? '1' : '0';
+
+        $out['map_Lat'] = sanitize_text_field($in['map_Lat']);
+        $out['map_Lng'] = sanitize_text_field($in['map_Lng']);
+        $out['map_zoom'] = intval($in['map_zoom']);
+
+        $out['map_control_1'] = (isset($in['map_control_1'])) ? '1' : '0';
+        $out['map_control_2'] = (isset($in['map_control_2'])) ? '1' : '0';
+        $out['map_control_3'] = (isset($in['map_control_3'])) ? '1' : '0';
+        $out['map_control_4'] = (isset($in['map_control_4'])) ? '1' : '0';
+        $out['map_control_5'] = (isset($in['map_control_5'])) ? '1' : '0';
+
+        $out['map_lang_code'] = sanitize_text_field($in['map_lang_code']);
+        $out['map_type'] = intval($in['map_type']);
+        $out['marker_on'] = (isset($in['marker_on'])) ? '1' : '0';
+
+        $out['marker_title'] = sanitize_text_field($in['marker_title']);
+        $out['marker_anim'] = intval($in['marker_anim']);
+        $out['marker_color'] = intval($in['marker_color']);
+
+        $out['info_on'] = (isset($in['info_on'])) ? '1' : '0';
+        $out['info_state'] = (isset($in['info_state'])) ? '1' : '0';
+
+        /*
+        * Lets allow some html in info window
+        * This is same as like we make a new post
+        */
+        $out['info_text'] = balanceTags(wp_kses_post($in['info_text']), true);
+
+        /*
+        * @Regx => http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
+        */
+        if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $in['map_Lat'])) {
+            add_settings_error('ank_google_map', 'agm_lat', 'Invalid Latitude Value. Please validate.');
+        } elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $in['map_Lng'])) {
+            add_settings_error('ank_google_map', 'agm_lat', 'Invalid Longitude Value. Please validate.');
+        } elseif (strlen($in['info_text']) > 1000) {
+            add_settings_error('ank_google_map', 'agm_lat', 'Info Window Text should not exceed 1000 characters. Current length is: ' . strlen($in['info_text']));
+        }
+
+
+        return $out;
+    }
+
+    function load_option_page()
+    {
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
-        /*
-        * Empty option array
-        */
-        $agm_options = array();
-        /*
-         * Fetch settings from database once
-         */
-        $agm_options = get_option('ank_google_map');
+        $file_path = __DIR__ . '/pages/options_page.php';
 
-        if (isset($_POST['save_agm_form'])) {
-            /*
-            * WP inbuilt form security check
-            */
-            check_admin_referer('agm_form', '_wpnonce-agm_form');
-            /*
-             * Begin sanitize inputs
-             */
-            $agm_options['plugin_ver'] = esc_attr(AGM_PLUGIN_VERSION);
-            $agm_options['div_width'] = sanitize_text_field($_POST['div_width']);
-            $agm_options['div_height'] = sanitize_text_field($_POST['div_height']);
-            $agm_options['div_width_unit'] = intval(sanitize_text_field($_POST['div_width_unit']));
-
-            $agm_options['div_border_color'] = sanitize_text_field($_POST['div_border_color']);
-
-            $agm_options['disable_mouse_wheel'] = (isset($_POST['disable_mouse_wheel'])) ? '1' : '0';
-            $agm_options['disable_drag_mobile'] = (isset($_POST['disable_drag_mobile'])) ? '1' : '0';
-
-            $agm_options['map_Lat'] = sanitize_text_field($_POST['map_Lat']);
-            $agm_options['map_Lng'] = sanitize_text_field($_POST['map_Lng']);
-            $agm_options['map_zoom'] = intval($_POST['map_zoom']);
-
-            $agm_options['map_control_1'] = (isset($_POST['map_control_1'])) ? '1' : '0';
-            $agm_options['map_control_2'] = (isset($_POST['map_control_2'])) ? '1' : '0';
-            $agm_options['map_control_3'] = (isset($_POST['map_control_3'])) ? '1' : '0';
-            $agm_options['map_control_4'] = (isset($_POST['map_control_4'])) ? '1' : '0';
-            $agm_options['map_control_5'] = (isset($_POST['map_control_5'])) ? '1' : '0';
-
-            $agm_options['map_lang_code'] = sanitize_text_field($_POST['map_lang_code']);
-            $agm_options['map_type'] = intval($_POST['map_type']);
-            $agm_options['marker_on'] = (isset($_POST['marker_on'])) ? '1' : '0';
-
-            $agm_options['marker_title'] = sanitize_text_field($_POST['marker_title']);
-            $agm_options['marker_anim'] = intval($_POST['marker_anim']);
-            $agm_options['marker_color'] = intval($_POST['marker_color']);
-
-            $agm_options['info_on'] = (isset($_POST['info_on'])) ? '1' : '0';
-            $agm_options['info_state'] = (isset($_POST['info_state'])) ? '1' : '0';
-
-
-            /*
-             * Lets allow some html in info window
-             * This is same as like we make a new post
-             */
-            $agm_options['info_text'] = balanceTags(wp_kses_post($_POST['info_text']), true);
-
-            /*
-             * @Regx => http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
-             */
-            if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $agm_options['map_Lat'])) {
-                echo "<div class='error notice is-dismissible'>Nothing saved, Invalid Latitude Value.</div>";
-
-            } elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $agm_options['map_Lng'])) {
-                echo "<div class='error notice is-dismissible'>Nothing saved, Invalid Longitude Value. </div>";
-
-            } elseif (strlen($agm_options['info_text']) > 1000) {
-                echo "<div class='error notice is-dismissible'>Nothing saved, Info Window Text should not exceed 1000 characters . Current Length is: " . strlen($agm_options['info_text']) . "</div>";
-            } else {
-                /* Save posted data back to database */
-                update_option('ank_google_map', $agm_options);
-                echo "<div class='updated notice is-dismissible'><p>Your settings has been <b>saved</b>.&emsp;You can always use <code>[ank_google_map]</code> shortcode.</p></div>";
-            }
-
+        if (file_exists($file_path)) {
+            require($file_path);
+        } else {
+            throw new \Exception("Unable to load settings page, Template File not found, (v" . AGM_PLUGIN_VERSION . ")");
         }
-        //load option page view
-        require_once(__DIR__ . '/pages/options_page.php');
 
     }
 
@@ -206,14 +205,12 @@ class Ank_Google_Map_Admin
      */
     private function get_text_editor($content = '')
     {
-        /**
-         * decide if browser support editor or not
-         */
+
         if (user_can_richedit()) {
             wp_editor($content, 'agm-info-editor',
                 array(
                     'media_buttons' => false, //disable media uploader
-                    'textarea_name' => 'info_text',
+                    'textarea_name' => 'ank_google_map[info_text]',
                     'textarea_rows' => 5,
                     'teeny' => false,
                     'quicktags' => true
