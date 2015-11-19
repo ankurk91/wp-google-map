@@ -13,7 +13,7 @@
 
 - - -
 
-### Prerequists
+### Prerequisite
 * php v5.3.0
 * WordPress 3.8.0
 

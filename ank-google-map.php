@@ -4,8 +4,8 @@
  * Adding namespace on top, no content allowed before namespace declaration
  */
 namespace Ank91\Ank_Google_Map_Plugin;
-?>
-<?php
+
+?><?php
 /*
 Plugin Name: Ank Google Map
 Plugin URI: https://github.com/ank91/ank-google-map
@@ -16,8 +16,8 @@ Author URI: http://ank91.github.io/
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-?>
-<?php
+?><?php
+
 /* no direct access*/
 if (!defined('ABSPATH')) exit;
 
