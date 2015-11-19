@@ -114,7 +114,7 @@ class Ank_Google_Map_Frontend
         $base_url = 'https://maps.gstatic.com/intl/en_us/mapfiles/';
         $path = array(
             /* 1 is reserved for default */
-            '2' => $base_url . 'mapfiles/marker.png',
+            '2' => $base_url . 'marker.png',
             '3' => $base_url . 'marker_black.png',
             '4' => $base_url . 'marker_grey.png',
             '5' => $base_url . 'marker_orange.png',

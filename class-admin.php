@@ -180,10 +180,7 @@ class Ank_Google_Map_Admin
             add_settings_error('ank_google_map', 'agm_lat', 'Invalid Latitude Value. Please validate.');
         } elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $in['map_Lng'])) {
             add_settings_error('ank_google_map', 'agm_lat', 'Invalid Longitude Value. Please validate.');
-        } elseif (strlen($in['info_text']) > 1000) {
-            add_settings_error('ank_google_map', 'agm_lat', 'Info Window Text should not exceed 1000 characters. Current length is: ' . strlen($in['info_text']));
         }
-
 
         return $out;
     }
