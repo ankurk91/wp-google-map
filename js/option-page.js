@@ -12,9 +12,8 @@
         var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
         var map_options = {
             draggable: width > 480,
-            overviewMapControl: true,
             center: center,
-            streetViewControl: false,
+            streetViewControl: true,
             zoom: parseInt(agm_opt.map.zoom),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: true,

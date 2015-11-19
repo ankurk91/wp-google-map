@@ -15,11 +15,12 @@
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
         var map_options = {
-            panControl: !opt.controls.panControl,
             zoomControl: !opt.controls.zoomControl,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_CENTER
+            },
             mapTypeControl: !opt.controls.mapTypeControl,
             streetViewControl: !opt.controls.streetViewControl,
-            overviewMapControl: !opt.controls.overviewMapControl,
             scrollwheel: !opt.mobile.scrollwheel,
             draggable: true,
             center: center,
@@ -28,9 +29,6 @@
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
                 position: google.maps.ControlPosition.TOP_RIGHT
-            },
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.LEFT_CENTER
             }
         };
         var map = new google.maps.Map(map_canvas_div, map_options);

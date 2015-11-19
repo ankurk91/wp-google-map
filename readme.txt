@@ -15,7 +15,7 @@ Simple and non-bloated WordPress Google Map Plugin.
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 
 
-= Some Features =
+= Notable Features =
 * Adjust map canvas height and width.
 * Responsive map, auto center map upon resize.
 * Configure map canvas border color.
@@ -44,7 +44,7 @@ Options page utilize inbuilt jQuery and Color Picker.
 It uses inbuilt WP dash-icons in Plugin Options Page.
 It uses inbuilt WP text editor on Plugin Options Page.
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.
-The whole package is about 60 kb. (~15 kb zipped).
+The whole package is about 100 kb. (~30 kb zipped).
 
 = What do you mean by Non Bloated =
 
@@ -150,7 +150,9 @@ It just a matter of a second. It will cost not more than 15 KB.
 = 1.7.2 =
 * Removed some more unused code
 * More adjustment due to recent changes
-
+* Using WP inbuilt Settings API to handle form data
+* Updated to Google Map API v3.22, read more [here](https://developers.google.com/maps/articles/v322-controls-diff)
+* Removed options : Pan control, Overview Map control
 = 1.7.1 =
 * Fix drag on mobile option stopped working
 
