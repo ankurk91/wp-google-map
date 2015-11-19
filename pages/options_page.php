@@ -35,7 +35,8 @@
                     </tr>
                     <tr>
                         <td>Border Color:</td>
-                        <td><input placeholder="Color" type="text" id="agm_color_field" name="ank_google_map[div_border_color]"
+                        <td><input placeholder="Color" type="text" id="agm_color_field"
+                                   name="ank_google_map[div_border_color]"
                                    value="<?php echo esc_attr($options['div_border_color']); ?>"><i
                                 style="vertical-align: top">Border will be 1px solid. Leave empty to
                                 disable.</i></td>
@@ -49,7 +50,8 @@
                     <tr>
                         <td></td>
                         <td><label><input <?php checked($options['disable_drag_mobile'], '1') ?>
-                                    type="checkbox" name="ank_google_map[disable_drag_mobile]">Disable Dragging on Mobile
+                                    type="checkbox" name="ank_google_map[disable_drag_mobile]">Disable Dragging on
+                                Mobile
                                 Devices</label></td>
                     </tr>
                 </table>
@@ -81,10 +83,7 @@
                     </tr>
                     <tr>
                         <td>Disable Controls:</td>
-                        <td><input <?php checked($options['map_control_1'], '1') ?> type="checkbox"
-                                                                                    name="ank_google_map[map_control_1]"
-                                                                                    id="map_control_1"><label
-                                for="map_control_1">Disable Pan Control</label><br>
+                        <td>
                             <input <?php checked($options['map_control_2'], '1') ?> type="checkbox"
                                                                                     name="ank_google_map[map_control_2]"
                                                                                     id="map_control_2"><label
@@ -96,17 +95,14 @@
                             <input <?php checked($options['map_control_4'], '1') ?> type="checkbox"
                                                                                     name="ank_google_map[map_control_4]"
                                                                                     id="map_control_4"><label
-                                for="map_control_4">Disable StreetView Control</label><br>
-                            <input <?php checked($options['map_control_5'], '1') ?> type="checkbox"
-                                                                                    name="ank_google_map[map_control_5]"
-                                                                                    id="map_control_5"><label
-                                for="map_control_5">Enable OverviewMap Control</label>
+                                for="map_control_4">Disable StreetView Control</label>
                         </td>
                     </tr>
                     <tr>
                         <td>Language Code:</td>
                         <td><input placeholder="empty=auto" pattern="([A-Za-z\-]){2,5}"
-                                   title="Language Code Like: en OR en-US" type="text" name="ank_google_map[map_lang_code]"
+                                   title="Language Code Like: en OR en-US" type="text"
+                                   name="ank_google_map[map_lang_code]"
                                    value="<?php echo esc_attr($options['map_lang_code']); ?>">
                             <a title="Language Code List"
                                href="https://developers.google.com/maps/faq#languagesupport" target="_blank"
@@ -206,16 +202,17 @@
                 <table class="agm_tbl inside">
                     <tr>
                         <td>Enable Info Window:</td>
-                        <td><input <?php checked($options['info_on'], '1') ?> type="checkbox" name="ank_google_map[info_on]"
-                                                                                  id="agm_info_on">
+                        <td><input <?php checked($options['info_on'], '1') ?> type="checkbox"
+                                                                              name="ank_google_map[info_on]"
+                                                                              id="agm_info_on">
                             <label for="agm_info_on">Check to enable <i style="display: none">(also needs marker
                                     to be enabled)</i></label></td>
                     </tr>
                     <tr>
                         <td>Info Window State:</td>
                         <td><input <?php checked($options['info_state'], '1') ?> type="checkbox"
-                                                                                     name="ank_google_map[info_state]"
-                                                                                     id="agm_info_state">
+                                                                                 name="ank_google_map[info_state]"
+                                                                                 id="agm_info_state">
                             <label for="agm_info_state">Show by default</label></td>
                     </tr>
                     <tr>
@@ -237,7 +234,7 @@
     <p class="dev-info">
         Created with &hearts; by <a target="_blank" href="https://ank91.github.io/"> Ankur Kumar</a> |
         Fork on <a target="_blank" href="https://github.com/ank91/ank-google-map">GitHub</a> |
-        ★ Rate on <a target="_blank" href="https://wordpress.org/plugins/ank-google-map">WordPress</a>
+        ★ Rate on <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/ank-google-map?filter=5">WordPress</a>
     </p>
     <!--dev info ends-->
     <?php if (isset($_GET['debug']) || WP_DEBUG) {
