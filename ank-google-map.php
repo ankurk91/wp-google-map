@@ -18,8 +18,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 ?><?php
 
-/* no direct access*/
-if (!defined('ABSPATH')) exit;
+/* No direct access */
+if (!defined('ABSPATH')) die;
 
 define('AGM_PLUGIN_VERSION', '1.7.2');
 define('AGM_BASE_FILE', plugin_basename(__FILE__));

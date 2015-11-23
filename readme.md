@@ -15,7 +15,7 @@
 
 ### Prerequisite
 * php v5.3.0
-* WordPress 3.8.0
+* WordPress v3.8.0
 
 - - -
 #### Quick Links
