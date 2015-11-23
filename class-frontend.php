@@ -35,7 +35,7 @@ class Ank_Google_Map_Frontend
         );
 
         $marker_anim_array = array(
-            1 => 'NONE',//none
+            1 => 'NONE',
             2 => 'BOUNCE',
             3 => 'DROP',
         );
