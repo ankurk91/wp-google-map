@@ -3,7 +3,7 @@
 
     var agm_opt = window._agm_opt;
 
-    function $By_ID(a) {
+    function $getById(a) {
         return document.querySelector('#' + a) || document.getElementById(a);
     }
 
@@ -11,7 +11,7 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
         var map_options = {
-            draggable: width > 480,
+            draggable: (width > 480),
             center: center,
             streetViewControl: true,
             zoom: parseInt(agm_opt.map.zoom),
@@ -32,6 +32,7 @@
             agm_lng = jQuery('#agm_lng'),
             agm_zoom = jQuery('#agm_zoom'),
             agm_zoom_pre = jQuery('#agm_zoom_pre');
+
         var marker = new google.maps.Marker({
             draggable: true,
             position: center,
@@ -64,7 +65,7 @@
             map.setZoom(parseInt(agm_zoom.val()));
         });
         /* Auto-complete feature */
-        var map_auto = new google.maps.places.Autocomplete($By_ID('agm_autocomplete'));
+        var map_auto = new google.maps.places.Autocomplete($getById('agm_autocomplete'));
         google.maps.event.addListener(map_auto, 'place_changed', function () {
             var place = map_auto.getPlace();
             if (place.geometry) {
@@ -80,7 +81,7 @@
 
 
     /* Prepare to load google map */
-    var map_canvas_div = $By_ID("agm_map_canvas");
+    var map_canvas_div = $getById("agm_map_canvas");
     if (typeof google == "object" && google.maps) {
         google.maps.event.addDomListener(window, "load", _loadGoogleMap)
     }
@@ -93,9 +94,10 @@
          * Prevent form submission when user press enter key in auto-complete
          */
         $("#agm_autocomplete").keydown(function (e) {
-            if (e.which == 13 || e.which == 13) {
+            if (e.keyCode == 13 || e.which == 13) {
                 e.preventDefault();
                 e.stopPropagation();
+                return false;
             }
         });
         /**

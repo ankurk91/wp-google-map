@@ -232,12 +232,12 @@
         </form>
     </div><!--post stuff ends-->
     <p class="dev-info">
-        Created with &hearts; by <a target="_blank" href="https://ank91.github.io/"> Ankur Kumar</a> |
+        Created with &hearts; by <a target="_blank" href="https://ank91.github.io/">Ankur Kumar</a> |
         Fork on <a target="_blank" href="https://github.com/ank91/ank-google-map">GitHub</a> |
         ★ Rate on <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/ank-google-map?filter=5">WordPress</a>
     </p>
     <!--dev info ends-->
-    <?php if (isset($_GET['debug']) || WP_DEBUG) {
+    <?php if (WP_DEBUG == true) {
         echo '<hr><p><h5>Showing Debugging Info:</h5>';
         var_dump($options);
         echo '</p><hr>';

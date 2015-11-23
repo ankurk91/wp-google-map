@@ -179,7 +179,7 @@ class Ank_Google_Map_Admin
         if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $in['map_Lat'])) {
             add_settings_error('ank_google_map', 'agm_lat', 'Invalid Latitude Value. Please validate.');
         } elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $in['map_Lng'])) {
-            add_settings_error('ank_google_map', 'agm_lat', 'Invalid Longitude Value. Please validate.');
+            add_settings_error('ank_google_map', 'agm_lng', 'Invalid Longitude Value. Please validate.');
         }
 
         return $out;
