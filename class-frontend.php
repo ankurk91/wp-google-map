@@ -91,7 +91,7 @@ class Ank_Google_Map_Frontend
         echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
 
         // Enqueue google map api
-        $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '?language=' . esc_attr($options['map_lang_code']);
+        $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '&language=' . esc_attr($options['map_lang_code']);
         wp_enqueue_script('agm-google-map-api', "//maps.googleapis.com/maps/api/js?v=3.22" . $lang_code, array(), null, true);
 
         // Enqueue frontend js file

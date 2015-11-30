@@ -2,7 +2,7 @@
 
 - - -
 [![WordPress downloads](https://img.shields.io/wordpress/plugin/dt/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
-[![WordPress compatable](https://img.shields.io/wordpress/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
+[![WordPress compatibility](https://img.shields.io/wordpress/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress plugin version](https://img.shields.io/wordpress/plugin/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress rating](https://img.shields.io/wordpress/plugin/r/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 
