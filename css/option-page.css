@@ -1,6 +1,6 @@
-input[type=range], select {
-    cursor: pointer
-}
+/**
+* Ank Google Map Options Page css
+*/
 
 .agm_tbl {
     width: 100%;
@@ -25,16 +25,8 @@ input[type=range], select {
     margin: 0 auto
 }
 
-option[selected] {
-    color: #0076b3
-}
-
 #agm_zoom_pre {
     color: #2290d1
-}
-
-.gmnoprint img {
-    max-width: none;
 }
 
 #agm_auto_holder {
@@ -57,16 +49,6 @@ option[selected] {
     font-weight: bolder;
 }
 
-.hndle {
-    cursor: default !important;
-    background: #F5F5F5;
-    border-bottom-color: #DFDFDF !important;
-}
-
-table.inside {
-    margin: 15px 10px !important;
-}
-
 .agm-left-col {
     width: 40%;
     float: left;
@@ -83,14 +65,14 @@ table.inside {
     padding: 5px;
 }
 
-.clearfix {
-    clear: both;
-    height: 1px
-}
-
 .agm-map-tip {
     text-align: center;
     margin: 0 0 10px 0;
+}
+
+.clearfix {
+    clear: both;
+    height: 1px
 }
 
 .dev-info {
@@ -99,9 +81,41 @@ table.inside {
 }
 
 p.submit {
-    text-align: center!important;
+    text-align: center !important;
 }
 
+/* Other tweaks */
+input[type=range], select {
+    cursor: pointer
+}
+
+option[selected] {
+    color: #0076b3
+}
+
+/**
+* Override wp default style
+*/
+.hndle {
+    cursor: default !important;
+    background: #F5F5F5;
+    border-bottom-color: #DFDFDF !important;
+}
+
+table.inside {
+    margin: 15px 10px !important;
+}
+
+/**
+* Fixes for map canvas
+*/
+.gmnoprint img {
+    max-width: none;
+}
+
+/**
+* Make it responsive
+*/
 @media screen and (max-width: 782px) {
 
     .agm_tbl td:first-child {

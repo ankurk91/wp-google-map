@@ -79,7 +79,7 @@ Then flush your WP cache and refresh target page.
 = Where does it store settings and options ? =
 
 WP Database->wp-options->ank_google_map.
-Uses a Single Row, stored in array for faster access.
+Uses a single row, stored in array for faster access.
 
 = From where does it loads additional Marker (colored) images ? =
 
