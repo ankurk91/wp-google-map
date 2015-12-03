@@ -1,7 +1,7 @@
 === Ank Google Map ===
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
-Tested up to: 4.3.1
+Tested up to: 4.4.0
 Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -149,6 +149,7 @@ It just a matter of a second. It will cost not more than 15 KB.
 
 = 1.7.3 =
 * Minor bug fixes
+* Tested upto WordPress v4.4.0
 
 = 1.7.2 =
 * More adjustment due to recent changes, remove unused code
