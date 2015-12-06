@@ -1,8 +1,8 @@
 <?php
 namespace Ank91\Ank_Google_Map_Plugin;
 /**
- * Front end class for this plugin
  * Class Ank_Google_Map_Frontend
+ * @package Ank91\Ank_Google_Map_Plugin
  */
 class Ank_Google_Map_Frontend
 {
@@ -96,7 +96,7 @@ class Ank_Google_Map_Frontend
 
         // Enqueue frontend js file
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
-        wp_enqueue_script('agm-frontend-js', plugins_url('js/frontend' . $is_min . '.js', __FILE__), array('agm-google-map-api'), AGM_PLUGIN_VERSION, true);
+        wp_enqueue_script('agm-frontend-js', plugins_url('js/frontend' . $is_min . '.js', AGM_BASE_FILE), array('agm-google-map-api'), AGM_PLUGIN_VERSION, true);
 
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-frontend-js', '_agm_opt', $this->get_js_options());
