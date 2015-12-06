@@ -1,4 +1,4 @@
-(function (window, document, jQuery, google) {
+(function (window, document, jQuery) {
     'use strict';
 
     var agm_opt = window._agm_opt;
@@ -79,7 +79,6 @@
     }
 
 
-
     /* Prepare to load google map */
     var map_canvas_div = $getById("agm_map_canvas");
     if (typeof google == "object" && google.maps) {
@@ -115,4 +114,4 @@
             $('#agm_color_field').wpColorPicker();
         }
     });
-})(window, document, jQuery, google);
+})(window, document, jQuery);

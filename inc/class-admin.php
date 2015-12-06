@@ -9,16 +9,17 @@ class Ank_Google_Map_Admin
     const PLUGIN_SLUG = 'agm_options_page';
     const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
 
+
     function __construct()
     {
         /* To save default options upon activation */
-        register_activation_hook(AGM_BASE_FILE, array($this, 'do_upon_plugin_activation'));
+        register_activation_hook(plugin_basename(AGM_BASE_FILE), array($this, 'do_upon_plugin_activation'));
 
         /* For register setting */
         add_action('admin_init', array($this, 'register_plugin_settings'));
 
         /* Add settings link to plugin list page */
-        add_filter('plugin_action_links_' . AGM_BASE_FILE, array($this, 'add_plugin_actions_links'), 10, 2);
+        add_filter('plugin_action_links_' . plugin_basename(AGM_BASE_FILE), array($this, 'add_plugin_actions_links'), 10, 2);
 
         /* Add settings link under admin->settings menu->ank google map */
         add_action('admin_menu', array($this, 'add_submenu_page'));
@@ -118,14 +119,14 @@ class Ank_Google_Map_Admin
     {
         $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
         /*
-        * Add the color picker js  + css file (for settings page only)
+        * Add the color picker js  + css file to option page
         * Available for wp v3.5+ only
         */
-        if (version_compare($GLOBALS['wp_version'], 3.5) >= 0) {
+        if ($this->is_color_picker_supported()) {
             add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_color_picker'));
         }
 
-        /* add help drop down menu on option page  wp v3.3+ */
+        /* Add help drop down menu on option page,  wp v3.3+ */
         if (version_compare($GLOBALS['wp_version'], '3.3', '>=')) {
             add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
         }
@@ -174,7 +175,7 @@ class Ank_Google_Map_Admin
         $out['info_text'] = balanceTags(wp_kses_post($in['info_text']), true);
 
         /*
-        * @Regx => http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
+        * @reference http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
         */
         if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $in['map_Lat'])) {
             add_settings_error('ank_google_map', 'agm_lat', 'Invalid Latitude Value. Please validate.');
@@ -195,12 +196,12 @@ class Ank_Google_Map_Admin
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
-        $file_path = __DIR__ . '/pages/options_page.php';
+        $file_path = plugin_dir_path(AGM_BASE_FILE) . 'views/options_page.php';
 
         if (file_exists($file_path)) {
-            require($file_path);
+            require $file_path;
         } else {
-            throw new \Exception("Unable to load settings page, Template File not found, (v" . AGM_PLUGIN_VERSION . ")");
+            throw new \Exception("Unable to load settings page, Template File '".esc_html($file_path)."'' not found, (v" . AGM_PLUGIN_VERSION . ")");
         }
 
     }
@@ -257,7 +258,7 @@ class Ank_Google_Map_Admin
                 'lng' => esc_attr($options['map_Lng']),
                 'zoom' => absint($options['map_zoom']),
             ),
-            'color_picker' => (version_compare($GLOBALS['wp_version'], 3.5) >= 0)
+            'color_picker' => $this->is_color_picker_supported()
         );
     }
 
@@ -267,11 +268,16 @@ class Ank_Google_Map_Admin
     function print_admin_js()
     {
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
-        wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', __FILE__), array(), AGM_PLUGIN_VERSION, 'all');
+        wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
         wp_enqueue_script('agm-google-map', '//maps.googleapis.com/maps/api/js?v=3.22&libraries=places', array(), null, true);
-        wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", __FILE__), array('jquery'), AGM_PLUGIN_VERSION, true);
+        wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
+    }
+
+    private function is_color_picker_supported()
+    {
+        return (version_compare($GLOBALS['wp_version'], '3.5') >= 0);
     }
 
     /*
