@@ -14,10 +14,11 @@
 logs/
 *.log
 npm-debug.log*
+error_log
 
 
 # OS generated files
-Thumbs.db
+[Tt]humbs.db
 ehthumbs.db
 *~
 .*~
@@ -34,8 +35,9 @@ $RECYCLE.BIN/
 
 
 # Folder config file
-Desktop.ini
-.DS_Store
+[Dd]esktop.ini
+*.DS_store
+.DS_store?
 
 
 # node packages
@@ -46,3 +48,9 @@ node_modules/
 # bower packages
 bower_components/
 
+# svn folders
+.svn
+
+# composer
+vendor/
+composer.phar

@@ -1,4 +1,4 @@
-(function (window, document, google) {
+(function (window, document) {
     'use strict';
 
     /**
@@ -8,7 +8,6 @@
         return;
     }
     var opt = window._agm_opt;
-
 
     function _loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -117,4 +116,4 @@
     }
 
 
-})(window, document, google);
+})(window, document);
