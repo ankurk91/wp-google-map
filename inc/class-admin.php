@@ -169,16 +169,6 @@ class Ank_Google_Map_Admin
         * This is same as like we make a new post
         */
         $out['info_text'] = balanceTags(wp_kses_post($in['info_text']), true);
-
-        /*
-        * @reference http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
-        */
-        if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $in['map_Lat'])) {
-            add_settings_error('ank_google_map', 'agm_lat', 'Invalid Latitude Value. Please validate.');
-        } elseif (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $in['map_Lng'])) {
-            add_settings_error('ank_google_map', 'agm_lng', 'Invalid Longitude Value. Please validate.');
-        }
-
         return $out;
     }
 
@@ -264,7 +254,7 @@ class Ank_Google_Map_Admin
     {
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
         wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
-        wp_enqueue_script('agm-google-map', '//maps.googleapis.com/maps/api/js?v=3.22&libraries=places', array(), null, true);
+        wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.22&libraries=places', array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
