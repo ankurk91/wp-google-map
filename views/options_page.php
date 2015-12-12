@@ -144,7 +144,7 @@
                     Options</h3>
                 <table class="agm_tbl inside">
                     <tr>
-                        <td>Enable marker:</td>
+                        <td>Enable Marker:</td>
                         <td><input <?php checked($options['marker_on'], '1') ?> type="checkbox"
                                                                                 name="ank_google_map[marker_on]"
                                                                                 id="agm_mark_on">
@@ -219,7 +219,6 @@
                         <td>Info Window Text:</td>
                         <td>
                             <?php $this->get_text_editor(stripslashes($options['info_text'])); ?>
-                            <i>HTML tags are allowed, Max 1000 characters.</i>
                         </td>
                     </tr>
                     <tr>

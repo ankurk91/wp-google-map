@@ -3,7 +3,7 @@
  * Main php file for 'Ank_Google_Map' plugin
  * Adding namespace on top, no content allowed before namespace declaration
  */
-namespace Ank91\Ank_Google_Map_Plugin;
+namespace Ank91\Plugins\Ank_Google_Map;
 
 ?><?php
 /*

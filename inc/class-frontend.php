@@ -1,5 +1,5 @@
 <?php
-namespace Ank91\Ank_Google_Map_Plugin;
+namespace Ank91\Plugins\Ank_Google_Map;
 /**
  * Class Ank_Google_Map_Frontend
  * @package Ank91\Ank_Google_Map_Plugin
@@ -92,7 +92,7 @@ class Ank_Google_Map_Frontend
 
         // Enqueue google map api
         $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '&language=' . esc_attr($options['map_lang_code']);
-        wp_enqueue_script('agm-google-map-api', "//maps.googleapis.com/maps/api/js?v=3.22" . $lang_code, array(), null, true);
+        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.22" . $lang_code, array(), null, true);
 
         // Enqueue frontend js file
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
