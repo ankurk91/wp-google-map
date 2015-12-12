@@ -1,5 +1,5 @@
 <?php
-namespace Ank91\Ank_Google_Map_Plugin;
+namespace Ank91\Plugins\Ank_Google_Map;
 /**
  * Class Ank_Google_Map_Admin
  * @package Ank91\Ank_Google_Map_Plugin
@@ -122,14 +122,10 @@ class Ank_Google_Map_Admin
         * Add the color picker js  + css file to option page
         * Available for wp v3.5+ only
         */
-        if ($this->is_color_picker_supported()) {
-            add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_color_picker'));
-        }
+        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_color_picker'));
 
         /* Add help drop down menu on option page,  wp v3.3+ */
-        if (version_compare($GLOBALS['wp_version'], '3.3', '>=')) {
-            add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
-        }
+        add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
 
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_js'));
     }
@@ -201,7 +197,7 @@ class Ank_Google_Map_Admin
         if (file_exists($file_path)) {
             require $file_path;
         } else {
-            throw new \Exception("Unable to load settings page, Template File '".esc_html($file_path)."'' not found, (v" . AGM_PLUGIN_VERSION . ")");
+            throw new \Exception("Unable to load settings page, Template File '" . esc_html($file_path) . "'' not found, (v" . AGM_PLUGIN_VERSION . ")");
         }
 
     }
@@ -228,7 +224,7 @@ class Ank_Google_Map_Admin
             /*
              * else Show normal text-area to user
              */
-            echo '<textarea maxlength="1000" rows="3" cols="33" name="info_text" style="width: 98%">' . $content . '</textarea>';
+            echo '<textarea rows="3" cols="33" name="info_text" style="width: 98%">' . $content . '</textarea>';
         }
     }
 
@@ -257,8 +253,7 @@ class Ank_Google_Map_Admin
                 'lat' => esc_attr($options['map_Lat']),
                 'lng' => esc_attr($options['map_Lng']),
                 'zoom' => absint($options['map_zoom']),
-            ),
-            'color_picker' => $this->is_color_picker_supported()
+            )
         );
     }
 
@@ -273,11 +268,6 @@ class Ank_Google_Map_Admin
         wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
-    }
-
-    private function is_color_picker_supported()
-    {
-        return (version_compare($GLOBALS['wp_version'], '3.5') >= 0);
     }
 
     /*

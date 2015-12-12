@@ -108,10 +108,12 @@
                 $(this).next('label').find('i:not(:visible)').fadeIn();
         });
         /**
-         * Check if color picker is available
+         * Load color picker, but be fail safe
          */
-        if (agm_opt.color_picker == 1) {
+        try {
             $('#agm_color_field').wpColorPicker();
+        } catch (e) {
+            console.error('WP Color Picker not loaded');
         }
     });
 })(window, document, jQuery);
