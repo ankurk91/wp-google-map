@@ -63,13 +63,13 @@
                 <table class="agm_tbl inside">
                     <tr>
                         <td>Latitude:</td>
-                        <td><input id="agm_lat" pattern="-?\d{1,3}\.\d+" title="Latitude"
+                        <td><input id="agm_lat" pattern="-?\d{1,3}\.\d+" title="Valid Latitude"
                                    placeholder='33.123333' type="text" required name="ank_google_map[map_Lat]"
                                    value="<?php echo esc_attr($options['map_Lat']); ?>"></td>
                     </tr>
                     <tr>
                         <td>Longitude:</td>
-                        <td><input id="agm_lng" pattern="-?\d{1,3}\.\d+" title="Longitude"
+                        <td><input id="agm_lng" pattern="-?\d{1,3}\.\d+" title="Valid Longitude"
                                    placeholder='77.456789' type="text" required name="ank_google_map[map_Lng]"
                                    value="<?php echo esc_attr($options['map_Lng']); ?>"></td>
                     </tr>
