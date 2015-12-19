@@ -184,7 +184,7 @@ class Ank_Google_Map_Admin
 
         $file_path = plugin_dir_path(AGM_BASE_FILE) . 'views/options_page.php';
 
-        if (file_exists($file_path)) {
+        if (is_readable($file_path)) {
             require $file_path;
         } else {
             throw new \Exception("Unable to load settings page, Template File '" . esc_html($file_path) . "'' not found, (v" . AGM_PLUGIN_VERSION . ")");
