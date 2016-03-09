@@ -237,11 +237,8 @@
     </p>
     <!--dev info ends-->
     <?php if (WP_DEBUG == true) {
-        echo '<hr><p><h5>Showing Debugging Info:</h5>';
+        echo '<hr><p><h5>Showing Debugging Info:</h5><pre>';
         var_dump($options);
-        echo '</p><hr>';
+        echo '</pre></p><hr>';
     } ?>
 </div><!-- end wrap-->
-<script type="text/javascript">
-    window.jQuery || console.error('Could not find jQuery. Ank Google Map option page needs jQuery to work.')
-</script>

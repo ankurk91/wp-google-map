@@ -117,7 +117,7 @@ class Ank_Google_Map_Admin
      */
     function add_submenu_page()
     {
-        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Ank Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
+        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
         /*
         * Add the color picker js  + css file to option page
         * Available for wp v3.5+ only
