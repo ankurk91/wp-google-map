@@ -19,7 +19,7 @@ matrix:
 
 # git configs
 git:
-  depth: 10
+  depth: 1
 
 # The platforms you wants to test against
 os:
