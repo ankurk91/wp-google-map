@@ -96,7 +96,7 @@ class Ank_Google_Map_Frontend
         //Decide API key
         $api_key = $this->getAPIKey() ? '&key=' . $this->getAPIKey() : '';
         // Enqueue google map api
-        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.22" . $lang_code . $api_key, array(), null, true);
+        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.24" . $lang_code . $api_key, array(), null, true);
 
         // Enqueue frontend js file
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
