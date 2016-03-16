@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.4.2
-Stable tag: 1.7.5
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: ank91
@@ -129,6 +129,13 @@ Possible reasons are -
 * Other plugin's java script conflict. (Try disabling them one by one).
 * This plugin has a problem/bug. (Report it now).
 
+= How do i insert the API key ? =
+* Obtain a browser key , see steps [here](https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key)
+* Add this line of code to your `functions.php`
+
+`
+define('AGM_API_KEY', 'PASTE_YOUR_API_KEY_HERE');
+`
 
 = Future Plans ? =
 
@@ -146,6 +153,9 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.6 =
+* Allow developers to add API key to google map (see FAQ)
 
 = 1.7.4 =
 * Minor bug fixes
