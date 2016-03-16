@@ -14,7 +14,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 /* No direct access */
 if (!defined('ABSPATH')) die;
 
-define('AGM_PLUGIN_VERSION', '1.7.5');
+define('AGM_PLUGIN_VERSION', '1.7.6');
 define('AGM_BASE_FILE', __FILE__);
 
 
