@@ -55,7 +55,7 @@ class Ank_Google_Map_Frontend
             ),
             'info_window' => array(
                 'enabled' => absint($options['info_on']),
-                'text' => wp_slash($options['info_text']),
+                'text' => wp_unslash($options['info_text']),
                 'state' => absint($options['info_state']),
             ),
             //disabled controls, 1=disabled
