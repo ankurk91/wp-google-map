@@ -55,7 +55,7 @@ class Ank_Google_Map_Frontend
             ),
             'info_window' => array(
                 'enabled' => absint($options['info_on']),
-                'text' => wp_slash($options['info_text']),
+                'text' => wp_unslash($options['info_text']),
                 'state' => absint($options['info_state']),
             ),
             //disabled controls, 1=disabled
@@ -90,9 +90,13 @@ class Ank_Google_Map_Frontend
         $b_color = ($options["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($options["div_border_color"]);
         echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
 
-        // Enqueue google map api
+
+        //Decide language code
         $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '&language=' . esc_attr($options['map_lang_code']);
-        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.22" . $lang_code, array(), null, true);
+        //Decide API key
+        $api_key = $this->getAPIKey() ? '&key=' . $this->getAPIKey() : '';
+        // Enqueue google map api
+        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.24" . $lang_code . $api_key, array(), null, true);
 
         // Enqueue frontend js file
         $is_min = (WP_DEBUG == 1) ? '' : '.min';
@@ -129,6 +133,20 @@ class Ank_Google_Map_Frontend
             return false;
         }
 
+    }
+
+    /**
+     * Check if user has defined the constant or not and return the constant value
+     * @return bool|string
+     */
+    private function getAPIKey()
+    {
+        if (defined('AGM_API_KEY')) {
+            if (!empty(AGM_API_KEY)) {
+                return trim(AGM_API_KEY);
+            }
+        }
+        return false;
     }
 
 
