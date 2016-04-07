@@ -157,6 +157,7 @@ It just a matter of a second. It will cost not more than 15 KB.
 = 1.7.6 =
 * Allow developers to add API key to google map (see FAQ)
 * Bump Google Map API version to 3.24
+* Fixed a bug in InfoWindow text
 
 = 1.7.4 =
 * Minor bug fixes
