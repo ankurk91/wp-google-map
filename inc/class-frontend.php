@@ -142,9 +142,7 @@ class Ank_Google_Map_Frontend
     private function getAPIKey()
     {
         if (defined('AGM_API_KEY')) {
-            if (!empty(AGM_API_KEY)) {
-                return trim(AGM_API_KEY);
-            }
+            return trim(AGM_API_KEY);
         }
         return false;
     }
