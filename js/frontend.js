@@ -1,15 +1,9 @@
 (function (window, document) {
     'use strict';
 
-    /**
-     * If options not found then return early
-     */
-    if (typeof window._agm_opt === 'undefined') {
-        return;
-    }
     var opt = window._agm_opt;
 
-    function _loadGoogleMap() {
+    function loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
@@ -33,7 +27,7 @@
         var map = new google.maps.Map(map_canvas_div, map_options);
 
         if (opt.mobile.draggable) {
-            map.setOptions({draggable: (width > 480)});
+            map.setOptions({draggable: (width > 480) || !isTouchDevice()});
         }
 
 
@@ -103,16 +97,25 @@
         });
     }
 
-
     var map_canvas_div = document.getElementById("agm_map_canvas");
     if (typeof map_canvas_div !== 'undefined') {
         if (typeof google == "object" && google.maps) {
-            google.maps.event.addDomListener(window, "load", _loadGoogleMap)
+            google.maps.event.addDomListener(window, "load", loadGoogleMap)
         }
         else {
             map_canvas_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
             map_canvas_div.style.height = "auto";
         }
+    }
+
+    /**
+     * Detect if touch enabled device
+     * @source http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+     * @returns {boolean|*}
+     */
+    function isTouchDevice() {
+        return 'ontouchstart' in window        // works on most browsers
+            || navigator.maxTouchPoints;       // works on IE10/11 and Surface
     }
 
 
