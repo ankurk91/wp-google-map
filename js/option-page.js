@@ -1,4 +1,4 @@
-(function (window, document, jQuery) {
+(function (window, document, $) {
     'use strict';
 
     var agm_opt = window._agm_opt;
@@ -10,8 +10,9 @@
     function _loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
+
         var map_options = {
-            draggable: (width > 480),
+            draggable: (width > 480) || !isTouchDevice(),
             center: center,
             streetViewControl: true,
             zoom: parseInt(agm_opt.map.zoom),
@@ -28,10 +29,10 @@
         };
         var map = new google.maps.Map(map_canvas_div, map_options);
 
-        var agm_lat = jQuery('#agm_lat'),
-            agm_lng = jQuery('#agm_lng'),
-            agm_zoom = jQuery('#agm_zoom'),
-            agm_zoom_pre = jQuery('#agm_zoom_pre');
+        var agm_lat = $('#agm_lat'),
+            agm_lng = $('#agm_lng'),
+            agm_zoom = $('#agm_zoom'),
+            agm_zoom_pre = $('#agm_zoom_pre');
 
         var marker = new google.maps.Marker({
             draggable: true,
@@ -59,11 +60,13 @@
             agm_lat.val(location.lat());
             agm_lng.val(location.lng());
         });
+
         /*zoom slider control*/
         agm_zoom.on('input click', function () {
             agm_zoom_pre.html(this.value);
             map.setZoom(parseInt(agm_zoom.val()));
         });
+
         /* Auto-complete feature */
         var map_auto = new google.maps.places.Autocomplete($getById('agm_autocomplete'));
         google.maps.event.addListener(map_auto, 'place_changed', function () {
@@ -88,32 +91,42 @@
         map_canvas_div.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
     }
 
-    jQuery(function ($) {
-        /**
-         * Prevent form submission when user press enter key in auto-complete
-         */
-        $("#agm_autocomplete").keydown(function (e) {
-            if (e.keyCode == 13 || e.which == 13) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            }
-        });
-        /**
-         * Show a message
-         * Info window needs marker to enabled first
-         */
-        $("#agm_info_on").click(function () {
-            if ($(this).is(":checked"))
-                $(this).next('label').find('i:not(:visible)').fadeIn();
-        });
-        /**
-         * Load color picker, but be fail safe
-         */
-        try {
-            $('#agm_color_field').wpColorPicker();
-        } catch (e) {
-            console.error('WP Color Picker not loaded');
+
+    /**
+     * Prevent form submission when user press enter key in auto-complete
+     */
+    $("#agm_autocomplete").keydown(function (e) {
+        if (e.keyCode == 13 || e.which == 13) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         }
     });
+    /**
+     * Show a message
+     * Info window needs marker to enabled first
+     */
+    $("#agm_info_on").click(function () {
+        if ($(this).is(":checked"))
+            $(this).next('label').find('i:not(:visible)').fadeIn(0);
+    });
+    /**
+     * Load color picker, but be fail safe
+     */
+    try {
+        $('#agm_color_field').wpColorPicker();
+    } catch (e) {
+        console.error('WP Color Picker not loaded');
+    }
+
+    /**
+     * Detect if touch enabled device
+     * @source http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+     * @returns {boolean|*}
+     */
+    function isTouchDevice() {
+        return 'ontouchstart' in window        // works on most browsers
+            || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+    }
+
 })(window, document, jQuery);
