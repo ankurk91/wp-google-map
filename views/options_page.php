@@ -238,7 +238,7 @@
     <!--dev info ends-->
     <?php if (WP_DEBUG == true) {
         echo '<hr><p><h5>Showing Debugging Info:</h5><pre>';
-        var_dump($options);
+        print_r($options);
         echo '</pre></p><hr>';
     } ?>
 </div><!-- end wrap-->
