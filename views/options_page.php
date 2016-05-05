@@ -1,7 +1,6 @@
 <div class="wrap">
     <h2>Ank Google Map
         <small>(v<?php echo AGM_PLUGIN_VERSION; ?>)</small>
-        Settings
     </h2>
     <div id="poststuff">
         <form action="<?php echo admin_url('options.php') ?>" method="post" id="agm_form">
@@ -236,9 +235,9 @@
         ★ Rate on <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/ank-google-map?filter=5">WordPress</a>
     </p>
     <!--dev info ends-->
-    <?php if (WP_DEBUG == true) {
+    <?php if (defined('WP_DEBUG') && WP_DEBUG == true) {
         echo '<hr><p><h5>Showing Debugging Info:</h5><pre>';
-        var_dump($options);
+        print_r($options);
         echo '</pre></p><hr>';
     } ?>
 </div><!-- end wrap-->

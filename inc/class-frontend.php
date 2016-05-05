@@ -88,7 +88,7 @@ class Ank_Google_Map_Frontend
         //Write canvas html always
         $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
         $b_color = ($options["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($options["div_border_color"]);
-        echo '<div id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
+        echo '<div class="agm_map_canvas" id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
 
 
         //Decide language code
@@ -99,7 +99,7 @@ class Ank_Google_Map_Frontend
         wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.24" . $lang_code . $api_key, array(), null, true);
 
         // Enqueue frontend js file
-        $is_min = (WP_DEBUG == 1) ? '' : '.min';
+        $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
         wp_enqueue_script('agm-frontend-js', plugins_url('js/frontend' . $is_min . '.js', AGM_BASE_FILE), array('agm-google-map-api'), AGM_PLUGIN_VERSION, true);
 
         //wp inbuilt hack to print js options object just before this script
