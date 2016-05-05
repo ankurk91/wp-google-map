@@ -6,9 +6,8 @@
  */
 
 
-// If uninstall not called from WordPress do exit
-
-if (!defined('ABSPATH') && !defined('WP_UNINSTALL_PLUGIN'))
+// Make sure that we are uninstalling
+if (!defined('WP_UNINSTALL_PLUGIN'))
     exit;
 
 
