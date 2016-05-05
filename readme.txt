@@ -1,8 +1,8 @@
 === Ank Google Map ===
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
-Tested up to: 4.4.2
-Stable tag: 1.7.6
+Tested up to: 4.5.1
+Stable tag: 1.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: ank91
@@ -24,7 +24,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Change map's language eg:Hindi/Urdu
 * Place animated and colorful marker on map
 * Place info window on marker with custom text/markup.
-* Disable dragging on mobile devices
+* Disable dragging on mobile devices / touch enabled devices
 * Disable mouse wheel zoom
 
 == Installation ==
@@ -116,7 +116,7 @@ No, I love it as like you. But I prefer faster websites.
 = Is Google Map API is free. =
 
 Until we break its terms and conditions.
-Google Map API V3 does not need an API Key.
+Google Map API V3 does not need an API Key, however Google has started showing a warning in console if you are not using an API Key.
 
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
@@ -130,7 +130,7 @@ Possible reasons are -
 * This plugin has a problem/bug. (Report it now).
 
 = How do i insert the API key ? =
-* Obtain a browser key , see steps [here](https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key)
+* Obtain a browser key, see steps [here](https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key)
 * Add this line of code to your `functions.php`
 
 `
@@ -153,6 +153,11 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.7 =
+* Tested upto WP Version 4.5.1
+* Better touch device detection
+* Google Map no longer supports IE 9
 
 = 1.7.6 =
 * Allow developers to add API key to google map (see FAQ)

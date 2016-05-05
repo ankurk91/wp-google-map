@@ -1,4 +1,4 @@
-# Ank-Google-Map
+# Ank Google Map
 
 - - -
 [![WordPress downloads](https://img.shields.io/wordpress/plugin/dt/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
@@ -14,8 +14,8 @@
 - - -
 
 ### Prerequisite
-* php v5.3.0
-* WordPress v3.8.0
+* php v5.3.0 or above
+* WordPress v3.8.0 or above
 
 - - -
 #### Quick Links
@@ -23,3 +23,6 @@
 * Change log is available [here](https://wordpress.org/plugins/ank-google-map/changelog/)
 * FAQ is available [here](https://wordpress.org/plugins/ank-google-map/faq/)
 
+#### License
+
+[License](LICENSE.txt)
