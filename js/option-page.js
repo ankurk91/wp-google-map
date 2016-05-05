@@ -1,7 +1,7 @@
 (function (window, document, $) {
     'use strict';
 
-    var agm_opt = window._agm_opt;
+    var opt = window._agm_opt;
 
     function $getById(a) {
         return document.querySelector('#' + a) || document.getElementById(a);
@@ -9,13 +9,13 @@
 
     function _loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var center = new google.maps.LatLng(parseFloat(agm_opt.map.lat), parseFloat(agm_opt.map.lng));
+        var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
-        var map_options = {
+        var mapOptions = {
             draggable: (width > 480) || !isTouchDevice(),
             center: center,
             streetViewControl: true,
-            zoom: parseInt(agm_opt.map.zoom),
+            zoom: parseInt(opt.map.zoom),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: true,
             zoomControlOptions: {
@@ -27,7 +27,7 @@
                 position: google.maps.ControlPosition.TOP_RIGHT
             }
         };
-        var map = new google.maps.Map(map_canvas_div, map_options);
+        var map = new google.maps.Map(mapCanvas, mapOptions);
 
         var agm_lat = $('#agm_lat'),
             agm_lng = $('#agm_lng'),
@@ -68,9 +68,9 @@
         });
 
         /* Auto-complete feature */
-        var map_auto = new google.maps.places.Autocomplete($getById('agm_autocomplete'));
-        google.maps.event.addListener(map_auto, 'place_changed', function () {
-            var place = map_auto.getPlace();
+        var locSearch = new google.maps.places.Autocomplete($getById('agm_autocomplete'));
+        google.maps.event.addListener(locSearch, 'place_changed', function () {
+            var place = locSearch.getPlace();
             if (place.geometry) {
                 map.panTo(place.geometry.location);
                 marker.setPosition(place.geometry.location);
@@ -83,12 +83,12 @@
 
 
     /* Prepare to load google map */
-    var map_canvas_div = $getById("agm_map_canvas");
+    var mapCanvas = $getById("agm_map_canvas");
     if (typeof google == "object" && google.maps) {
         google.maps.event.addDomListener(window, "load", _loadGoogleMap)
     }
     else {
-        map_canvas_div.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
+        mapCanvas.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
     }
 
 

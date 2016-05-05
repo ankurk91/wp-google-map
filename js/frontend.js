@@ -7,7 +7,7 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
-        var map_options = {
+        var mapOptions = {
             zoomControl: !opt.controls.zoomControl,
             zoomControlOptions: {
                 position: google.maps.ControlPosition.LEFT_CENTER
@@ -24,7 +24,7 @@
                 position: google.maps.ControlPosition.TOP_RIGHT
             }
         };
-        var map = new google.maps.Map(map_canvas_div, map_options);
+        var map = new google.maps.Map(mapCanvas, mapOptions);
 
         if (opt.mobile.draggable) {
             map.setOptions({draggable: (width > 480) || !isTouchDevice()});
@@ -97,14 +97,14 @@
         });
     }
 
-    var map_canvas_div = document.getElementById("agm_map_canvas");
-    if (typeof map_canvas_div !== 'undefined') {
+    var mapCanvas = document.getElementById("agm_map_canvas");
+    if (typeof mapCanvas !== 'undefined') {
         if (typeof google == "object" && google.maps) {
             google.maps.event.addDomListener(window, "load", loadGoogleMap)
         }
         else {
-            map_canvas_div.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
-            map_canvas_div.style.height = "auto";
+            mapCanvas.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
+            mapCanvas.style.height = "auto";
         }
     }
 
