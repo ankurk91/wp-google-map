@@ -69,7 +69,7 @@ class Ank_Google_Map_Admin
             'div_width' => '100',
             'div_width_unit' => 2,
             'div_height' => '300',
-            'div_border_color' => '#ccc',
+            'div_border_color' => '',
             'map_Lat' => '28.613939100000003',
             'map_Lng' => '77.20902120000005',
             'map_zoom' => 2,
@@ -127,7 +127,7 @@ class Ank_Google_Map_Admin
         /* Add help drop down menu on option page,  wp v3.3+ */
         add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
 
-        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_js'));
+        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_assets'));
     }
 
     /**
@@ -248,14 +248,15 @@ class Ank_Google_Map_Admin
     }
 
     /**
-     * Print option page javascript
+     * Add option page javascript and css
      */
-    function print_admin_js()
+    function print_admin_assets()
     {
-        $is_min = (WP_DEBUG == 1) ? '' : '.min';
+        $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
+
         wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
         wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.24&libraries=places', array(), null, true);
-        wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery'), AGM_PLUGIN_VERSION, true);
+        wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
     }
