@@ -3,7 +3,7 @@
 # http://git-scm.com/docs/gitignore
 
 # phpstorm, webstorm
-.idea
+.idea/
 
 # sublime and other ide
 .project
@@ -49,7 +49,7 @@ node_modules/
 bower_components/
 
 # svn folders
-.svn
+.svn/
 
 # composer
 vendor/

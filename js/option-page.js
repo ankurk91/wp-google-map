@@ -95,7 +95,7 @@
     /**
      * Prevent form submission when user press enter key in auto-complete
      */
-    $("#agm_autocomplete").keydown(function (e) {
+    $("#agm_autocomplete").on('keydown', function (e) {
         if (e.keyCode == 13 || e.which == 13) {
             e.preventDefault();
             e.stopPropagation();
@@ -106,7 +106,7 @@
      * Show a message
      * Info window needs marker to enabled first
      */
-    $("#agm_info_on").click(function () {
+    $("#agm_info_on").on('click', function () {
         if ($(this).is(":checked"))
             $(this).next('label').find('i:not(:visible)').fadeIn(0);
     });
