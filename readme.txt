@@ -2,7 +2,7 @@
 Tags: google map, responsive, light weight, ank, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.5.3
-Stable tag: 1.7.7
+Stable tag: 1.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: ank91
@@ -106,17 +106,11 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.0+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.5.3+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Do you hate jQuery ? =
 
 No, I love it as like you. But I prefer faster websites.
-
-
-= Is Google Map API is free. =
-
-Until we break its terms and conditions.
-Google Map API V3 does not need an API Key, however Google has started showing a warning in console if you are not using an API Key.
 
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
@@ -131,11 +125,8 @@ Possible reasons are -
 
 = How do i insert the API key ? =
 * Obtain a browser key, see steps [here](https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key)
-* Add this line of code to your `functions.php`
+* Insert your key on option page and you are good to go
 
-`
-define('AGM_API_KEY', 'PASTE_YOUR_API_KEY_HERE');
-`
 
 = Future Plans ? =
 
@@ -153,6 +144,9 @@ It just a matter of a second. It will cost not more than 15 KB.
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.8 =
+* Option to add API key
 
 = 1.7.7 =
 * Tested upto WP Version 4.5.1

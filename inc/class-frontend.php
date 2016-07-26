@@ -7,7 +7,7 @@ namespace Ank91\Plugins\Ank_Google_Map;
 class Ank_Google_Map_Frontend
 {
 
-    private $db_options = array();
+    private $db = array();
 
     function __construct()
     {
@@ -15,7 +15,7 @@ class Ank_Google_Map_Frontend
         /* Register our short-code [ank_google_map] */
         add_shortcode('ank_google_map', array($this, 'process_shortcode'));
         /* Store database options for later use */
-        $this->db_options = get_option('ank_google_map');
+        $this->db = get_option('ank_google_map');
     }
 
 
@@ -25,7 +25,7 @@ class Ank_Google_Map_Frontend
      */
     private function get_js_options()
     {
-        $options = $this->db_options;
+        $db = $this->db;
 
         $map_type_array = array(
             1 => 'ROADMAP',
@@ -42,31 +42,31 @@ class Ank_Google_Map_Frontend
 
         $return_array = array(
             'map' => array(
-                'lat' => $options['map_Lat'],
-                'lng' => $options['map_Lng'],
-                'zoom' => $options['map_zoom'],
-                'type' => $map_type_array[$options['map_type']],
+                'lat' => $db['map_Lat'],
+                'lng' => $db['map_Lng'],
+                'zoom' => $db['map_zoom'],
+                'type' => $map_type_array[$db['map_type']],
             ),
             'marker' => array(
-                'enabled' => absint($options['marker_on']),
-                'animation' => esc_js($marker_anim_array[$options['marker_anim']]),
-                'title' => esc_js($options['marker_title']),
-                'color' => $this->get_marker_url($options['marker_color']),
+                'enabled' => absint($db['marker_on']),
+                'animation' => esc_js($marker_anim_array[$db['marker_anim']]),
+                'title' => esc_js($db['marker_title']),
+                'color' => $this->get_marker_url($db['marker_color']),
             ),
             'info_window' => array(
-                'enabled' => absint($options['info_on']),
-                'text' => wp_unslash($options['info_text']),
-                'state' => absint($options['info_state']),
+                'enabled' => absint($db['info_on']),
+                'text' => wp_unslash($db['info_text']),
+                'state' => absint($db['info_state']),
             ),
             //disabled controls, 1=disabled
             'controls' => array(
-                'zoomControl' => absint($options['map_control_2']),
-                'mapTypeControl' => absint($options['map_control_3']),
-                'streetViewControl' => absint($options['map_control_4']),
+                'zoomControl' => absint($db['map_control_2']),
+                'mapTypeControl' => absint($db['map_control_3']),
+                'streetViewControl' => absint($db['map_control_4']),
             ),
             'mobile' => array(
-                'scrollwheel' => absint($options['disable_mouse_wheel']),
-                'draggable' => absint($options['disable_drag_mobile']),
+                'scrollwheel' => absint($db['disable_mouse_wheel']),
+                'draggable' => absint($db['disable_drag_mobile']),
             )
         );
 
@@ -83,18 +83,18 @@ class Ank_Google_Map_Frontend
     {
 
         ob_start();// ob_start is here for a reason
-        $options = $this->db_options;
+        $db = $this->db;
 
         //Write canvas html always
-        $w_unit = ($options["div_width_unit"] === 1) ? 'px' : '%';
-        $b_color = ($options["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($options["div_border_color"]);
-        echo '<div class="agm_map_canvas" id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($options["div_width"]) . $w_unit . ';height:' . esc_attr($options["div_height"]) . 'px;' . $b_color . '"></div>';
+        $w_unit = ($db["div_width_unit"] === 1) ? 'px' : '%';
+        $b_color = ($db["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($db["div_border_color"]);
+        echo '<div class="agm_map_canvas" id="agm_map_canvas" style="margin: 0 auto;width:' . esc_attr($db["div_width"]) . $w_unit . ';height:' . esc_attr($db["div_height"]) . 'px;' . $b_color . '"></div>';
 
 
         //Decide language code
-        $lang_code = (esc_attr($options['map_lang_code']) === '') ? '' : '&language=' . esc_attr($options['map_lang_code']);
+        $lang_code = (esc_attr($db['map_lang_code']) === '') ? '' : '&language=' . esc_attr($db['map_lang_code']);
         //Decide API key
-        $api_key = $this->getAPIKey() ? '&key=' . $this->getAPIKey() : '';
+        $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
         // Enqueue google map api
         wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.24" . $lang_code . $api_key, array(), null, true);
 
@@ -134,18 +134,5 @@ class Ank_Google_Map_Frontend
         }
 
     }
-
-    /**
-     * Check if user has defined the constant or not and return the constant value
-     * @return bool|string
-     */
-    private function getAPIKey()
-    {
-        if (defined('AGM_API_KEY')) {
-            return trim(AGM_API_KEY);
-        }
-        return false;
-    }
-
 
 }
