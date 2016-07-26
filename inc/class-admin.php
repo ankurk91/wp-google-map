@@ -87,6 +87,7 @@ class Ank_Google_Map_Admin
             'info_state' => '0',
             'disable_mouse_wheel' => '0',
             'disable_drag_mobile' => '1',
+            'api_key' => ''
         );
 
         return $default_options;
@@ -158,6 +159,7 @@ class Ank_Google_Map_Admin
         $out['marker_anim'] = intval($in['marker_anim']);
         $out['marker_color'] = intval($in['marker_color']);
 
+        $out['api_key'] = sanitize_text_field($in['api_key']);
 
         $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'marker_on', 'info_on', 'info_state');
 
@@ -253,9 +255,11 @@ class Ank_Google_Map_Admin
     function print_admin_assets()
     {
         $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
-
+        $db = get_option('ank_google_map');
         wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
-        wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.24&libraries=places', array(), null, true);
+
+        $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
+        wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.24&libraries=places' . $api_key, array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
         //wp inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());

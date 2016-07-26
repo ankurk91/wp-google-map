@@ -33,6 +33,10 @@
     position: relative;
 }
 
+#agm_autocomplete{
+    background: #fff!important;
+}
+
 #agm_auto_holder:before {
     transform: rotate(720deg);
     position: absolute;
