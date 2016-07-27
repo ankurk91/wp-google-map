@@ -221,6 +221,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>API Key:</td>
+                        <td>
+                            <input type="text" style="width: 40%" placeholder="Paste your key here" name="ank_google_map[api_key]"
+                                   value="<?php echo esc_attr($options['api_key']); ?>">
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <?php submit_button() ?>
                         </td>

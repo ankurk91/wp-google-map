@@ -1,5 +1,5 @@
-# Travis CI config file
-# https://travis-ci.org
+# Config file for https://travis-ci.org/
+# Validate this file here - http://lint.travis-ci.org/
 
 language: php
 
@@ -14,7 +14,6 @@ php:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.0
     - php: hhvm
 
 # git configs
@@ -27,22 +26,22 @@ os:
 
 sudo: false
 
-install:
-#
+#install:
 
-before_script:
-#
+
+#before_script:
+
 
 script:
     - find . \( -name '*.php' \) -exec php -lf {} \;
 
 
-after_script:
-#
-after_success:
-#
-after_failure:
-#
+#after_script:
+
+#after_success:
+
+#after_failure:
+
 
 # Tell Travis CI to monitor only 'master' branch
 branches:
@@ -50,5 +49,7 @@ branches:
 
 # Configure email notifications
 notifications:
-     on_success: never
-     on_failure: always
+     email:
+        on_success: never
+        on_failure: always
+
