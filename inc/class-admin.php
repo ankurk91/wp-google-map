@@ -1,10 +1,10 @@
 <?php
-namespace Ank91\Plugins\Ank_Google_Map;
+namespace Ankur\Plugins\Ank_Google_Map;
 /**
- * Class Ank_Google_Map_Admin
- * @package Ank91\Ank_Google_Map_Plugin
+ * Class Admin
+ * @package Ankur\Plugins\Ank_Google_Map
  */
-class Ank_Google_Map_Admin
+class Admin
 {
     const PLUGIN_SLUG = 'agm_options_page';
     const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
@@ -21,7 +21,7 @@ class Ank_Google_Map_Admin
         /* Add settings link to plugin list page */
         add_filter('plugin_action_links_' . plugin_basename(AGM_BASE_FILE), array($this, 'add_plugin_actions_links'), 10, 2);
 
-        /* Add settings link under admin->settings menu->ank google map */
+        /* Add settings link under admin->settings menu->google map */
         add_action('admin_menu', array($this, 'add_submenu_page'));
 
         /* Check for database upgrades*/
@@ -118,7 +118,7 @@ class Ank_Google_Map_Admin
      */
     function add_submenu_page()
     {
-        $page_hook_suffix = add_submenu_page('options-general.php', 'Ank Google Map', 'Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
+        $page_hook_suffix = add_submenu_page('options-general.php', 'Google Map', 'Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
         /*
         * Add the color picker js  + css file to option page
         * Available for wp v3.5+ only
@@ -277,7 +277,7 @@ class Ank_Google_Map_Admin
             array(
                 'id' => 'agm-overview',
                 'title' => 'Overview',
-                'content' => '<p><strong>Thanks for using "Ank Google Map"</strong><br>' .
+                'content' => '<p><strong>Thanks for using this plugin.</strong><br>' .
                     'This plugin allows you to put a custom Google Map on your website. Just configure options below and ' .
                     'save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
                 </p>'
@@ -291,6 +291,7 @@ class Ank_Google_Map_Admin
                 'title' => 'Troubleshoot',
                 'content' => '<p><strong>Things to remember</strong><br>' .
                     '<ul>
+                <li>Google Map require to setup an API key before start using it. See FAQ.</li>    
                 <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after saving settings here.</li>
                 <li>Only one map is supported at this time. Don&apos;t put short-code twice on the same page.</li>
                 <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>
@@ -308,7 +309,7 @@ class Ank_Google_Map_Admin
                     'A brief FAQ is available, ' .
                     'click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>' .
                     'Support is only available on WordPress Forums, click <a href="https://wordpress.org/support/plugin/ank-google-map" target="_blank">here</a> to ask anything about this plugin.<br>' .
-                    'You can also report a bug at plugin&apos;s GitHub <a href="https://github.com/ank91/ank-google-map" target="_blank">page</a>.' .
+                    'You can also report a bug at plugin&apos;s GitHub <a href="https://github.com/ankurk91/wp-google-map" target="_blank">page</a>.' .
                     'I will try to reply as soon as possible. </p>'
 
             )
@@ -317,7 +318,7 @@ class Ank_Google_Map_Admin
         $curr_screen->set_help_sidebar(
             '<p><strong>Quick Links</strong></p>' .
             '<p><a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">Plugin FAQ</a></p>' .
-            '<p><a href="https://github.com/ank91/ank-google-map" target="_blank">Plugin Home</a></p>'
+            '<p><a href="https://github.com/ankurk91/wp-google-map" target="_blank">Plugin Home</a></p>'
         );
     }
 

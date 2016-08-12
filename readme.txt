@@ -1,11 +1,11 @@
-=== Ank Google Map ===
-Tags: google map, responsive, light weight, ank, free, easy map
+=== Google Map ===
+Tags: google map, responsive, light weight, free, easy map
 Requires at least: 3.8.0
 Tested up to: 4.5.3
-Stable tag: 1.7.8
+Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Contributors: ank91
+Contributors: ankurk91
 
 Simple and non-bloated WordPress Google Map Plugin.
 
@@ -136,14 +136,16 @@ Possible reasons are -
 * Improved upgrade paths.
 
 == Upgrade Notice ==
-
-No big changes yet in this plugin, so go ahead and upgrade to new version whenever i release.
-It just a matter of a second. It will cost not more than 15 KB.
+Please upgrade to at-least v1.7.9
 
 == Screenshots ==
 1. Plugin Option Page Screen
 
 == Changelog ==
+
+= 1.7.9
+* Updated Links
+* Namespace changed
 
 = 1.7.8 =
 * Option to add API key

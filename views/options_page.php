@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h2>Ank Google Map
+    <h2>Google Map
         <small>(v<?php echo AGM_PLUGIN_VERSION; ?>)</small>
     </h2>
     <div id="poststuff">
@@ -237,8 +237,8 @@
         </form>
     </div><!--post stuff ends-->
     <p class="dev-info">
-        Created with &hearts; by <a target="_blank" href="https://ank91.github.io/">Ankur Kumar</a> |
-        Fork on <a target="_blank" href="https://github.com/ank91/ank-google-map">GitHub</a> |
+        Created with &hearts; by <a target="_blank" href="https://ankurk91.github.io/">Ankur Kumar</a> |
+        Fork on <a target="_blank" href="https://github.com/ankurk91/wp-google-map">GitHub</a> |
         ★ Rate on <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/ank-google-map?filter=5">WordPress</a>
     </p>
     <!--dev info ends-->

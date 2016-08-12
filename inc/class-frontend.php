@@ -1,10 +1,10 @@
 <?php
-namespace Ank91\Plugins\Ank_Google_Map;
+namespace Ankur\Plugins\Ank_Google_Map;
 /**
- * Class Ank_Google_Map_Frontend
- * @package Ank91\Ank_Google_Map_Plugin
+ * Class Frontend
+ * @package Ankur\Plugins\Ank_Google_Map
  */
-class Ank_Google_Map_Frontend
+class Frontend
 {
 
     private $db = array();
