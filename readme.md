@@ -1,4 +1,4 @@
-# Google Map plugin for WordPress
+# Google Map Plugin for WordPress
 
 [![WordPress downloads](https://img.shields.io/wordpress/plugin/dt/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress compatibility](https://img.shields.io/wordpress/v/ank-google-map.svg?style=flat-square)](https://wordpress.org/plugins/ank-google-map)
@@ -14,7 +14,7 @@
 
 ### Prerequisites
 * php v5.3.0+ or v7.0.x
-* WordPress v3.8.0 or above
+* WordPress v4.0.0 or above
 
 
 ### Quick Links
@@ -22,4 +22,4 @@
 * FAQ is available [here](https://wordpress.org/plugins/ank-google-map/faq/)
 
 ### License
-GPLv2 [License](LICENSE.txt)
+MIT [License](LICENSE.txt)

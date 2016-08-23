@@ -1,7 +1,7 @@
 (function (window, document) {
     'use strict';
 
-    var opt = window._agm_opt;
+    var opt = window._agmOpt;
 
     function loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -97,7 +97,7 @@
         });
     }
 
-    var mapCanvas = document.getElementById("agm_map_canvas");
+    var mapCanvas = document.getElementById("agm-canvas");
     if (typeof mapCanvas !== 'undefined') {
         if (typeof google == "object" && google.maps) {
             google.maps.event.addDomListener(window, "load", loadGoogleMap)

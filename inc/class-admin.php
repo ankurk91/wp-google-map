@@ -6,26 +6,29 @@ namespace Ankur\Plugins\Ank_Google_Map;
  */
 class Admin
 {
-    const PLUGIN_SLUG = 'agm_options_page';
-    const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
 
+    const PLUGIN_SLUG = 'agm_settings';
+    const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
 
     function __construct()
     {
-        /* To save default options upon activation */
+        // To save default options upon activation
         register_activation_hook(plugin_basename(AGM_BASE_FILE), array($this, 'do_upon_plugin_activation'));
 
-        /* For register setting */
+        // For register setting
         add_action('admin_init', array($this, 'register_plugin_settings'));
 
-        /* Add settings link to plugin list page */
+        // Add settings link to plugin list page
         add_filter('plugin_action_links_' . plugin_basename(AGM_BASE_FILE), array($this, 'add_plugin_actions_links'), 10, 2);
 
-        /* Add settings link under admin->settings menu->google map */
+        // Add settings link under admin->settings menu->Google map
         add_action('admin_menu', array($this, 'add_submenu_page'));
 
-        /* Check for database upgrades*/
+        // Check for database upgrades
         add_action('plugins_loaded', array($this, 'check_for_db_options'));
+
+        // Be multilingual
+        add_action('plugins_loaded', array($this, 'load_text_domain'));
     }
 
     /*
@@ -56,6 +59,10 @@ class Admin
         register_setting(self::PLUGIN_OPTION_GROUP, 'ank_google_map', array($this, 'validate_form_post'));
     }
 
+    public static function load_text_domain()
+    {
+        load_plugin_textdomain('ank-google-map', false, dirname(plugin_basename(AGM_BASE_FILE)) . '/languages/');
+    }
 
     /**
      * Returns default plugin db options
@@ -125,7 +132,7 @@ class Admin
         */
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_color_picker'));
 
-        /* Add help drop down menu on option page,  wp v3.3+ */
+        // Add help drop down menu on option page,  WP v3.3+
         add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
 
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_assets'));
@@ -140,6 +147,7 @@ class Admin
     {
 
         $out = array();
+        $errors = array();
         //always store plugin version to db
         $out['plugin_ver'] = esc_attr(AGM_PLUGIN_VERSION);;
 
@@ -150,6 +158,19 @@ class Admin
 
         $out['map_Lat'] = sanitize_text_field($in['map_Lat']);
         $out['map_Lng'] = sanitize_text_field($in['map_Lng']);
+
+        /**
+         * @link http://stackoverflow.com/questions/7549669/php-validate-latitude-longitude-strings-in-decimal-format
+         */
+        if (!preg_match("/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/", $in['map_Lat'])) {
+            $errors[] = __('Invalid Latitude format', 'ank-google-map');
+            $out['map_Lat'] = '0';
+        }
+        if (!preg_match("/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/", $in['map_Lng'])) {
+            $errors[] = __('Invalid Longitude format', 'ank-google-map');
+            $out['map_Lng'] = '0';
+        }
+
         $out['map_zoom'] = intval($in['map_zoom']);
 
         $out['map_lang_code'] = sanitize_text_field($in['map_lang_code']);
@@ -171,6 +192,14 @@ class Admin
         * This is same as like we make a new post
         */
         $out['info_text'] = balanceTags(wp_kses_post($in['info_text']), true);
+
+        // Show all form errors in a single notice
+        if (!empty($errors)) {
+            add_settings_error('ank_google_map', 'ank_google_map', implode('<br>', $errors));
+        } else {
+            add_settings_error('ank_google_map', 'ank_google_map', __('Settings saved. Use this shortcode', 'ank-google-map') . ' - <code>[ank_google_map]</code>', 'updated');
+        }
+
         return $out;
     }
 
@@ -184,42 +213,19 @@ class Admin
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
 
-        $file_path = plugin_dir_path(AGM_BASE_FILE) . 'views/options_page.php';
+        $file_path = plugin_dir_path(AGM_BASE_FILE) . 'views/settings.php';
 
         if (is_readable($file_path)) {
+            extract(array(
+                'db' => get_option('ank_google_map'),
+                'option_group' => self::PLUGIN_OPTION_GROUP
+            ));
             require $file_path;
         } else {
-            throw new \Exception("Unable to load settings page, Template File '" . esc_html($file_path) . "'' not found, (v" . AGM_PLUGIN_VERSION . ")");
+            throw new \Exception("Unable to load settings page, File - '" . esc_html($file_path) . "' not found");
         }
 
     }
-
-
-    /**
-     * Decides whether to load text editor or not
-     * @param string $content
-     */
-    private function get_text_editor($content = '')
-    {
-
-        if (user_can_richedit()) {
-            wp_editor($content, 'agm-info-editor',
-                array(
-                    'media_buttons' => false, //disable media uploader
-                    'textarea_name' => 'ank_google_map[info_text]',
-                    'textarea_rows' => 5,
-                    'teeny' => false,
-                    'quicktags' => true
-                ));
-
-        } else {
-            /*
-             * else Show normal text-area to user
-             */
-            echo '<textarea rows="3" cols="33" name="info_text" style="width: 98%">' . $content . '</textarea>';
-        }
-    }
-
 
     /**
      * Enqueue color picker related css and js
@@ -238,13 +244,13 @@ class Admin
      */
     private function get_js_options()
     {
-        $options = get_option('ank_google_map');
+        $db = get_option('ank_google_map');
 
         return array(
             'map' => array(
-                'lat' => esc_attr($options['map_Lat']),
-                'lng' => esc_attr($options['map_Lng']),
-                'zoom' => absint($options['map_zoom']),
+                'lat' => esc_attr($db['map_Lat']),
+                'lng' => esc_attr($db['map_Lng']),
+                'zoom' => absint($db['map_zoom']),
             )
         );
     }
@@ -256,13 +262,13 @@ class Admin
     {
         $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
         $db = get_option('ank_google_map');
-        wp_enqueue_style('agm-admin-css', plugins_url('css/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
+        wp_enqueue_style('agm-admin-css', plugins_url('/assets/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
 
         $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
         wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.24&libraries=places' . $api_key, array(), null, true);
-        wp_enqueue_script('agm-admin-js', plugins_url("/js/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
-        //wp inbuilt hack to print js options object just before this script
-        wp_localize_script('agm-admin-js', '_agm_opt', $this->get_js_options());
+        wp_enqueue_script('agm-admin-js', plugins_url("/assets/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
+        // WP inbuilt hack to print js options object just before this script
+        wp_localize_script('agm-admin-js', '_agmOpt', $this->get_js_options());
     }
 
     /*
@@ -279,7 +285,7 @@ class Admin
                 'title' => 'Overview',
                 'content' => '<p><strong>Thanks for using this plugin.</strong><br>' .
                     'This plugin allows you to put a custom Google Map on your website. Just configure options below and ' .
-                    'save your settings. Copy/paste <code>[ank_google_map]</code> short-code on your page/post/widget to view your map.
+                    'save your settings. <br>Copy & paste <code>[ank_google_map]</code> shortcode on your page/post/widget to view your map.
                 </p>'
 
             )
@@ -294,8 +300,7 @@ class Admin
                 <li>Google Map require to setup an API key before start using it. See FAQ.</li>    
                 <li>If you are using a cache/performance plugin, you need to flush/delete your site cache after saving settings here.</li>
                 <li>Only one map is supported at this time. Don&apos;t put short-code twice on the same page.</li>
-                <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>
-                <li>Info Window needs marker to be enabled first.</li>
+                <li>Only one marker supported at this time, Marker will be positioned at the center of your map.</li>                
                 </ul>
                 </p>'
 

@@ -1,0 +1,272 @@
+# Ank Google Map plugin for WordPress
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ank Google Map\n"
+"Report-Msgid-Bugs-To: https://github.com/ankurk91/wp-google-map/issues\n"
+"POT-Creation-Date: 2016-08-24 12:30+0530\n"
+"PO-Revision-Date: 2016-01-13 17:06+0530\n"
+"Last-Translator: ankurk91\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;"
+"_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;"
+"esc_html_x:1,2c\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: views\n"
+"X-Poedit-SearchPath-1: inc\n"
+
+#: inc/class-admin.php:116
+msgid "Settings"
+msgstr ""
+
+#: inc/class-admin.php:166
+msgid "Invalid Latitude format"
+msgstr ""
+
+#: inc/class-admin.php:170
+msgid "Invalid Longitude format"
+msgstr ""
+
+#: inc/class-admin.php:200
+msgid "Settings saved. Use this shortcode"
+msgstr ""
+
+#: inc/class-admin.php:213
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: views/settings.php:2
+msgid "Google Map"
+msgstr ""
+
+#: views/settings.php:9
+msgid "General"
+msgstr ""
+
+#: views/settings.php:10
+msgid "Location"
+msgstr ""
+
+#: views/settings.php:11
+msgid "Marker"
+msgstr ""
+
+#: views/settings.php:12
+msgid "Info Window"
+msgstr ""
+
+#: views/settings.php:24
+msgid "API Key"
+msgstr ""
+
+#: views/settings.php:27
+msgid "Paste your API key here"
+msgstr ""
+
+#: views/settings.php:35
+msgid "Canvas Width"
+msgstr ""
+
+#: views/settings.php:40
+msgid "Canvas Width Unit"
+msgstr ""
+
+#: views/settings.php:45
+msgid "Pixel"
+msgstr ""
+
+#: views/settings.php:48
+msgid "Percent"
+msgstr ""
+
+#: views/settings.php:51
+msgid "Choose % (percent) to make it responsive"
+msgstr ""
+
+#: views/settings.php:55
+msgid "Canvas Height"
+msgstr ""
+
+#: views/settings.php:59
+msgid "Height will be in px"
+msgstr ""
+
+#: views/settings.php:63
+msgid "Canvas Border Color"
+msgstr ""
+
+#: views/settings.php:67
+msgid "Border will be 1px solid. Leave empty to disable"
+msgstr ""
+
+#: views/settings.php:71
+msgid "Disable Mouse Wheel Zoom"
+msgstr ""
+
+#: views/settings.php:77
+msgid "Disable Dragging on Mobile Devices"
+msgstr ""
+
+#: views/settings.php:83
+msgid "Map Language"
+msgstr ""
+
+#: views/settings.php:98
+msgid "Latitude"
+msgstr ""
+
+#: views/settings.php:103
+msgid "Longitude"
+msgstr ""
+
+#: views/settings.php:108
+msgid "Zoom Level"
+msgstr ""
+
+#: views/settings.php:118
+msgid "Disable Controls"
+msgstr ""
+
+#: views/settings.php:122
+msgid "Zoom Control"
+msgstr ""
+
+#: views/settings.php:125
+msgid "MapType Control"
+msgstr ""
+
+#: views/settings.php:128
+msgid "StreetView Control"
+msgstr ""
+
+#: views/settings.php:132
+msgid "Map Type"
+msgstr ""
+
+#: views/settings.php:136
+msgid "ROADMAP"
+msgstr ""
+
+#: views/settings.php:139
+msgid "SATELLITE"
+msgstr ""
+
+#: views/settings.php:142
+msgid "HYBRID"
+msgstr ""
+
+#: views/settings.php:145
+msgid "TERRAIN"
+msgstr ""
+
+#: views/settings.php:150
+msgid "Search for Location"
+msgstr ""
+
+#: views/settings.php:154
+msgid "Right click on map to set that point as new center of map"
+msgstr ""
+
+#: views/settings.php:163
+msgid "Enable Marker"
+msgstr ""
+
+#: views/settings.php:167 views/settings.php:232
+msgid "Check to enable"
+msgstr ""
+
+#: views/settings.php:170
+msgid "Marker Title"
+msgstr ""
+
+#: views/settings.php:174
+msgid "Don't use html tags here"
+msgstr ""
+
+#: views/settings.php:178
+msgid "Marker Animation"
+msgstr ""
+
+#: views/settings.php:182
+msgid "NONE"
+msgstr ""
+
+#: views/settings.php:185
+msgid "BOUNCE"
+msgstr ""
+
+#: views/settings.php:188
+msgid "DROP"
+msgstr ""
+
+#: views/settings.php:193
+msgid "Marker Color"
+msgstr ""
+
+#: views/settings.php:197
+msgid "Default"
+msgstr ""
+
+#: views/settings.php:199
+msgid "Light Red"
+msgstr ""
+
+#: views/settings.php:201
+msgid "Black"
+msgstr ""
+
+#: views/settings.php:204
+msgid "Gray"
+msgstr ""
+
+#: views/settings.php:207
+msgid "Orange"
+msgstr ""
+
+#: views/settings.php:210
+msgid "White"
+msgstr ""
+
+#: views/settings.php:213
+msgid "Yellow"
+msgstr ""
+
+#: views/settings.php:216
+msgid "Purple"
+msgstr ""
+
+#: views/settings.php:219
+msgid "Green"
+msgstr ""
+
+#: views/settings.php:229
+msgid "Enable Info Window"
+msgstr ""
+
+#: views/settings.php:233
+msgid "Needs marker to be enabled"
+msgstr ""
+
+#: views/settings.php:237
+msgid "Info Window State"
+msgstr ""
+
+#: views/settings.php:241
+msgid "Shown by default"
+msgstr ""
+
+#: views/settings.php:244
+msgid "Info Window Text"
+msgstr ""
+
+#: views/settings.php:256
+msgid "HTML allowed"
+msgstr ""

@@ -1,21 +1,21 @@
 === Google Map ===
-Tags: google map, responsive, light weight, free, easy map
-Requires at least: 3.8.0
-Tested up to: 4.5.3
-Stable tag: 1.7.9
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: google map, map, responsive, light weight, free, easy
+Requires at least: 4.0.0
+Tested up to: 4.6.0
+Stable tag: 2.0.0
+License: MIT
+License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
 
-Simple and non-bloated WordPress Google Map Plugin.
+Simple, light-weight and non-bloated WordPress Google Map Plugin.
 
 == Description ==
-One Website , One Map , One Marker.
-Simple and non-bloated WordPress Google Map Plugin.
+Simple, light-weight and non-bloated Google Map Plugin for WordPress.<br>
 Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
 
 
 = Notable Features =
+* Add Google Map API key
 * Adjust map canvas height and width.
 * Responsive map, auto center map upon resize.
 * Configure map canvas border color.
@@ -31,22 +31,26 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 1. Search for 'ank google map' in WordPress Plugin Directory and Download the .zip file & extract it.
 2. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins List' page in WordPress Admin Area.
-4. Configure this plugin via Settings-->Ank Google Map
+4. Configure this plugin via Settings-->Google Map
 5. Paste the `[ank_google_map]` short-code in your pages/posts/widgets.
 
 
 == Frequently Asked Questions ==
 
+= What is the short-code for this plugin =
+
+`[ank_google_map]`
+
 = Why did you call it Light Weight ? =
 
 Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
-It uses inbuilt WP dash-icons in Plugin Options Page.
+It uses inbuilt WP dash-icons on Plugin Options Page.
 It uses inbuilt WP text editor on Plugin Options Page.
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.
 The whole package is about 100 kb. (~30 kb zipped).
 
-= What do you mean by Non Bloated =
+= What do you mean by Non Bloated ? =
 
 There are many of Map plugins in plugin directory, but most of them not written well.
 Means they put lots of java script (uncompressed) code on every page of your website.
@@ -54,11 +58,7 @@ They also loads jquery file before them which effects your page speed.
 This plugin will enqueue its js files on the required page only.
 It does not depends on external js library like: jQuery.
 
-= What is the short-code for this plugin =
-
-`[ank_google_map]`
-
-= Map controls does not shown correctly on front-end =
+= Map controls not shown correctly on front-end =
 
 Add this css code to your theme's style.css file to fix this
 
@@ -85,7 +85,7 @@ Uses a single row, stored in array for faster access.
 
 Every marker image is loaded from official Google Server.
 
-= What if i uninstall/remove this plugin? =
+= What if i uninstall/remove this plugin ? =
 
 No worry! It will remove its traces from database upon uninstall.
 You have to remove short-code from your pages by yourself.
@@ -106,7 +106,7 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.5.3+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.6.0+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Do you hate jQuery ? =
 
@@ -130,20 +130,28 @@ Possible reasons are -
 
 = Future Plans ? =
 
-* I18n for Option Page.
 * Multiple Maps with Multiple Markers.
 * Multi-site support
-* Improved upgrade paths.
+* Custom Styles
+
 
 == Upgrade Notice ==
-Please upgrade to at-least v1.7.9
+Please upgrade to at-least v2.0.0
 
 == Screenshots ==
-1. Plugin Option Page Screen
+1. General Options
+2. Location Options
+3. Marker Options
+4. Info Window Options
+
 
 == Changelog ==
 
-= 1.7.9
+= 2.0.0 =
+* Revamp UI
+* Translation ready
+
+= 1.7.9 =
 * Updated Links
 * Namespace changed
 
