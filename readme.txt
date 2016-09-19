@@ -1,7 +1,7 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
-Tested up to: 4.6.0
+Tested up to: 4.6.1
 Stable tag: 2.0.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -27,6 +27,16 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Disable dragging on mobile devices / touch enabled devices
 * Disable mouse wheel zoom
 
+= Featured on =
+* [wpnewsify.com](https://wpnewsify.com/plugins/best-wordpress-google-maps-plugins/)
+* [wpaisle.com](https://wpaisle.com/wordpress-widgets/google-map-widgets-for-wordpress/)
+* [webdesigncone.com](http://webdesigncone.com/2014/best-wordpress-plugins/)  
+
+
+> <strong>Found bugs ?</strong><br>
+> I am happy to resolve bugs, report your bugs [here](https://github.com/ankurk91/wp-google-map/issues)<br>
+> Please use WordPress forums for any kind of support.
+
 == Installation ==
 1. Search for 'ank google map' in WordPress Plugin Directory and Download the .zip file & extract it.
 2. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
@@ -45,14 +55,13 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 Because it does not depend on jQuery, written in pure Java Script.
 Options page utilize inbuilt jQuery and Color Picker.
-It uses inbuilt WP dash-icons on Plugin Options Page.
-It uses inbuilt WP text editor on Plugin Options Page.
+It uses inbuilt dash-icons and text editor on Plugin Options Page.
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.
 The whole package is about 100 kb. (~30 kb zipped).
 
 = What do you mean by Non Bloated ? =
 
-There are many of Map plugins in plugin directory, but most of them not written well.
+There are many of Map plugins in plugin directory, but most of them not written well.<br>
 Means they put lots of java script (uncompressed) code on every page of your website.
 They also loads jquery file before them which effects your page speed.
 This plugin will enqueue its js files on the required page only.
@@ -92,7 +101,7 @@ You have to remove short-code from your pages by yourself.
 
 = How do i enter correct language code ? =
 
-You can force google to load a specific language for all visitors.
+You can force google to load a specific language for all visitors.<br>
 Get latest supported language code list from [here](https://developers.google.com/maps/faq#languagesupport).
 If you don't specify language code then google will try to load the language requested by visitor's web browser.
 
@@ -136,7 +145,7 @@ Possible reasons are -
 
 
 == Upgrade Notice ==
-Please upgrade to at-least v2.0.0
+Please upgrade to v2.0.0
 
 == Screenshots ==
 1. General Options
