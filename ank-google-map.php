@@ -4,10 +4,10 @@ namespace Ankur\Plugins\Ank_Google_Map;
 /*
 Plugin Name: Google Map
 Plugin URI: https://github.com/ankurk91/wp-google-map
-Description: Simple, light weight and non-bloated Google Map Plugin. Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost. Short code : <code>[ank_google_map]</code>
-Version: 2.0.0
+Description: Simple, light weight and non-bloated Google Map Plugin. Short code : <code>[ank_google_map]</code>
+Version: 2.1.0
 Author: Ankur Kumar
-Author URI: http://ankurk91.github.io/
+Author URI: https://ankurk91.github.io/
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Text Domain: ank-google-map
@@ -18,9 +18,11 @@ Domain Path: /languages
 /* No direct access */
 if (!defined('ABSPATH')) die;
 
-define('AGM_PLUGIN_VERSION', '2.0.0');
+define('AGM_PLUGIN_VERSION', '2.1.0');
 define('AGM_BASE_FILE', __FILE__);
 
+//Include required class files
+require __DIR__ . '/inc/class-util.php';
 
 if (is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
     require __DIR__ . '/inc/class-admin.php';

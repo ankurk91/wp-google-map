@@ -7,7 +7,17 @@ namespace Ankur\Plugins\Ank_Google_Map;
 class Frontend
 {
 
+    /**
+     * Stores database options
+     * @var array|mixed|void
+     */
     private $db = array();
+
+    /**
+     * Util class instance
+     * @var Util
+     */
+    private $util;
 
     function __construct()
     {
@@ -15,6 +25,7 @@ class Frontend
         add_shortcode('ank_google_map', array($this, 'process_shortcode'));
         // Store database options for later use
         $this->db = get_option('ank_google_map');
+        $this->util = new Util();
     }
 
 
@@ -45,12 +56,13 @@ class Frontend
                 'lng' => $db['map_Lng'],
                 'zoom' => $db['map_zoom'],
                 'type' => $map_type_array[$db['map_type']],
+                'styles' => $this->util->get_style_by_id($db['map_style'])
             ),
             'marker' => array(
                 'enabled' => absint($db['marker_on']),
                 'animation' => esc_js($marker_anim_array[$db['marker_anim']]),
                 'title' => esc_js($db['marker_title']),
-                'color' => $this->get_marker_url($db['marker_color']),
+                'color' => $this->util->get_marker_url($db['marker_color']),
             ),
             'info_window' => array(
                 'enabled' => absint($db['info_on']),
@@ -106,32 +118,5 @@ class Frontend
         return ob_get_clean();
     }
 
-
-    /**
-     * We depends on Google server for maker images
-     * @link http://ex-ample.blogspot.in/2011/08/all-url-of-markers-used-by-google-maps.html
-     */
-    private function get_marker_url($id)
-    {
-
-        $base_url = 'https://maps.gstatic.com/intl/en_us/mapfiles/';
-        $path = array(
-            // Key 1 is reserved for default
-            '2' => $base_url . 'marker.png',
-            '3' => $base_url . 'marker_black.png',
-            '4' => $base_url . 'marker_grey.png',
-            '5' => $base_url . 'marker_orange.png',
-            '6' => $base_url . 'marker_white.png',
-            '7' => $base_url . 'marker_yellow.png',
-            '8' => $base_url . 'marker_purple.png',
-            '9' => $base_url . 'marker_green.png',
-        );
-        if (array_key_exists($id, $path)) {
-            return $path[$id];
-        } else {
-            return false;
-        }
-
-    }
 
 }

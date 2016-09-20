@@ -46,8 +46,25 @@
 
 
     // Google Map related stuff start
-    var opt = window._agmOpt, map;
+    var opt = window._agmOpt, map, mapOptions = {};
 
+    /**
+     * Find and return styles from styles json
+     * @param id
+     * @returns {Array}
+     */
+    function getStyleByID(id) {
+        var found = opt.styles.filter(function (s) {
+            return (s.id == id);
+        });
+        return (found.length) ? found[0].style : [];
+    }
+
+    /**
+     * Get DOM element by ID
+     * @param a
+     * @returns {Element}
+     */
     function getById(a) {
         return document.querySelector('#' + a) || document.getElementById(a);
     }
@@ -56,7 +73,7 @@
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
-        var mapOptions = {
+        mapOptions = {
             draggable: (width > 480) || !isTouchDevice(),
             center: center,
             streetViewControl: true,
@@ -70,9 +87,11 @@
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
                 position: google.maps.ControlPosition.TOP_RIGHT
-            }
+            },
+            styles: getStyleByID(opt.map.style)
         };
         map = new google.maps.Map(mapCanvas, mapOptions);
+
 
         var agmLat = $('#agm-lat'),
             agmLng = $('#agm-lng'),
@@ -83,7 +102,8 @@
             draggable: true,
             position: center,
             map: map,
-            title: 'Current Location'
+            title: 'Current Location',
+            icon: opt.marker.icon || ''
         });
 
         google.maps.event.addListener(map, 'rightclick', function (event) {
@@ -143,7 +163,9 @@
         mapCanvas.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
     }
 
-    //Workaround to fix Map not loaded properly when canvas is hidden initially
+    /**
+     * Workaround to fix Map not loaded properly when canvas is hidden initially
+     */
     $('#wpt-loc-tab').on('click.agm', function () {
         try {
             google.maps.event.trigger(map, 'resize');
@@ -151,6 +173,18 @@
             console.error('Google map not loaded yet');
         }
 
+    });
+
+    /**
+     * Dynamically change the map style
+     */
+    $('#agm-map-style').on('change.agm', function (e) {
+        e.preventDefault();
+        try {
+            map.setOptions({styles: getStyleByID($(this).val())});
+        } catch (e) {
+            console.error('Google map not loaded yet');
+        }
     });
 
     /**

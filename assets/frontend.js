@@ -22,7 +22,8 @@
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
                 position: google.maps.ControlPosition.TOP_RIGHT
-            }
+            },
+            styles: opt.map.styles
         };
         var map = new google.maps.Map(mapCanvas, mapOptions);
 

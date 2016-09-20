@@ -7,8 +7,17 @@ namespace Ankur\Plugins\Ank_Google_Map;
 class Admin
 {
 
+    /**
+     * Constants
+     */
     const PLUGIN_SLUG = 'agm_settings';
     const PLUGIN_OPTION_GROUP = 'agm_plugin_options';
+
+    /**
+     * Utility class instance
+     * @var Util
+     */
+    private $util;
 
     function __construct()
     {
@@ -29,6 +38,9 @@ class Admin
 
         // Be multilingual
         add_action('plugins_loaded', array($this, 'load_text_domain'));
+
+        // Init class
+        $this->util = new Util();
     }
 
     /*
@@ -94,7 +106,8 @@ class Admin
             'info_state' => '0',
             'disable_mouse_wheel' => '0',
             'disable_drag_mobile' => '1',
-            'api_key' => ''
+            'api_key' => '',
+            'map_style' => 0 //disabled
         );
 
         return $default_options;
@@ -175,6 +188,7 @@ class Admin
 
         $out['map_lang_code'] = sanitize_text_field($in['map_lang_code']);
         $out['map_type'] = intval($in['map_type']);
+        $out['map_style'] = intval($in['map_style']);
 
         $out['marker_title'] = sanitize_text_field($in['marker_title']);
         $out['marker_anim'] = intval($in['marker_anim']);
@@ -218,7 +232,8 @@ class Admin
         if (is_readable($file_path)) {
             extract(array(
                 'db' => get_option('ank_google_map'),
-                'option_group' => self::PLUGIN_OPTION_GROUP
+                'option_group' => self::PLUGIN_OPTION_GROUP,
+                'styles' => $this->util->get_styles()
             ));
             require $file_path;
         } else {
@@ -251,7 +266,12 @@ class Admin
                 'lat' => esc_attr($db['map_Lat']),
                 'lng' => esc_attr($db['map_Lng']),
                 'zoom' => absint($db['map_zoom']),
-            )
+                'style' => absint($db['map_style']),
+            ),
+            'marker' => array(
+                'icon' => $this->util->get_marker_url($db['marker_color'])
+            ),
+            'styles' => $this->util->get_styles()
         );
     }
 

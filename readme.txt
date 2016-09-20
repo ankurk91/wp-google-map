@@ -2,7 +2,7 @@
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
 Tested up to: 4.6.1
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -141,7 +141,7 @@ Possible reasons are -
 
 * Multiple Maps with Multiple Markers.
 * Multi-site support
-* Custom Styles
+
 
 
 == Upgrade Notice ==
@@ -155,6 +155,9 @@ Please upgrade to v2.0.0
 
 
 == Changelog ==
+
+= 2.1.0 =
+* Allow styling map by using some predefined styles from [snazzymaps](https://snazzymaps.com/)
 
 = 2.0.0 =
 * Revamp UI

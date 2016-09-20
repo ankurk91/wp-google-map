@@ -12,7 +12,7 @@
             <a class="nav-tab" id="wpt-info-tab" href="#top#wpt-info"><?php _e('Info Window', 'ank-google-map') ?></a>
         </h2>
 
-        <form action="<?php echo admin_url('options.php') ?>" method="post" id="agm-form">
+        <form action="<?php echo admin_url('options.php') ?>" method="post" id="agm-form" novalidate>
             <?php
             //wp inbuilt nonce field , etc
             settings_fields($option_group);
@@ -81,7 +81,7 @@
                         </tr>
                         <tr>
                             <th scope="row"><?php _e('Map Language', 'ank-google-map'); ?></th>
-                            <td><input placeholder="en" pattern="([A-Za-z\-]){2,5}"
+                            <td><input placeholder="en"
                                        type="text"
                                        name="ank_google_map[map_lang_code]"
                                        value="<?php echo esc_attr($db['map_lang_code']); ?>">
@@ -145,6 +145,20 @@
                                         value="4"><?php _e('TERRAIN', 'ank-google-map'); ?>
                                     </option>
                                 </select></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php _e('Map Style', 'ank-google-map'); ?></th>
+                            <td>
+                                <select id="agm-map-style" name="ank_google_map[map_style]">
+                                    <option disabled label="Map style"></option>
+                                    <option value="0">None</option>
+                                    <?php
+                                    foreach ($styles as $item) {?>
+                                        <option value="<?php echo $item['id']?>" <?php selected($db['map_style'], $item['id']) ?>><?php echo ucwords(str_replace('-',' ',$item['name'])) ?></option>
+                                   <?php } ?>
+                                </select>
+                                <p class="description"><?php _e('Styles taken from','ank-google-map')?> <a target="_blank" href="https://snazzymaps.com/">snazzymaps</a></p>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row"><?php _e('Search for Location', 'ank-google-map'); ?></th>
