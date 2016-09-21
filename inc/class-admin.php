@@ -285,7 +285,7 @@ class Admin
         wp_enqueue_style('agm-admin-css', plugins_url('/assets/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
 
         $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
-        wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=3.24&libraries=places' . $api_key, array(), null, true);
+        wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=' . AGM_API_VER . '&libraries=places' . $api_key, array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/assets/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
         // WP inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agmOpt', $this->get_js_options());

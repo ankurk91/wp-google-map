@@ -107,7 +107,7 @@ class Frontend
         //Decide API key
         $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
         // Enqueue google map api
-        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=3.24" . $lang_code . $api_key, array(), null, true);
+        wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=" . AGM_API_VER . $lang_code . $api_key, array(), null, true);
 
         // Enqueue frontend js file
         $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
