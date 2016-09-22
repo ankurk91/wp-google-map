@@ -39,13 +39,12 @@
             var marker = new google.maps.Marker({
                 position: center,
                 map: map,
-                title: opt.marker.title
+                title: opt.marker.title,
+                icon: opt.marker.file || opt.marker.color || ''
             });
+
             if (opt.marker.animation !== 'NONE') {
                 marker.setAnimation(google.maps.Animation[opt.marker.animation])
-            }
-            if (opt.marker.color !== false) {
-                marker.setIcon(opt.marker.color);
             }
 
             /**
@@ -104,7 +103,7 @@
             google.maps.event.addDomListener(window, "load", loadGoogleMap)
         }
         else {
-            mapCanvas.innerHTML = '<p style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
+            mapCanvas.innerHTML = '<p class="map-not-loaded" style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
             mapCanvas.style.height = "auto";
         }
     }

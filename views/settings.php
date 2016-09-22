@@ -153,11 +153,13 @@
                                     <option disabled label="Map style"></option>
                                     <option value="0">None</option>
                                     <?php
-                                    foreach ($styles as $item) {?>
-                                        <option value="<?php echo $item['id']?>" <?php selected($db['map_style'], $item['id']) ?>><?php echo ucwords(str_replace('-',' ',$item['name'])) ?></option>
-                                   <?php } ?>
+                                    foreach ($styles as $item) { ?>
+                                        <option
+                                            value="<?php echo $item['id'] ?>" <?php selected($db['map_style'], $item['id']) ?>><?php echo ucwords(str_replace('-', ' ', $item['name'])) ?></option>
+                                    <?php } ?>
                                 </select>
-                                <p class="description"><?php _e('Styles taken from','ank-google-map')?> <a target="_blank" href="https://snazzymaps.com/">snazzymaps</a></p>
+                                <p class="description"><?php _e('Styles taken from', 'ank-google-map') ?> <a
+                                        target="_blank" href="https://snazzymaps.com/">snazzymaps</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -233,6 +235,15 @@
                                         value="9"><?php _e('Green', 'ank-google-map'); ?>
                                     </option>
                                 </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php _e('Marker File URL', 'ank-google-map'); ?></th>
+                            <td>
+                                <input type="text"  name="ank_google_map[marker_file]"
+                                       value="<?php echo esc_url($db['marker_file']); ?>"
+                                       placeholder="http://example.com/icon-50.png">
+                                <p class="description"><?php _e('Full URL to marker icon image file','ank-google-map') ?></p>
                             </td>
                         </tr>
                     </table>

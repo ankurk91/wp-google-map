@@ -63,6 +63,7 @@ class Frontend
                 'animation' => esc_js($marker_anim_array[$db['marker_anim']]),
                 'title' => esc_js($db['marker_title']),
                 'color' => $this->util->get_marker_url($db['marker_color']),
+                'file' => empty($db['marker_file']) ? false : esc_url($db['marker_file']),
             ),
             'info_window' => array(
                 'enabled' => absint($db['info_on']),

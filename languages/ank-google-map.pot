@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ank Google Map\n"
 "Report-Msgid-Bugs-To: https://github.com/ankurk91/wp-google-map/issues\n"
-"POT-Creation-Date: 2016-08-24 12:30+0530\n"
+"POT-Creation-Date: 2016-09-22 16:18+0530\n"
 "PO-Revision-Date: 2016-01-13 17:06+0530\n"
 "Last-Translator: ankurk91\n"
 "Language-Team: \n"
@@ -23,23 +23,23 @@ msgstr ""
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: inc\n"
 
-#: inc/class-admin.php:116
+#: inc/class-admin.php:130
 msgid "Settings"
 msgstr ""
 
-#: inc/class-admin.php:166
+#: inc/class-admin.php:180
 msgid "Invalid Latitude format"
 msgstr ""
 
-#: inc/class-admin.php:170
+#: inc/class-admin.php:184
 msgid "Invalid Longitude format"
 msgstr ""
 
-#: inc/class-admin.php:200
+#: inc/class-admin.php:216
 msgid "Settings saved. Use this shortcode"
 msgstr ""
 
-#: inc/class-admin.php:213
+#: inc/class-admin.php:229
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -168,105 +168,121 @@ msgid "TERRAIN"
 msgstr ""
 
 #: views/settings.php:150
+msgid "Map Style"
+msgstr ""
+
+#: views/settings.php:161
+msgid "Styles taken from"
+msgstr ""
+
+#: views/settings.php:166
 msgid "Search for Location"
 msgstr ""
 
-#: views/settings.php:154
+#: views/settings.php:170
 msgid "Right click on map to set that point as new center of map"
 msgstr ""
 
-#: views/settings.php:163
+#: views/settings.php:179
 msgid "Enable Marker"
 msgstr ""
 
-#: views/settings.php:167 views/settings.php:232
+#: views/settings.php:183 views/settings.php:257
 msgid "Check to enable"
 msgstr ""
 
-#: views/settings.php:170
+#: views/settings.php:186
 msgid "Marker Title"
 msgstr ""
 
-#: views/settings.php:174
+#: views/settings.php:190
 msgid "Don't use html tags here"
 msgstr ""
 
-#: views/settings.php:178
+#: views/settings.php:194
 msgid "Marker Animation"
 msgstr ""
 
-#: views/settings.php:182
+#: views/settings.php:198
 msgid "NONE"
 msgstr ""
 
-#: views/settings.php:185
+#: views/settings.php:201
 msgid "BOUNCE"
 msgstr ""
 
-#: views/settings.php:188
+#: views/settings.php:204
 msgid "DROP"
 msgstr ""
 
-#: views/settings.php:193
+#: views/settings.php:209
 msgid "Marker Color"
 msgstr ""
 
-#: views/settings.php:197
+#: views/settings.php:213
 msgid "Default"
 msgstr ""
 
-#: views/settings.php:199
+#: views/settings.php:215
 msgid "Light Red"
 msgstr ""
 
-#: views/settings.php:201
+#: views/settings.php:217
 msgid "Black"
 msgstr ""
 
-#: views/settings.php:204
+#: views/settings.php:220
 msgid "Gray"
 msgstr ""
 
-#: views/settings.php:207
+#: views/settings.php:223
 msgid "Orange"
 msgstr ""
 
-#: views/settings.php:210
+#: views/settings.php:226
 msgid "White"
 msgstr ""
 
-#: views/settings.php:213
+#: views/settings.php:229
 msgid "Yellow"
 msgstr ""
 
-#: views/settings.php:216
+#: views/settings.php:232
 msgid "Purple"
 msgstr ""
 
-#: views/settings.php:219
+#: views/settings.php:235
 msgid "Green"
 msgstr ""
 
-#: views/settings.php:229
+#: views/settings.php:241
+msgid "Marker File URL"
+msgstr ""
+
+#: views/settings.php:246
+msgid "Full URL to marker icon image file"
+msgstr ""
+
+#: views/settings.php:254
 msgid "Enable Info Window"
 msgstr ""
 
-#: views/settings.php:233
+#: views/settings.php:258
 msgid "Needs marker to be enabled"
 msgstr ""
 
-#: views/settings.php:237
+#: views/settings.php:262
 msgid "Info Window State"
 msgstr ""
 
-#: views/settings.php:241
+#: views/settings.php:266
 msgid "Shown by default"
 msgstr ""
 
-#: views/settings.php:244
+#: views/settings.php:269
 msgid "Info Window Text"
 msgstr ""
 
-#: views/settings.php:256
+#: views/settings.php:281
 msgid "HTML allowed"
 msgstr ""

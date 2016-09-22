@@ -26,11 +26,14 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Place info window on marker with custom text/markup.
 * Disable dragging on mobile devices / touch enabled devices
 * Disable mouse wheel zoom
+* Map Style - eg. Grayscale
+* Custom marker icon file
 
 = Featured on =
 * [wpnewsify.com](https://wpnewsify.com/plugins/best-wordpress-google-maps-plugins/)
 * [wpaisle.com](https://wpaisle.com/wordpress-widgets/google-map-widgets-for-wordpress/)
-* [webdesigncone.com](http://webdesigncone.com/2014/best-wordpress-plugins/)  
+* [webdesigncone.com](http://webdesigncone.com/2014/best-wordpress-plugins/)
+* [wpin.me](http://wpin.me/how-to-add-google-maps-wordpress/)
 
 
 > <strong>Found bugs ?</strong><br>
@@ -158,6 +161,7 @@ Please upgrade to v2.0.0
 
 = 2.1.0 =
 * Allow styling map by using some predefined styles from [snazzymaps](https://snazzymaps.com/)
+* Allow custom marker icon image file
 
 = 2.0.0 =
 * Revamp UI

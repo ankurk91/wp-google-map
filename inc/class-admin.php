@@ -101,6 +101,7 @@ class Admin
             'marker_title' => 'We are here',
             'marker_anim' => 1,
             'marker_color' => 1,
+            'marker_file' => '',
             'info_on' => '1',
             'info_text' => '<b>Your Destination</b>',
             'info_state' => '0',
@@ -193,6 +194,7 @@ class Admin
         $out['marker_title'] = sanitize_text_field($in['marker_title']);
         $out['marker_anim'] = intval($in['marker_anim']);
         $out['marker_color'] = intval($in['marker_color']);
+        $out['marker_file'] = sanitize_text_field($in['marker_file']);
 
         $out['api_key'] = sanitize_text_field($in['api_key']);
 
@@ -269,7 +271,8 @@ class Admin
                 'style' => absint($db['map_style']),
             ),
             'marker' => array(
-                'icon' => $this->util->get_marker_url($db['marker_color'])
+                'color' => $this->util->get_marker_url($db['marker_color']),
+                'file' => empty($db['marker_file']) ? false : esc_url($db['marker_file'])
             ),
             'styles' => $this->util->get_styles()
         );

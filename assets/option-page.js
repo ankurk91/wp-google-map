@@ -103,7 +103,7 @@
             position: center,
             map: map,
             title: 'Current Location',
-            icon: opt.marker.icon || ''
+            icon: opt.marker.file || opt.marker.color || ''
         });
 
         google.maps.event.addListener(map, 'rightclick', function (event) {
