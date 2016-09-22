@@ -1,7 +1,7 @@
 <div class="wrap">
-    <h2><?php _e('Google Map', 'ank-google-map') ?>
+    <h1><?php _e('Google Map', 'ank-google-map') ?>
         <small>(v<?php echo AGM_PLUGIN_VERSION; ?>)</small>
-    </h2>
+    </h1>
 
     <div class="option-page-wrap">
 

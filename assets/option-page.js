@@ -46,7 +46,7 @@
 
 
     // Google Map related stuff start
-    var opt = window._agmOpt, map, mapOptions = {};
+    var opt = window._agmOpt, map, mapCenter, mapOptions = {};
 
     /**
      * Find and return styles from styles json
@@ -71,11 +71,11 @@
 
     function loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
+        mapCenter = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
         mapOptions = {
             draggable: (width > 480) || !isTouchDevice(),
-            center: center,
+            center: mapCenter,
             streetViewControl: true,
             zoom: parseInt(opt.map.zoom),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -100,7 +100,7 @@
 
         var marker = new google.maps.Marker({
             draggable: true,
-            position: center,
+            position: mapCenter,
             map: map,
             title: 'Current Location',
             icon: opt.marker.file || opt.marker.color || ''
@@ -166,9 +166,10 @@
     /**
      * Workaround to fix Map not loaded properly when canvas is hidden initially
      */
-    $('#wpt-loc-tab').on('click.agm', function () {
+    $('#wpt-loc-tab').one('click.agm', function () {
         try {
             google.maps.event.trigger(map, 'resize');
+            map.setCenter(mapCenter);
         } catch (e) {
             console.error('Google map not loaded yet');
         }
