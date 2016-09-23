@@ -20,6 +20,8 @@ if (!defined('ABSPATH')) die;
 
 define('AGM_PLUGIN_VERSION', '2.1.0');
 define('AGM_BASE_FILE', __FILE__);
+
+//@link https://developers.google.com/maps/documentation/javascript/releases
 define('AGM_API_VER', '3.26');
 
 //Include required class files

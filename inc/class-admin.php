@@ -124,10 +124,10 @@ class Admin
     {
 
         if (current_user_can('manage_options')) {
-            $build_url = add_query_arg('page', self::PLUGIN_SLUG, 'options-general.php');
+            $url = add_query_arg('page', self::PLUGIN_SLUG, 'options-general.php');
             array_unshift(
                 $links,
-                sprintf('<a href="%s">%s</a>', $build_url, __('Settings'))
+                sprintf('<a href="%s">%s</a>', $url, __('Settings'))
             );
         }
 
@@ -300,9 +300,9 @@ class Admin
     public static function add_help_menu_tab()
     {
 
-        $curr_screen = get_current_screen();
+        $screen = get_current_screen();
 
-        $curr_screen->add_help_tab(
+        $screen->add_help_tab(
             array(
                 'id' => 'agm-overview',
                 'title' => 'Overview',
@@ -314,7 +314,7 @@ class Admin
             )
         );
 
-        $curr_screen->add_help_tab(
+        $screen->add_help_tab(
             array(
                 'id' => 'agm-troubleshoot',
                 'title' => 'Troubleshoot',
@@ -329,7 +329,7 @@ class Admin
 
             )
         );
-        $curr_screen->add_help_tab(
+        $screen->add_help_tab(
             array(
                 'id' => 'agm-more-info',
                 'title' => 'More',
@@ -337,13 +337,13 @@ class Admin
                     'A brief FAQ is available, ' .
                     'click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>' .
                     'Support is only available on WordPress Forums, click <a href="https://wordpress.org/support/plugin/ank-google-map" target="_blank">here</a> to ask anything about this plugin.<br>' .
-                    'You can also report a bug at plugin&apos;s GitHub <a href="https://github.com/ankurk91/wp-google-map" target="_blank">page</a>.' .
+                    'You can also report bugs at plugin&apos;s GitHub <a href="https://github.com/ankurk91/wp-google-map/issues" target="_blank">page</a>. ' .
                     'I will try to reply as soon as possible. </p>'
 
             )
         );
 
-        $curr_screen->set_help_sidebar(
+        $screen->set_help_sidebar(
             '<p><strong>Quick Links</strong></p>' .
             '<p><a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">Plugin FAQ</a></p>' .
             '<p><a href="https://github.com/ankurk91/wp-google-map" target="_blank">Plugin Home</a></p>'

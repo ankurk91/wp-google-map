@@ -23,6 +23,7 @@ class Frontend
     {
         // Register our short-code [ank_google_map]
         add_shortcode('ank_google_map', array($this, 'process_shortcode'));
+
         // Store database options for later use
         $this->db = get_option('ank_google_map');
         $this->util = new Util();

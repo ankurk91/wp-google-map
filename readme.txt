@@ -16,17 +16,17 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 = Notable Features =
 * Add Google Map API key
-* Adjust map canvas height and width.
-* Responsive map, auto center map upon resize.
-* Configure map canvas border color.
-* Disable/Enable map controls.
+* Adjust map canvas height and width
+* Responsive map, auto center map upon resize
+* Configure map canvas border color
+* Disable/Enable map controls
 * Find your location by typing address (Auto complete)
-* Change map's language eg:Hindi/Urdu
+* Change map's language eg: Hindi/Urdu
 * Place animated and colorful marker on map
 * Place info window on marker with custom text/markup.
 * Disable dragging on mobile devices / touch enabled devices
 * Disable mouse wheel zoom
-* Map Style - eg. Grayscale
+* Map Style - eg: Grayscale
 * Custom marker icon file
 
 = Featured on =
@@ -56,17 +56,16 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 = Why did you call it Light Weight ? =
 
-Because it does not depend on jQuery, written in pure Java Script.
-Options page utilize inbuilt jQuery and Color Picker.
-It uses inbuilt dash-icons and text editor on Plugin Options Page.
-It does not create additional tables in your database, uses inbuilt 'wp_options' table.
-The whole package is about 100 kb. (~30 kb zipped).
+Because it does not depend on jQuery, written in pure Java Script.<br>
+It utilize WordPress dash-icons, color picker, and text editor on plugin Options Page.<br>
+It does not create additional tables in your database, uses inbuilt 'wp_options' table.<br>
+The whole package is about 25 kb (zipped).
 
 = What do you mean by Non Bloated ? =
 
 There are many of Map plugins in plugin directory, but most of them not written well.<br>
 Means they put lots of java script (uncompressed) code on every page of your website.
-They also loads jquery file before them which effects your page speed.
+They also loads jQuery file before them which effects your page speed.
 This plugin will enqueue its js files on the required page only.
 It does not depends on external js library like: jQuery.
 
@@ -118,12 +117,7 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.6.0+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
-
-= Do you hate jQuery ? =
-
-No, I love it as like you. But I prefer faster websites.
-
+No, tested with v4.6.1+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -143,12 +137,12 @@ Possible reasons are -
 = Future Plans ? =
 
 * Multiple Maps with Multiple Markers.
-* Multi-site support
+
 
 
 
 == Upgrade Notice ==
-Please upgrade to v2.0.0
+Please upgrade to v2.0.0 for  better experience
 
 == Screenshots ==
 1. General Options

@@ -110,7 +110,7 @@
 
     /**
      * Detect if touch enabled device
-     * @source http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+     * @link http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
      * @returns {boolean|*}
      */
     function isTouchDevice() {

@@ -160,7 +160,7 @@
         google.maps.event.addDomListener(window, "load", loadGoogleMap)
     }
     else {
-        mapCanvas.innerHTML = '<h4 style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
+        mapCanvas.innerHTML = '<h4 class="map-not-loaded" style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
     }
 
     /**
@@ -210,7 +210,7 @@
 
     /**
      * Detect if touch enabled device
-     * @source http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+     * @link http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
      * @returns {boolean|*}
      */
     function isTouchDevice() {
