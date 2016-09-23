@@ -95,6 +95,7 @@ class Admin
             'map_control_2' => '0',
             'map_control_3' => '0',
             'map_control_4' => '0',
+            'map_control_5' => '0',
             'map_lang_code' => '',
             'map_type' => 1,
             'marker_on' => '1',
@@ -198,7 +199,7 @@ class Admin
 
         $out['api_key'] = sanitize_text_field($in['api_key']);
 
-        $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'marker_on', 'info_on', 'info_state');
+        $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'map_control_5', 'marker_on', 'info_on', 'info_state');
 
         foreach ($choices_array as $choice) {
             $out[$choice] = (isset($in[$choice])) ? '1' : '0';

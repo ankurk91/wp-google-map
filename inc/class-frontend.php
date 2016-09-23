@@ -76,6 +76,7 @@ class Frontend
                 'zoomControl' => absint($db['map_control_2']),
                 'mapTypeControl' => absint($db['map_control_3']),
                 'streetViewControl' => absint($db['map_control_4']),
+                'fullscreenControl' => absint($db['map_control_5']),
             ),
             'mobile' => array(
                 'scrollwheel' => absint($db['disable_mouse_wheel']),

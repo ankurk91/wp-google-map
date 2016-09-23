@@ -81,18 +81,22 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: true,
             zoomControlOptions: {
-                position: google.maps.ControlPosition.LEFT_CENTER
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
             },
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                position: google.maps.ControlPosition.TOP_RIGHT
+                position: google.maps.ControlPosition.TOP_LEFT
             },
-            styles: getStyleByID(opt.map.style)
+            styles: getStyleByID(opt.map.style),
+            fullscreenControl: true,
+            fullscreenControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            }
         };
         map = new google.maps.Map(mapCanvas, mapOptions);
 
-
+        //jQuery DOM
         var agmLat = $('#agm-lat'),
             agmLng = $('#agm-lng'),
             agmZoom = $('#agm-zoom'),
@@ -133,13 +137,13 @@
             google.maps.event.trigger(map, 'resize');
         });
 
-        /* Zoom slider control*/
+        // Zoom slider control
         agmZoom.on('input click', function () {
             agmZoomVal.html(this.value);
             map.setZoom(parseInt(agmZoom.val()));
         });
 
-        /* Auto-complete feature */
+        // Auto-complete feature
         var locSearch = new google.maps.places.Autocomplete(getById('agm-search'));
         google.maps.event.addListener(locSearch, 'place_changed', function () {
             var place = locSearch.getPlace();
@@ -154,7 +158,7 @@
     }
 
 
-    /* Prepare to load google map */
+    // Prepare to load google map
     var mapCanvas = getById("agm-canvas");
     if (typeof google == "object" && google.maps) {
         google.maps.event.addDomListener(window, "load", loadGoogleMap)

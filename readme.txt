@@ -2,7 +2,7 @@
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
 Tested up to: 4.6.1
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -152,6 +152,9 @@ Please upgrade to v2.0.0 for  better experience
 
 
 == Changelog ==
+
+= 2.2.0 =
+* Add: FullScreen Control
 
 = 2.1.0 =
 * Allow styling map by using some predefined styles from [snazzymaps](https://snazzymaps.com/)

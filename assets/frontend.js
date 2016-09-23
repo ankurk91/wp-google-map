@@ -5,39 +5,38 @@
 
     function loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        var center = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
+        var mapCenter = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
         var mapOptions = {
             zoomControl: !opt.controls.zoomControl,
             zoomControlOptions: {
-                position: google.maps.ControlPosition.LEFT_CENTER
+                position: google.maps.ControlPosition.RIGHT_CENTER
             },
             mapTypeControl: !opt.controls.mapTypeControl,
             streetViewControl: !opt.controls.streetViewControl,
             scrollwheel: !opt.mobile.scrollwheel,
-            draggable: true,
-            center: center,
+            draggable: (width > 480) || !isTouchDevice(),
+            center: mapCenter,
             zoom: parseInt(opt.map.zoom),
             mapTypeId: google.maps.MapTypeId[opt.map.type],
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                position: google.maps.ControlPosition.TOP_RIGHT
+                position: google.maps.ControlPosition.TOP_LEFT
             },
-            styles: opt.map.styles
+            styles: opt.map.styles,
+            fullscreenControl: !opt.controls.fullscreenControl,
+            fullscreenControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            }
         };
         var map = new google.maps.Map(mapCanvas, mapOptions);
-
-        if (opt.mobile.draggable) {
-            map.setOptions({draggable: (width > 480) || !isTouchDevice()});
-        }
-
 
         /**
          * If marker is enabled
          */
         if (opt.marker.enabled === 1) {
             var marker = new google.maps.Marker({
-                position: center,
+                position: mapCenter,
                 map: map,
                 title: opt.marker.title,
                 icon: opt.marker.file || opt.marker.color || ''
@@ -92,7 +91,7 @@
                 clearTimeout(timeout);
             }
             timeout = window.setTimeout(function () {
-                map.setCenter(center);
+                map.setCenter(mapCenter);
             }, 300);
         });
     }

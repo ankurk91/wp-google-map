@@ -105,8 +105,8 @@
                                        value="<?php echo esc_attr($db['map_Lng']); ?>"></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Zoom Level', 'ank-google-map'); ?> <b><i id="agm-zoom-val"
-                                                                                               style="color:#0073aa"><?php echo esc_attr($db['map_zoom']); ?></i></b>
+                            <th scope="row"><?php _e('Zoom Level', 'ank-google-map'); ?> <b><span id="agm-zoom-val"
+                                                                                               style="color:#0073aa"><?php echo esc_attr($db['map_zoom']); ?></span></b>
                             </th>
                             <td><input id="agm-zoom" type="range" max="21"
                                        min="1" name="ank_google_map[map_zoom]"
@@ -118,14 +118,17 @@
                             <th scope="row"><?php _e('Disable Controls', 'ank-google-map'); ?></th>
                             <td>
                                 <label><input <?php checked($db['map_control_2'], '1') ?> type="checkbox"
-                                                                                          name="ank_google_map[map_control_2]">Disable
-                                    <?php _e('Zoom Control', 'ank-google-map'); ?></label><br>
+                                                                                          name="ank_google_map[map_control_2]">
+                                    <?php _e('Disable Zoom Control', 'ank-google-map'); ?></label><br>
                                 <label><input <?php checked($db['map_control_3'], '1') ?> type="checkbox"
-                                                                                          name="ank_google_map[map_control_3]">Disable
-                                    <?php _e('MapType Control', 'ank-google-map'); ?></label><br>
+                                                                                          name="ank_google_map[map_control_3]">
+                                    <?php _e('Disable MapType Control', 'ank-google-map'); ?></label><br>
                                 <label><input <?php checked($db['map_control_4'], '1') ?> type="checkbox"
-                                                                                          name="ank_google_map[map_control_4]">Disable
-                                    <?php _e('StreetView Control', 'ank-google-map'); ?></label>
+                                                                                          name="ank_google_map[map_control_4]">
+                                    <?php _e('Disable StreetView Control', 'ank-google-map'); ?></label><br>
+                                <label><input <?php checked($db['map_control_5'], '1') ?> type="checkbox"
+                                                                                          name="ank_google_map[map_control_5]">
+                                    <?php _e('Disable FullScreen Control', 'ank-google-map'); ?></label>
                             </td>
                         </tr>
                         <tr>
@@ -240,10 +243,10 @@
                         <tr>
                             <th scope="row"><?php _e('Marker File URL', 'ank-google-map'); ?></th>
                             <td>
-                                <input type="text"  name="ank_google_map[marker_file]"
+                                <input type="text" name="ank_google_map[marker_file]"
                                        value="<?php echo esc_url($db['marker_file']); ?>"
                                        placeholder="http://example.com/icon-50.png">
-                                <p class="description"><?php _e('Full URL to marker icon image file','ank-google-map') ?></p>
+                                <p class="description"><?php _e('Full URL to marker icon image file', 'ank-google-map') ?></p>
                             </td>
                         </tr>
                     </table>
