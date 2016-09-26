@@ -65,7 +65,7 @@
      * @param a
      * @returns {Element}
      */
-    function getById(a) {
+    function getElementById(a) {
         return document.querySelector('#' + a) || document.getElementById(a);
     }
 
@@ -137,14 +137,31 @@
             google.maps.event.trigger(map, 'resize');
         });
 
+        var timeout;
+        /**
+         * Resize event handling, make map more responsive
+         * Center map after 300 ms
+         */
+        google.maps.event.addDomListener(window, 'resize', function () {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = window.setTimeout(function () {
+                map.setCenter(mapCenter);
+            }, 300);
+        });
+
         // Zoom slider control
-        agmZoom.on('input click', function () {
+        agmZoom.on('input.agm click.agm', function () {
             agmZoomVal.html(this.value);
             map.setZoom(parseInt(agmZoom.val()));
         });
 
         // Auto-complete feature
-        var locSearch = new google.maps.places.Autocomplete(getById('agm-search'));
+        var searchInput = getElementById('agm-search');
+        var locSearch = new google.maps.places.Autocomplete(searchInput);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(searchInput);
+
         google.maps.event.addListener(locSearch, 'place_changed', function () {
             var place = locSearch.getPlace();
             if (place.geometry) {
@@ -159,7 +176,7 @@
 
 
     // Prepare to load google map
-    var mapCanvas = getById("agm-canvas");
+    var mapCanvas = getElementById("agm-canvas");
     if (typeof google == "object" && google.maps) {
         google.maps.event.addDomListener(window, "load", loadGoogleMap)
     }

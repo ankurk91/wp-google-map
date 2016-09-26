@@ -166,9 +166,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Search for Location', 'ank-google-map'); ?></th>
+                            <th scope="row"><?php _e('Set Location', 'ank-google-map'); ?></th>
                             <td>
-                                <input type="text" size="40" id="agm-search" class="agm-search"><br>
+                                <input type="text" size="40" id="agm-search" class="agm-search">
                                 <div id="agm-canvas" class="agm-canvas"></div>
                                 <p class="description"><?php _e('Right click on map to set that point as new center of map', 'ank-google-map'); ?></p>
                             </td>
