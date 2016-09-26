@@ -117,7 +117,7 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.6.1+ (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.6.1 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -155,6 +155,7 @@ Please upgrade to v2.0.0 for  better experience
 
 = 2.2.0 =
 * Add: FullScreen Control
+* Fix: Warnings on updates
 
 = 2.1.0 =
 * Allow styling map by using some predefined styles from [snazzymaps](https://snazzymaps.com/)

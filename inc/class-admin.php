@@ -34,7 +34,7 @@ class Admin
         add_action('admin_menu', array($this, 'add_submenu_page'));
 
         // Check for database upgrades
-        add_action('plugins_loaded', array($this, 'check_for_db_options'));
+        add_action('plugins_loaded', array($this, 'perform_upgrade'));
 
         // Be multilingual
         add_action('plugins_loaded', array($this, 'load_text_domain'));
@@ -53,14 +53,6 @@ class Admin
             add_option('ank_google_map', $this->get_default_options());
         }
 
-    }
-
-    /**
-     * Check if db options exists and create if not found
-     */
-    function check_for_db_options()
-    {
-        $this->do_upon_plugin_activation();
     }
 
     /**
@@ -293,6 +285,37 @@ class Admin
         wp_enqueue_script('agm-admin-js', plugins_url("/assets/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
         // WP inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agmOpt', $this->get_js_options());
+    }
+
+    /**
+     * Upgrade plugin database options
+     */
+    function perform_upgrade()
+    {
+        //Get fresh options from db
+        $db = get_option('ank_google_map');
+        //Check if we need to proceed , if no return early
+        if ($this->should_proceed_to_upgrade($db) === false) return;
+        //Get default options
+        $default_options = $this->get_default_options();
+        //Merge with db options , preserve old
+        $new_options = (empty($db)) ? $default_options : array_merge($default_options, $db);
+        //Update plugin version
+        $new_options['plugin_ver'] = AGM_PLUGIN_VERSION;
+        //Write options back to db
+        update_option('ank_google_map', $new_options);
+    }
+
+    /**
+     * Check if we need to upgrade database options or not
+     * @param $db_options
+     * @return bool
+     */
+    private function should_proceed_to_upgrade($db_options)
+    {
+        if (empty($db_options) || !is_array($db_options)) return true;
+        if (!isset($db_options['plugin_ver'])) return true;
+        return version_compare($db_options['plugin_ver'], AGM_PLUGIN_VERSION, '<');
     }
 
     /*
