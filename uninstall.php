@@ -6,7 +6,7 @@
  */
 
 
-// Make sure that we are uninstalling
+// Make sure that uninstall was called by WordPress
 if (!defined('WP_UNINSTALL_PLUGIN'))
     exit;
 

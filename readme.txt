@@ -37,7 +37,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 
 > <strong>Found bugs ?</strong><br>
-> I am happy to resolve bugs, report your bugs [here](https://github.com/ankurk91/wp-google-map/issues)<br>
+> I am happy to resolve bugs, report bugs [here](https://github.com/ankurk91/wp-google-map/issues)<br>
 > Please use WordPress forums for any kind of support.
 
 == Installation ==
@@ -56,7 +56,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 = Why did you call it Light Weight ? =
 
-Because it does not depend on jQuery, written in pure Java Script.<br>
+Because it is minimum of JavaScript.<br>
 It utilize WordPress dash-icons, color picker, and text editor on plugin Options Page.<br>
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.<br>
 The whole package is about 25 kb (zipped).
@@ -66,7 +66,7 @@ The whole package is about 25 kb (zipped).
 There are many of Map plugins in plugin directory, but most of them not written well.<br>
 Means they put lots of java script (uncompressed) code on every page of your website.
 They also loads jQuery file before them which effects your page speed.
-This plugin will enqueue its js files on the required page only.
+This plugin will enqueue its JS files on the required page only.
 It does not depends on external js library like: jQuery.
 
 = Map controls not shown correctly on front-end =
@@ -74,7 +74,7 @@ It does not depends on external js library like: jQuery.
 Add this css code to your theme's style.css file to fix this
 
 `
-.gmnoprint img, #agm_map_canvas img { max-width: none; }
+.gmnoprint img, #agm-canvas img { max-width: none; }
 
 `
 = Shortcode does not work in text widget =

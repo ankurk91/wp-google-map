@@ -51,7 +51,7 @@ class Frontend
             3 => 'DROP',
         );
 
-        $return_array = array(
+        return array(
             'map' => array(
                 'lat' => $db['map_Lat'],
                 'lng' => $db['map_Lng'],
@@ -84,7 +84,6 @@ class Frontend
             )
         );
 
-        return $return_array;
     }
 
 

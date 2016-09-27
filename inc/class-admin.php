@@ -75,7 +75,7 @@ class Admin
     function get_default_options()
     {
 
-        $default_options = array(
+        return array(
             'plugin_ver' => AGM_PLUGIN_VERSION,
             'div_width' => '100',
             'div_width_unit' => 2,
@@ -104,7 +104,6 @@ class Admin
             'map_style' => 0 //disabled
         );
 
-        return $default_options;
     }
 
     /**
@@ -290,7 +289,7 @@ class Admin
     /**
      * Upgrade plugin database options
      */
-    function perform_upgrade()
+    public function perform_upgrade()
     {
         //Get fresh options from db
         $db = get_option('ank_google_map');

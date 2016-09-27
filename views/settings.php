@@ -295,7 +295,7 @@
         Developed with &hearts; by <a target="_blank" href="https://ankurk91.github.io/?utm_source=<?php echo rawurlencode(get_home_url()) ?>&amp;utm_medium=plugin_options_page&amp;utm_campaign=ank-google-map">Ankur Kumar</a> |
         Contribute on <a target="_blank" href="https://github.com/ankurk91/wp-google-map">GitHub</a> |
         ★ Rate this on <a target="_blank"
-                          href="https://wordpress.org/support/view/plugin-reviews/ank-google-map?filter=5">WordPress</a>
+                          href="https://wordpress.org/support/plugin/ank-google-map/reviews/?filter=5">WordPress</a>
     </p>
     <?php if (defined('WP_DEBUG') && WP_DEBUG == true) {
         echo '<hr><p><h5>Debugging info:</h5><pre>';

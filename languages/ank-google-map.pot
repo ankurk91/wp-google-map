@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ank Google Map\n"
 "Report-Msgid-Bugs-To: https://github.com/ankurk91/wp-google-map/issues\n"
-"POT-Creation-Date: 2016-09-23 12:12+0530\n"
+"POT-Creation-Date: 2016-09-27 10:07+0530\n"
 "PO-Revision-Date: 2016-01-13 17:06+0530\n"
 "Last-Translator: ankurk91\n"
 "Language-Team: \n"
@@ -23,23 +23,23 @@ msgstr ""
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: inc\n"
 
-#: inc/class-admin.php:130
+#: inc/class-admin.php:122
 msgid "Settings"
 msgstr ""
 
-#: inc/class-admin.php:180
+#: inc/class-admin.php:172
 msgid "Invalid Latitude format"
 msgstr ""
 
-#: inc/class-admin.php:184
+#: inc/class-admin.php:176
 msgid "Invalid Longitude format"
 msgstr ""
 
-#: inc/class-admin.php:216
+#: inc/class-admin.php:208
 msgid "Settings saved. Use this shortcode"
 msgstr ""
 
-#: inc/class-admin.php:229
+#: inc/class-admin.php:221
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -136,153 +136,157 @@ msgid "Disable Controls"
 msgstr ""
 
 #: views/settings.php:122
-msgid "Zoom Control"
+msgid "Disable Zoom Control"
 msgstr ""
 
 #: views/settings.php:125
-msgid "MapType Control"
+msgid "Disable MapType Control"
 msgstr ""
 
 #: views/settings.php:128
-msgid "StreetView Control"
+msgid "Disable StreetView Control"
 msgstr ""
 
-#: views/settings.php:132
+#: views/settings.php:131
+msgid "Disable FullScreen Control"
+msgstr ""
+
+#: views/settings.php:135
 msgid "Map Type"
 msgstr ""
 
-#: views/settings.php:136
+#: views/settings.php:139
 msgid "ROADMAP"
 msgstr ""
 
-#: views/settings.php:139
+#: views/settings.php:142
 msgid "SATELLITE"
 msgstr ""
 
-#: views/settings.php:142
+#: views/settings.php:145
 msgid "HYBRID"
 msgstr ""
 
-#: views/settings.php:145
+#: views/settings.php:148
 msgid "TERRAIN"
 msgstr ""
 
-#: views/settings.php:150
+#: views/settings.php:153
 msgid "Map Style"
 msgstr ""
 
-#: views/settings.php:161
+#: views/settings.php:164
 msgid "Styles taken from"
 msgstr ""
 
-#: views/settings.php:166
-msgid "Search for Location"
+#: views/settings.php:169
+msgid "Set Location"
 msgstr ""
 
-#: views/settings.php:170
+#: views/settings.php:173
 msgid "Right click on map to set that point as new center of map"
 msgstr ""
 
-#: views/settings.php:179
+#: views/settings.php:182
 msgid "Enable Marker"
 msgstr ""
 
-#: views/settings.php:183 views/settings.php:257
+#: views/settings.php:186 views/settings.php:260
 msgid "Check to enable"
 msgstr ""
 
-#: views/settings.php:186
+#: views/settings.php:189
 msgid "Marker Title"
 msgstr ""
 
-#: views/settings.php:190
+#: views/settings.php:193
 msgid "Don't use html tags here"
 msgstr ""
 
-#: views/settings.php:194
+#: views/settings.php:197
 msgid "Marker Animation"
 msgstr ""
 
-#: views/settings.php:198
+#: views/settings.php:201
 msgid "NONE"
 msgstr ""
 
-#: views/settings.php:201
+#: views/settings.php:204
 msgid "BOUNCE"
 msgstr ""
 
-#: views/settings.php:204
+#: views/settings.php:207
 msgid "DROP"
 msgstr ""
 
-#: views/settings.php:209
+#: views/settings.php:212
 msgid "Marker Color"
 msgstr ""
 
-#: views/settings.php:213
+#: views/settings.php:216
 msgid "Default"
 msgstr ""
 
-#: views/settings.php:215
+#: views/settings.php:218
 msgid "Light Red"
 msgstr ""
 
-#: views/settings.php:217
+#: views/settings.php:220
 msgid "Black"
 msgstr ""
 
-#: views/settings.php:220
+#: views/settings.php:223
 msgid "Gray"
 msgstr ""
 
-#: views/settings.php:223
+#: views/settings.php:226
 msgid "Orange"
 msgstr ""
 
-#: views/settings.php:226
+#: views/settings.php:229
 msgid "White"
 msgstr ""
 
-#: views/settings.php:229
+#: views/settings.php:232
 msgid "Yellow"
 msgstr ""
 
-#: views/settings.php:232
+#: views/settings.php:235
 msgid "Purple"
 msgstr ""
 
-#: views/settings.php:235
+#: views/settings.php:238
 msgid "Green"
 msgstr ""
 
-#: views/settings.php:241
+#: views/settings.php:244
 msgid "Marker File URL"
 msgstr ""
 
-#: views/settings.php:246
+#: views/settings.php:249
 msgid "Full URL to marker icon image file"
 msgstr ""
 
-#: views/settings.php:254
+#: views/settings.php:257
 msgid "Enable Info Window"
 msgstr ""
 
-#: views/settings.php:258
+#: views/settings.php:261
 msgid "Needs marker to be enabled"
 msgstr ""
 
-#: views/settings.php:262
+#: views/settings.php:265
 msgid "Info Window State"
 msgstr ""
 
-#: views/settings.php:266
+#: views/settings.php:269
 msgid "Shown by default"
 msgstr ""
 
-#: views/settings.php:269
+#: views/settings.php:272
 msgid "Info Window Text"
 msgstr ""
 
-#: views/settings.php:281
+#: views/settings.php:284
 msgid "HTML allowed"
 msgstr ""
