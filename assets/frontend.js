@@ -38,6 +38,7 @@
             var marker = new google.maps.Marker({
                 position: mapCenter,
                 map: map,
+                optimized: false,
                 title: opt.marker.title,
                 icon: opt.marker.file || opt.marker.color || ''
             });
