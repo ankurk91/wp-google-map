@@ -105,6 +105,7 @@
         var marker = new google.maps.Marker({
             draggable: true,
             position: mapCenter,
+            optimized: false,
             map: map,
             title: 'Current Location',
             icon: opt.marker.file || opt.marker.color || ''
