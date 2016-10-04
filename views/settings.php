@@ -245,7 +245,11 @@
                             <td>
                                 <input type="text" name="ank_google_map[marker_file]"
                                        value="<?php echo esc_url($db['marker_file']); ?>"
-                                       placeholder="http://example.com/icon-50.png">
+                                       placeholder="https://example.com/icon-50.png">
+                                <button id="agm-marker-file" type="button" class="button button-secondary wp-hide-pw"
+                                        title="<?php _e('Select from Media Library','ank-google-map');?>">
+                                    <i class="dashicons dashicons-format-image"></i>
+                                </button>
                                 <p class="description"><?php _e('Full URL to marker icon image file', 'ank-google-map') ?></p>
                             </td>
                         </tr>

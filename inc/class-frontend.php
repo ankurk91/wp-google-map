@@ -99,9 +99,9 @@ class Frontend
         $db = $this->db;
 
         // Write canvas html always
-        $w_unit = ($db["div_width_unit"] === 1) ? 'px' : '%';
-        $b_color = ($db["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($db["div_border_color"]);
-        echo '<div class="agm-canvas" id="agm-canvas" style="margin: 0 auto;width:' . esc_attr($db["div_width"]) . $w_unit . ';height:' . esc_attr($db["div_height"]) . 'px;' . $b_color . '"></div>';
+        $width_unit = ($db["div_width_unit"] === 1) ? 'px' : '%';
+        $border_color = ($db["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($db["div_border_color"]);
+        echo '<div class="agm-canvas" id="agm-canvas" style="margin: 0 auto; width:' . esc_attr($db["div_width"]) . $width_unit . '; height:' . esc_attr($db["div_height"]) . 'px;' . $border_color . '"></div>';
 
 
         // Decide language code

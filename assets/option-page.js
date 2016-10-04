@@ -1,35 +1,35 @@
 (function (window, document, $) {
     'use strict';
 
-    //Get requested tab from url
+    // Get requested tab from url
     var requestedTab = window.location.hash.replace('#top#', '');
 
     /**
      * Cache DOM elements for later use
      */
     var $tabs = $('h2#wpt-tabs'),
-        $input = $("form#agm-form").find('input:hidden[name="_wp_http_referer"]'),
+        $input = $('form#agm-form').find('input:hidden[name="_wp_http_referer"]'),
         $sections = $('section.tab-content');
 
-    //If there no active tab found , set first tab as active
+    // If there no active tab found , set first tab as active
     if (requestedTab === '' || $('#' + requestedTab).length == 0) requestedTab = $sections.attr('id');
-    //Notice: we are not using cached DOM in next line
+    // Notice: we are not using cached DOM in next line
     $('#' + requestedTab).addClass('active');
     $('#' + requestedTab + '-tab').addClass('nav-tab-active');
-    //Set return tab on page load
+    // Set return tab on page load
     setRedirectURL(requestedTab);
 
-    //Bind a click event to all tabs
+    // Bind a click event to all tabs
     $tabs.find('a.nav-tab').on('click.agm', (function (e) {
         e.stopPropagation();
-        //Hide all tabs
+        // Hide all tabs
         $tabs.find('a.nav-tab').removeClass('nav-tab-active');
         $sections.removeClass('active');
-        //Activate only clicked tab
+        // Activate only clicked tab
         var id = $(this).attr('id').replace('-tab', '');
         $('#' + id).addClass('active');
         $(this).addClass('nav-tab-active');
-        //Set return tab url
+        // Set return tab url
         setRedirectURL(id);
     }));
 
@@ -40,7 +40,7 @@
      */
     function setRedirectURL(url) {
         var split = $input.val().split('?', 1);
-        //Update the tab id in last while keeping base url same
+        //Update the tab id at last while preserving keeping base url
         $input.val(split[0] + '?page=agm_settings#top#' + url);
     }
 
@@ -96,7 +96,7 @@
         };
         map = new google.maps.Map(mapCanvas, mapOptions);
 
-        //jQuery DOM
+        // jQuery DOM
         var agmLat = $('#agm-lat'),
             agmLng = $('#agm-lng'),
             agmZoom = $('#agm-zoom'),
@@ -134,7 +134,7 @@
             agmLng.val(location.lng());
         });
 
-        google.maps.event.addListener(map, "idle", function () {
+        google.maps.event.addListener(map, 'idle', function () {
             google.maps.event.trigger(map, 'resize');
         });
 
@@ -177,9 +177,9 @@
 
 
     // Prepare to load google map
-    var mapCanvas = getElementById("agm-canvas");
-    if (typeof google == "object" && google.maps) {
-        google.maps.event.addDomListener(window, "load", loadGoogleMap)
+    var mapCanvas = getElementById('agm-canvas');
+    if (typeof google == 'object' && google.maps) {
+        google.maps.event.addDomListener(window, 'load', loadGoogleMap)
     }
     else {
         mapCanvas.innerHTML = '<h4 class="map-not-loaded" style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
@@ -229,6 +229,42 @@
     } catch (e) {
         console.error('WP Color Picker not loaded');
     }
+
+    var uploadFrame;
+    /**
+     * Media uploader
+     * @link https://codex.wordpress.org/Javascript_Reference/wp.media
+     */
+    $('#agm-marker-file').on('click.agm', function (e) {
+        e.preventDefault();
+        var vm = $(this);
+
+        // If the media frame already exists, reopen it.
+        if (uploadFrame) {
+            uploadFrame.open();
+            return;
+        }
+
+        // Create a new media frame
+        uploadFrame = wp.media({
+            //frame: 'image',
+            title: 'Choose Marker Image',
+            button: {
+                text: 'Choose Image'
+            },
+            library: {type: 'image'},
+            multiple: false
+        });
+
+        // When an image is selected in the media frame...
+        uploadFrame.on('select', function () {
+            vm.prev('input').val(uploadFrame.state().get('selection').first().toJSON().url);
+        });
+
+        // Finally, open the modal on click
+        uploadFrame.open();
+
+    });
 
     /**
      * Detect if touch enabled device

@@ -23,4 +23,5 @@
 * FAQ is available [here](https://wordpress.org/plugins/ank-google-map/faq/)
 
 ### License
-MIT [License](LICENSE.txt)
+* Source code is licenced under MIT [License](LICENSE.txt)
+* Banner and Logo taken from [iconfinder.com](https://www.iconfinder.com/icons/196750/location_map_marker_navigation_pin_icon#size=128)

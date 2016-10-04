@@ -2,7 +2,7 @@
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
 Tested up to: 4.6.1
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -34,6 +34,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * [wpaisle.com](https://wpaisle.com/wordpress-widgets/google-map-widgets-for-wordpress/)
 * [webdesigncone.com](http://webdesigncone.com/2014/best-wordpress-plugins/)
 * [wpin.me](http://wpin.me/how-to-add-google-maps-wordpress/)
+* [onplugins.com](http://onplugins.com/most-active-wordpress-easy-map-plugins/)
 
 
 > <strong>Found bugs ?</strong><br>
@@ -152,6 +153,10 @@ Please upgrade to v2.0.0 for  better experience
 
 
 == Changelog ==
+
+= 2.2.3 =
+* Fix: Marker image on Safari
+* Add: Select marker image from Media Library
 
 = 2.2.0 =
 * Add: FullScreen Control

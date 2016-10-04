@@ -65,7 +65,7 @@
             /**
              * Clicking on marker will show info-window
              */
-            google.maps.event.addListener(marker, "click", function () {
+            google.maps.event.addListener(marker, 'click', function () {
                 infoWindow.open(map, marker);
                 marker.setAnimation(null);
             });
@@ -97,14 +97,14 @@
         });
     }
 
-    var mapCanvas = document.getElementById("agm-canvas");
+    var mapCanvas = document.getElementById('agm-canvas');
     if (typeof mapCanvas !== 'undefined') {
-        if (typeof google == "object" && google.maps) {
-            google.maps.event.addDomListener(window, "load", loadGoogleMap)
+        if (typeof google == 'object' && google.maps) {
+            google.maps.event.addDomListener(window, 'load', loadGoogleMap)
         }
         else {
             mapCanvas.innerHTML = '<p class="map-not-loaded" style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
-            mapCanvas.style.height = "auto";
+            mapCanvas.style.height = 'auto';
         }
     }
 

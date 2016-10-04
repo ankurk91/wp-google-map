@@ -132,16 +132,11 @@ class Admin
     function add_submenu_page()
     {
         $page_hook_suffix = add_submenu_page('options-general.php', 'Google Map', 'Google Map', 'manage_options', self::PLUGIN_SLUG, array($this, 'load_option_page'));
-        /*
-        * Add the color picker js  + css file to option page
-        * Available for wp v3.5+ only
-        */
-        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_color_picker'));
 
         // Add help drop down menu on option page,  WP v3.3+
         add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
 
-        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'print_admin_assets'));
+        add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_admin_assets'));
     }
 
     /**
@@ -237,17 +232,6 @@ class Admin
     }
 
     /**
-     * Enqueue color picker related css and js
-     */
-    function add_color_picker()
-    {
-
-        wp_enqueue_style('wp-color-picker');
-        wp_enqueue_script('wp-color-picker');
-
-    }
-
-    /**
      * Returns dynamic javascript options to be used by admin js
      * @return array
      */
@@ -271,10 +255,15 @@ class Admin
     }
 
     /**
-     * Add option page javascript and css
+     * Add javascript and css to plugin option page
      */
-    function print_admin_assets()
+    public function add_admin_assets()
     {
+
+        wp_enqueue_style('wp-color-picker');
+        wp_enqueue_script('wp-color-picker');
+        wp_enqueue_media();
+
         $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
         $db = get_option('ank_google_map');
         wp_enqueue_style('agm-admin-css', plugins_url('/assets/option-page' . $is_min . '.css', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, 'all');
