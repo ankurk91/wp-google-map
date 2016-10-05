@@ -28,6 +28,7 @@ define('AGM_API_VER', '3.26');
 require __DIR__ . '/inc/class-util.php';
 
 if (is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
+    require __DIR__ . '/inc/class-settings.php';
     require __DIR__ . '/inc/class-admin.php';
     new Admin();
 
