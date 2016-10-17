@@ -154,13 +154,14 @@ Please upgrade to v2.0.0 for  better experience
 
 == Changelog ==
 
-= 2.2.3 =
-* Fix: Marker image on Safari
+= 2.3.0 =
+* Fix: Parse error: syntax error,unexpected '[' with php 5.3
+* Fix: Marker image visibility on Safari
 * Add: Select marker image from Media Library
 
 = 2.2.0 =
 * Add: FullScreen Control
-* Fix: Warnings on updates
+* Fix: Undefined index warnings on updates
 
 = 2.1.0 =
 * Allow styling map by using some predefined styles from [snazzymaps](https://snazzymaps.com/)

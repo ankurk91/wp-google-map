@@ -80,7 +80,7 @@ class Admin
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_admin_assets'));
     }
 
-    public static function load_text_domain()
+    public function load_text_domain()
     {
         load_plugin_textdomain('ank-google-map', false, dirname(plugin_basename(AGM_BASE_FILE)) . '/languages/');
     }
@@ -132,7 +132,7 @@ class Admin
     /*
      * Add a help tab at top of plugin option page
      */
-    public static function add_help_menu_tab()
+    public function add_help_menu_tab()
     {
 
         $screen = get_current_screen();

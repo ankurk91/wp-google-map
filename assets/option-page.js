@@ -212,6 +212,7 @@
 
     /**
      * Prevent form submission when user press enter key in auto-complete
+     * Note: event not namespaced
      */
     $("#agm-search").on('keydown', function (e) {
         if (e.keyCode == 13 || e.which == 13) {
@@ -237,7 +238,7 @@
      */
     $('#agm-marker-file').on('click.agm', function (e) {
         e.preventDefault();
-        var vm = $(this);
+        var $vm = $(this);
 
         // If the media frame already exists, reopen it.
         if (uploadFrame) {
@@ -248,7 +249,7 @@
         // Create a new media frame
         uploadFrame = wp.media({
             //frame: 'image',
-            title: 'Choose Marker Image',
+            title: 'Choose Marker',
             button: {
                 text: 'Choose Image'
             },
@@ -258,7 +259,7 @@
 
         // When an image is selected in the media frame...
         uploadFrame.on('select', function () {
-            vm.prev('input').val(uploadFrame.state().get('selection').first().toJSON().url);
+            $vm.prev('input').val(uploadFrame.state().get('selection').first().toJSON().url);
         });
 
         // Finally, open the modal on click

@@ -38,14 +38,14 @@ class Frontend
     {
         $db = $this->db;
 
-        $map_type_array = array(
+        $map_types = array(
             1 => 'ROADMAP',
             2 => 'SATELLITE',
             3 => 'HYBRID',
             4 => 'TERRAIN',
         );
 
-        $marker_anim_array = array(
+        $marker_animations = array(
             1 => 'NONE',
             2 => 'BOUNCE',
             3 => 'DROP',
@@ -56,12 +56,12 @@ class Frontend
                 'lat' => $db['map_Lat'],
                 'lng' => $db['map_Lng'],
                 'zoom' => $db['map_zoom'],
-                'type' => $map_type_array[$db['map_type']],
+                'type' => $map_types[$db['map_type']],
                 'styles' => $this->util->get_style_by_id($db['map_style'])
             ),
             'marker' => array(
                 'enabled' => absint($db['marker_on']),
-                'animation' => esc_js($marker_anim_array[$db['marker_anim']]),
+                'animation' => esc_js($marker_animations[$db['marker_anim']]),
                 'title' => esc_js($db['marker_title']),
                 'color' => $this->util->get_marker_url($db['marker_color']),
                 'file' => empty($db['marker_file']) ? false : esc_url($db['marker_file']),
