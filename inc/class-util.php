@@ -14,17 +14,21 @@ class Util
 
     /**
      * Read styles.json file
-     * @param bool $json Should return json content
-     * @return mixed|string|void
+     * @return array
      */
-    public function get_styles($json = false)
+    public function get_styles()
     {
         $file = plugin_dir_path(AGM_BASE_FILE) . 'styles.json';
         $contents = file_get_contents($file);
-        if ($json) {
-            return $contents;
-        }
-        return json_decode($contents, true);
+
+        $contents = json_decode($contents, true);
+        /**
+         * Filter: 'agm_custom_styles' - Allows filtering of the styles.json
+         *
+         * @api array $contents JSON content
+         */
+        return apply_filters('agm_custom_styles', $contents);
+
     }
 
     /**
