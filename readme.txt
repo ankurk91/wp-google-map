@@ -1,7 +1,7 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
-Tested up to: 4.6.1
+Tested up to: 4.7
 Stable tag: 2.3.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT

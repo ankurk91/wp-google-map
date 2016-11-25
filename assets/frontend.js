@@ -98,7 +98,7 @@
     }
 
     var mapCanvas = document.getElementById('agm-canvas');
-    if (typeof mapCanvas !== 'undefined') {
+    if (typeof mapCanvas !== 'undefined' && mapCanvas) {
         if (typeof google == 'object' && google.maps) {
             google.maps.event.addDomListener(window, 'load', loadGoogleMap)
         }
