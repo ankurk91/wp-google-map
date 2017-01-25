@@ -92,7 +92,8 @@
             fullscreenControl: true,
             fullscreenControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_TOP
-            }
+            },
+            gestureHandling: 'auto',
         };
         map = new google.maps.Map(mapCanvas, mapOptions);
 

@@ -66,7 +66,8 @@ class Settings
             'disable_mouse_wheel' => '0',
             'disable_drag_mobile' => '1',
             'api_key' => '',
-            'map_style' => 0 //disabled
+            'map_style' => 0, //disabled
+            'gesture_handling' => 'auto'
         );
 
     }
@@ -162,6 +163,7 @@ class Settings
         $out['marker_file'] = sanitize_text_field($in['marker_file']);
 
         $out['api_key'] = sanitize_text_field($in['api_key']);
+        $out['gesture_handling'] = sanitize_text_field($in['gesture_handling']);
 
         $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'map_control_5', 'marker_on', 'info_on', 'info_state');
 

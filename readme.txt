@@ -1,8 +1,8 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
-Tested up to: 4.7
-Stable tag: 2.3.1
+Tested up to: 4.7.1
+Stable tag: 2.4.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -11,7 +11,7 @@ Simple, light-weight and non-bloated WordPress Google Map Plugin.
 
 == Description ==
 Simple, light-weight and non-bloated Google Map Plugin for WordPress.<br>
-Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% Free of cost.
+Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% free of cost.
 
 
 = Notable Features =
@@ -21,13 +21,18 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Configure map canvas border color
 * Disable/Enable map controls
 * Find your location by typing address (Auto complete)
-* Change map's language eg: Hindi/Urdu
+* Change map's language eg: Hindi
 * Place animated and colorful marker on map
 * Place info window on marker with custom text/markup.
 * Disable dragging on mobile devices / touch enabled devices
 * Disable mouse wheel zoom
 * Map Style - eg: Grayscale
-* Custom marker icon file
+* Custom marker icon/image file
+* Cooperative Gesture Handling (Two fingers zoom on mobile devices)
+
+= php v7.0 and Bedrock compatibility =
+* This plugin is is fully compatible with php 7.0 and roots [bedrock](https://github.com/roots/bedrock).
+* Fallback support to php v5.3+
 
 = Featured on =
 * [wpnewsify.com](https://wpnewsify.com/plugins/best-wordpress-google-maps-plugins/)
@@ -78,6 +83,11 @@ Add this css code to your theme's style.css file to fix this
 .gmnoprint img, #agm-canvas img { max-width: none; }
 
 `
+
+= Full screen control not visible =
+
+This is because of you theme css, test with WP default theme first.
+
 = Shortcode does not work in text widget =
 
 Add this line to your theme's functions.php
@@ -96,6 +106,7 @@ Uses a single row, stored in array for faster access.
 = From where does it loads additional Marker (colored) images ? =
 
 Every marker image is loaded from official Google Server.
+You can also upload your own marker images.
 
 = What if i uninstall/remove this plugin ? =
 
@@ -118,7 +129,7 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.6.1 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.7.1 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -133,7 +144,7 @@ Possible reasons are -
 = How do i insert the API key ? =
 * Obtain a browser key, see steps [here](https://developers.google.com/maps/documentation/javascript/get-api-key#get-an-api-key)
 * Insert your key on option page and you are good to go
-
+* It may take upto 15 minutes for API key to work upon installation
 
 = Future Plans ? =
 
@@ -154,8 +165,11 @@ Please upgrade to v2.0.0 for  better experience
 
 == Changelog ==
 
+= 2.3.2 =
+* Add: [Gesture Handling](https://developers.google.com/maps/documentation/javascript/interaction#gesture-handling)
+
 = 2.3.1 =
-* Add: Add a filter to style.json content array, see class-util.php
+* Add: Add a filter to style.json content array, see class-util.php or [see](https://github.com/ankurk91/wp-google-map/wiki/How-to-add-your-own-styles)
 
 = 2.3.0 =
 * Fix: Parse error: syntax error,unexpected '[' with php 5.3
