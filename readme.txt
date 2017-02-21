@@ -1,7 +1,7 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
-Tested up to: 4.7.1
+Tested up to: 4.7.2
 Stable tag: 2.4.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -31,7 +31,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Cooperative Gesture Handling (Two fingers zoom on mobile devices)
 
 = php v7.0 and Bedrock compatibility =
-* This plugin is is fully compatible with php 7.0 and roots [bedrock](https://github.com/roots/bedrock).
+* This plugin is is fully compatible with php 7.0 and roots' [bedrock](https://github.com/roots/bedrock).
 * Fallback support to php v5.3+
 
 = Featured on =
@@ -129,7 +129,7 @@ Leave the color field empty and it will not be applied.
 
 = Did you test it with old version of WordPress ? =
 
-No, tested with v4.7.1 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
+No, tested with v4.7.2 (latest as of now) only. So i recommend you to upgrade to latest WordPress today.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -165,8 +165,9 @@ Please upgrade to v2.0.0 for  better experience
 
 == Changelog ==
 
-= 2.3.2 =
+= 2.4.0 =
 * Add: [Gesture Handling](https://developers.google.com/maps/documentation/javascript/interaction#gesture-handling)
+* Update: Bump Google Map API version to 3.27 stable
 
 = 2.3.1 =
 * Add: Add a filter to style.json content array, see class-util.php or [see](https://github.com/ankurk91/wp-google-map/wiki/How-to-add-your-own-styles)
