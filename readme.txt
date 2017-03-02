@@ -2,7 +2,7 @@
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
 Tested up to: 4.7.2
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -154,7 +154,7 @@ Possible reasons are -
 
 
 == Upgrade Notice ==
-Please upgrade to v2.0.0 for  better experience
+Please upgrade to v2.0.0 for better experience
 
 == Screenshots ==
 1. General Options
@@ -164,6 +164,9 @@ Please upgrade to v2.0.0 for  better experience
 
 
 == Changelog ==
+
+= 2.5.0 =
+* Add: Expose Google Map object to `window`, [read](https://github.com/ankurk91/wp-google-map/wiki/Hook-into-JS)
 
 = 2.4.0 =
 * Add: [Gesture Handling](https://developers.google.com/maps/documentation/javascript/interaction#gesture-handling)

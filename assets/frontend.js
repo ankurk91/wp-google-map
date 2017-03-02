@@ -1,36 +1,38 @@
 (function (window, document) {
     'use strict';
 
+    // Grab options from dumped JS on html
     var opt = window._agmOpt;
+    // Expose some vars to a global namespace
+    var AGM = window.AGM = {};
 
     function loadGoogleMap() {
         var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var mapCenter = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
 
         var mapOptions = {
-                zoomControl: !opt.controls.zoomControl,
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT_CENTER
-                },
-                mapTypeControl: !opt.controls.mapTypeControl,
-                streetViewControl: !opt.controls.streetViewControl,
-                scrollwheel: !opt.mobile.scrollwheel,
-                draggable: (width > 480) || !isTouchDevice(),
-                center: mapCenter,
-                zoom: parseInt(opt.map.zoom),
-                mapTypeId: google.maps.MapTypeId[opt.map.type],
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                    position: google.maps.ControlPosition.TOP_LEFT
-                },
-                styles: opt.map.styles,
-                fullscreenControl: !opt.controls.fullscreenControl,
-                fullscreenControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT_TOP
-                },
-                gestureHandling: opt.mobile.gestureHandling || 'auto',
-            }
-            ;
+            zoomControl: !opt.controls.zoomControl,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
+            },
+            mapTypeControl: !opt.controls.mapTypeControl,
+            streetViewControl: !opt.controls.streetViewControl,
+            scrollwheel: !opt.mobile.scrollwheel,
+            draggable: (width > 480) || !isTouchDevice(),
+            center: mapCenter,
+            zoom: parseInt(opt.map.zoom),
+            mapTypeId: google.maps.MapTypeId[opt.map.type],
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.TOP_LEFT
+            },
+            styles: opt.map.styles,
+            fullscreenControl: !opt.controls.fullscreenControl,
+            fullscreenControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            gestureHandling: opt.mobile.gestureHandling || 'auto',
+        };
         var map = new google.maps.Map(mapCanvas, mapOptions);
 
         /**
@@ -97,6 +99,12 @@
                 map.setCenter(mapCenter);
             }, 300);
         });
+
+        // Lets expose them
+        AGM.map = map;
+        AGM.marker = marker;
+        AGM.infoWindow = infoWindow;
+        window.dispatchEvent(new Event('agm.loaded'));
     }
 
     var mapCanvas = document.getElementById('agm-canvas');
