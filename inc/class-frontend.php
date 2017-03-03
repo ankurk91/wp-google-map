@@ -97,6 +97,9 @@ class Frontend
     {
 
         ob_start();// ob_start is here for a reason
+        // Do something before shortcode
+        do_action('agm-before-shortcode');
+
         $db = $this->db;
 
         // Write canvas html always
@@ -114,10 +117,13 @@ class Frontend
 
         // Enqueue frontend js file
         $is_min = (defined('WP_DEBUG') && WP_DEBUG == true) ? '' : '.min';
-        wp_enqueue_script('agm-frontend-js', plugins_url('assets/frontend' . $is_min . '.js', AGM_BASE_FILE), array('agm-google-map-api'), AGM_PLUGIN_VERSION, true);
+        wp_enqueue_script('agm-frontend-js', plugins_url('assets/frontend' . $is_min . '.js', AGM_BASE_FILE), array(), AGM_PLUGIN_VERSION, true);
 
         // WP inbuilt hack to print js options object just before this script
         wp_localize_script('agm-frontend-js', '_agmOpt', $this->get_js_options());
+        // Do something after shortcode
+        do_action('agm-after-shortcode');
+
         return ob_get_clean();
     }
 

@@ -167,6 +167,7 @@ Please upgrade to v2.0.0 for better experience
 
 = 2.5.0 =
 * Add: Expose Google Map object to `window`, [read](https://github.com/ankurk91/wp-google-map/wiki/Hook-into-JS)
+* Add: Expose two actions before and after shortcode, [read](https://github.com/ankurk91/wp-google-map/wiki/Before-and-After-shortcode-actions)
 
 = 2.4.0 =
 * Add: [Gesture Handling](https://developers.google.com/maps/documentation/javascript/interaction#gesture-handling)
