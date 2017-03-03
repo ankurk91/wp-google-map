@@ -22,6 +22,8 @@
 * Change log is available [here](https://wordpress.org/plugins/ank-google-map/changelog/)
 * FAQ is available [here](https://wordpress.org/plugins/ank-google-map/faq/)
 
+### [Wiki](https://github.com/ankurk91/wp-google-map/wiki) docs for developers
+
 ### License
 * Source code is licenced under MIT [License](LICENSE.txt)
 * Banner and Logo taken from [iconfinder.com](https://www.iconfinder.com/icons/196750/location_map_marker_navigation_pin_icon#size=128)
