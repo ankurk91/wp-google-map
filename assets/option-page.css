@@ -1,45 +1,45 @@
 
 .tab-content {
-    display: none
+  display: none
 }
 
 .tab-content.active {
-    display: block
+  display: block
 }
 
 .wp-editor-wrap {
-    width: 50%;
+  width: 50%;
 }
 
 .agm-search {
-    padding: 6px;
-    top: 9px !important;
-    text-overflow: ellipsis;
-    border-radius: 2px 0 0 2px;
-    width: 300px;
-    border: 1px solid transparent !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  padding: 6px;
+  top: 9px !important;
+  text-overflow: ellipsis;
+  border-radius: 2px 0 0 2px;
+  width: 300px;
+  border: 1px solid transparent !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
 .agm-canvas {
-    height: 300px;
-    width: 550px;
-    border: 1px solid #bcbcbc;
+  height: 300px;
+  width: 550px;
+  border: 1px solid #bcbcbc;
 }
 
 @media screen and (max-width: 782px) {
-    .agm-canvas, .wp-editor-wrap {
-        width: 99%;
-    }
+  .agm-canvas, .wp-editor-wrap {
+    width: 99%;
+  }
 
-    .agm-search {
-        width: 33% !important;
-    }
+  .agm-search {
+    width: 33% !important;
+  }
 }
 
 /**
 * Fixes for map canvas
 */
 .gmnoprint img {
-    max-width: none;
+  max-width: none;
 }

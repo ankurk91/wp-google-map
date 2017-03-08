@@ -74,12 +74,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Disable Dragging on Mobile Devices', 'ank-google-map'); ?></th>
-                            <td><input <?php checked($db['disable_drag_mobile'], '1') ?>
-                                        type="checkbox" name="ank_google_map[disable_drag_mobile]">
-                            </td>
-                        </tr>
-                        <tr>
                             <th scope="row"><?php _e('Scrolling and Panning Behavior', 'ank-google-map'); ?></th>
                             <td>
                                 <select name="ank_google_map[gesture_handling]">

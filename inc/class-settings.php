@@ -1,4 +1,5 @@
 <?php
+
 namespace Ankur\Plugins\Ank_Google_Map;
 /**
  * Class Settings
@@ -64,7 +65,6 @@ class Settings
             'info_text' => '<b>Your Destination</b>',
             'info_state' => '0',
             'disable_mouse_wheel' => '0',
-            'disable_drag_mobile' => '1',
             'api_key' => '',
             'map_style' => 0, //disabled
             'gesture_handling' => 'auto'
@@ -165,7 +165,7 @@ class Settings
         $out['api_key'] = sanitize_text_field($in['api_key']);
         $out['gesture_handling'] = sanitize_text_field($in['gesture_handling']);
 
-        $choices_array = array('disable_mouse_wheel', 'disable_drag_mobile', 'map_control_2', 'map_control_3', 'map_control_4', 'map_control_5', 'marker_on', 'info_on', 'info_state');
+        $choices_array = array('disable_mouse_wheel', 'map_control_2', 'map_control_3', 'map_control_4', 'map_control_5', 'marker_on', 'info_on', 'info_state');
 
         foreach ($choices_array as $choice) {
             $out[$choice] = (isset($in[$choice])) ? '1' : '0';

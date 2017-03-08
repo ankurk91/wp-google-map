@@ -1,8 +1,8 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free, easy
 Requires at least: 4.0.0
-Tested up to: 4.7.2
-Stable tag: 2.5.0
+Tested up to: 4.8.0
+Stable tag: 2.6.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -62,7 +62,6 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 
 = Why did you call it Light Weight ? =
 
-Because it is minimum of JavaScript.<br>
 It utilize WordPress dash-icons, color picker, and text editor on plugin Options Page.<br>
 It does not create additional tables in your database, uses inbuilt 'wp_options' table.<br>
 The whole package is about 25 kb (zipped).
@@ -164,6 +163,11 @@ Please upgrade to v2.0.0 for better experience
 
 
 == Changelog ==
+
+= 2.6.0 =
+* Compatible with WP v4.8.0
+* Update: Google Map API v3.28
+* Remove: [draggable](https://developers.google.com/maps/documentation/javascript/reference#MapOptions) option
 
 = 2.5.0 =
 * Add: Expose Google Map object to `window`, [read](https://github.com/ankurk91/wp-google-map/wiki/Hook-into-JS)

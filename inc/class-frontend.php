@@ -80,7 +80,6 @@ class Frontend
             ),
             'mobile' => array(
                 'scrollwheel' => absint($db['disable_mouse_wheel']),
-                'draggable' => absint($db['disable_drag_mobile']),
                 'gestureHandling' => esc_js($db['gesture_handling']),
             )
         );
