@@ -170,7 +170,7 @@ class Admin
                 'title' => 'More',
                 'content' => '<p><strong>Need more information ?</strong><br>' .
                     'A brief FAQ is available, ' .
-                    'click <a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">here</a> for more.<br>' .
+                    'click <a href="https://wordpress.org/plugins/ank-google-map#faq" target="_blank">here</a> for more.<br>' .
                     'Support is only available on WordPress Forums, click <a href="https://wordpress.org/support/plugin/ank-google-map" target="_blank">here</a> to ask anything about this plugin.<br>' .
                     'You can also report bugs at plugin&apos;s GitHub <a href="https://github.com/ankurk91/wp-google-map/issues" target="_blank">page</a>. ' .
                     'I will try to reply as soon as possible. </p>'
@@ -180,7 +180,7 @@ class Admin
 
         $screen->set_help_sidebar(
             '<p><strong>Quick Links</strong></p>' .
-            '<p><a href="https://wordpress.org/plugins/ank-google-map/faq/" target="_blank">Plugin FAQ</a></p>' .
+            '<p><a href="https://wordpress.org/plugins/ank-google-map#faq" target="_blank">Plugin FAQ</a></p>' .
             '<p><a href="https://github.com/ankurk91/wp-google-map" target="_blank">Plugin Home</a></p>'
         );
     }
