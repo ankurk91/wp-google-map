@@ -4,7 +4,6 @@
 [![WordPress compatibility](https://img.shields.io/wordpress/v/ank-google-map.svg?maxAge=3600)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress plugin version](https://img.shields.io/wordpress/plugin/v/ank-google-map.svg?maxAge=3600)](https://wordpress.org/plugins/ank-google-map)
 [![WordPress rating](https://img.shields.io/wordpress/plugin/r/ank-google-map.svg?maxAge=3600)](https://wordpress.org/plugins/ank-google-map)
-[![Build Status](https://travis-ci.org/ankurk91/wp-google-map.svg)](https://travis-ci.org/ankurk91/wp-google-map)
 
 - - -
 

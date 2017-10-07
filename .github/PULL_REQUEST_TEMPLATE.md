@@ -5,7 +5,6 @@
 [ ] Code style update (formatting, local variables)
 [ ] Refactoring (no functional changes)
 [ ] Build related changes
-[ ] CI related changes
 [ ] Other... Please describe:
 ```
 
