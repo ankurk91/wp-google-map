@@ -3,8 +3,6 @@
 
   // Grab options from dumped JS on html
   var opt = window._agmOpt;
-  // Expose some vars to a global namespace
-  var AGM = window.AGM = {};
 
   function loadGoogleMap() {
     var mapCenter = new google.maps.LatLng(parseFloat(opt.map.lat), parseFloat(opt.map.lng));
@@ -98,11 +96,14 @@
       }, 300);
     });
 
-    // Lets expose them
-    AGM.map = map;
-    AGM.marker = marker;
-    AGM.infoWindow = infoWindow;
-    window.dispatchEvent(new Event('agm.loaded'));
+    // Expose some vars to window
+    window.AGM = {
+      map: map,
+      marker: marker,
+      infoWindow: infoWindow
+    };
+
+    window.dispatchEvent(new CustomEvent('agm.loaded', {detail: AGM}));
   }
 
   var mapCanvas = document.getElementById('agm-canvas');
