@@ -1,4 +1,5 @@
 <?php
+
 namespace Ankur\Plugins\Ank_Google_Map;
 
 /**
@@ -7,10 +8,6 @@ namespace Ankur\Plugins\Ank_Google_Map;
  */
 class Util
 {
-    function __construct()
-    {
-        //
-    }
 
     /**
      * Read styles.json file

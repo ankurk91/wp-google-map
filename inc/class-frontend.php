@@ -1,4 +1,5 @@
 <?php
+
 namespace Ankur\Plugins\Ank_Google_Map;
 /**
  * Class Frontend
@@ -19,7 +20,7 @@ class Frontend
      */
     private $util;
 
-    function __construct()
+    public function __construct()
     {
         // Register our short-code [ank_google_map]
         add_shortcode('ank_google_map', array($this, 'process_shortcode'));
@@ -38,30 +39,17 @@ class Frontend
     {
         $db = $this->db;
 
-        $map_types = array(
-            1 => 'ROADMAP',
-            2 => 'SATELLITE',
-            3 => 'HYBRID',
-            4 => 'TERRAIN',
-        );
-
-        $marker_animations = array(
-            1 => 'NONE',
-            2 => 'BOUNCE',
-            3 => 'DROP',
-        );
-
         return array(
             'map' => array(
                 'lat' => $db['map_Lat'],
                 'lng' => $db['map_Lng'],
                 'zoom' => $db['map_zoom'],
-                'type' => $map_types[$db['map_type']],
+                'type' => $this->get_map_types()[$db['map_type']],
                 'styles' => $this->util->get_style_by_id($db['map_style'])
             ),
             'marker' => array(
                 'enabled' => absint($db['marker_on']),
-                'animation' => esc_js($marker_animations[$db['marker_anim']]),
+                'animation' => $this->get_marker_animations()[$db['marker_anim']],
                 'title' => esc_js($db['marker_title']),
                 'color' => $this->util->get_marker_url($db['marker_color']),
                 'file' => empty($db['marker_file']) ? false : esc_url($db['marker_file']),
@@ -92,7 +80,7 @@ class Frontend
      * Does not accept any parameters
      * @return string
      */
-    function process_shortcode()
+    public function process_shortcode()
     {
 
         ob_start();// ob_start is here for a reason
@@ -126,5 +114,24 @@ class Frontend
         return ob_get_clean();
     }
 
+
+    protected function get_map_types()
+    {
+        return array(
+            1 => 'ROADMAP',
+            2 => 'SATELLITE',
+            3 => 'HYBRID',
+            4 => 'TERRAIN',
+        );
+    }
+
+    protected function get_marker_animations()
+    {
+        return array(
+            1 => 'NONE',
+            2 => 'BOUNCE',
+            3 => 'DROP',
+        );
+    }
 
 }

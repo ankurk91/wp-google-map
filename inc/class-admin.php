@@ -1,4 +1,5 @@
 <?php
+
 namespace Ankur\Plugins\Ank_Google_Map;
 /**
  * Class Admin
@@ -24,12 +25,12 @@ class Admin
      */
     private $settings;
 
-    function __construct()
+    public function __construct()
     {
         // Add settings link to plugin list page
         add_filter('plugin_action_links_' . plugin_basename(AGM_BASE_FILE), array($this, 'add_plugin_actions_links'), 10, 2);
 
-        // Add settings link under admin->settings menu->Google map
+        // Add settings link under settings menu
         add_action('admin_menu', array($this, 'add_link_to_settings_menu'));
 
         // Be multilingual
@@ -67,14 +68,14 @@ class Admin
     {
         $page_hook_suffix = add_submenu_page(
             'options-general.php',
-            'Google Map', //page title
-            'Google Map', //menu text
+            'Google Map', // page title
+            'Google Map', // menu text
             'manage_options',
             self::PLUGIN_SLUG,
             array($this->settings, 'load_option_page')
         );
 
-        // Add help drop down menu on option page,  WP v3.3+
+        // Add help drop down menu on option page
         add_action("load-$page_hook_suffix", array($this, 'add_help_menu_tab'));
 
         add_action('admin_print_scripts-' . $page_hook_suffix, array($this, 'add_admin_assets'));
@@ -125,6 +126,7 @@ class Admin
         $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
         wp_enqueue_script('agm-google-map', 'https://maps.googleapis.com/maps/api/js?v=' . AGM_API_VER . '&libraries=places' . $api_key, array(), null, true);
         wp_enqueue_script('agm-admin-js', plugins_url("/assets/option-page" . $is_min . ".js", AGM_BASE_FILE), array('jquery', 'agm-google-map'), AGM_PLUGIN_VERSION, true);
+
         // WP inbuilt hack to print js options object just before this script
         wp_localize_script('agm-admin-js', '_agmOpt', $this->get_js_options());
     }
@@ -164,6 +166,7 @@ class Admin
 
             )
         );
+
         $screen->add_help_tab(
             array(
                 'id' => 'agm-more-info',

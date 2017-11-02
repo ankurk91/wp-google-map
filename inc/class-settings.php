@@ -105,16 +105,13 @@ class Settings
 
         $file_path = plugin_dir_path(AGM_BASE_FILE) . 'views/settings.php';
 
-        if (is_readable($file_path)) {
-            extract(array(
-                'db' => get_option('ank_google_map'),
-                'option_group' => self::PLUGIN_OPTION_GROUP,
-                'styles' => $this->util->get_styles()
-            ));
-            require $file_path;
-        } else {
-            throw new \Exception("Unable to load settings page, File - '" . esc_html($file_path) . "' not found");
-        }
+        // WordPress discourage extract method
+        extract(array(
+            'db' => get_option('ank_google_map'),
+            'option_group' => self::PLUGIN_OPTION_GROUP,
+            'styles' => $this->util->get_styles()
+        ));
+        require $file_path;
 
     }
 
@@ -195,13 +192,13 @@ class Settings
         $db = get_option('ank_google_map');
         //Check if we need to proceed , if no return early
         if ($this->should_proceed_to_upgrade($db) === false) return;
-        //Get default options
+        // Get default options
         $default_options = $this->get_default_options();
-        //Merge with db options , preserve old
+        // Merge with db options , preserve old
         $new_options = (empty($db)) ? $default_options : array_merge($default_options, $db);
-        //Update plugin version
+        // Update plugin version
         $new_options['plugin_ver'] = AGM_PLUGIN_VERSION;
-        //Write options back to db
+        // Write options back to db
         update_option('ank_google_map', $new_options);
     }
 
