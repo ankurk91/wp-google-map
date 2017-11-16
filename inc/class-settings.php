@@ -169,7 +169,7 @@ class Settings
         }
         /*
         * Lets allow some html in info window
-        * This is same as like we make a new post
+        * This is same as like we create a new post
         */
         $out['info_text'] = balanceTags(wp_kses_post($in['info_text']), true);
 
@@ -188,7 +188,7 @@ class Settings
      */
     public function perform_upgrade()
     {
-        //Get fresh options from db
+        // Get fresh options from db
         $db = get_option('ank_google_map');
         //Check if we need to proceed , if no return early
         if ($this->should_proceed_to_upgrade($db) === false) return;

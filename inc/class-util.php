@@ -43,7 +43,7 @@ class Util
 
         if (is_array($found) && count($found)) {
             $first = current($found);
-            //workaround for php 5.3
+            // Workaround for php 5.3
             //@link http://stackoverflow.com/questions/16358973/parse-error-syntax-error-unexpected-with-php-5-3
             return $first['style'];
         }

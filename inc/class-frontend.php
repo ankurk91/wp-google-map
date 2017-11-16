@@ -97,7 +97,7 @@ class Frontend
 
         // Decide language code
         $lang_code = (esc_attr($db['map_lang_code']) === '') ? '' : '&language=' . esc_attr($db['map_lang_code']);
-        //Decide API key
+        // Decide API key
         $api_key = empty($db['api_key']) ? '' : '&key=' . esc_js($db['api_key']);
         // Enqueue google map api
         wp_enqueue_script('agm-google-map-api', "https://maps.googleapis.com/maps/api/js?v=" . AGM_API_VER . $lang_code . $api_key, array(), null, true);

@@ -1,7 +1,7 @@
 === Google Map ===
 Tags: google map, map, responsive, light weight, free
 Requires at least: 4.0.0
-Tested up to: 4.8.3
+Tested up to: 4.9.0
 Stable tag: 2.6.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
@@ -30,7 +30,7 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Custom marker icon/image file
 * Cooperative Gesture Handling (Two fingers zoom on mobile devices)
 
-= php v7.0 and Bedrock compatibility =
+= php v7.x and Bedrock compatibility =
 * This plugin is is fully compatible with php 7.0 and roots' [bedrock](https://github.com/roots/bedrock).
 * Fallback support to php v5.3+
 
@@ -165,7 +165,7 @@ Please upgrade to v2.0.0 for better experience
 == Changelog ==
 
 = 2.6.1 =
-* Compatible with WP v4.8.3
+* Compatible with WP v4.9.0
 * Update: Google Map API v3.29
 
 = 2.6.0 =
