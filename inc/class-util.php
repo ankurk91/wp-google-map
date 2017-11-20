@@ -60,7 +60,7 @@ class Util
     {
 
         $base_url = 'https://maps.gstatic.com/intl/en_us/mapfiles/';
-        $path = array(
+        $urls = array(
             // Key 1 is reserved for default
             '2' => $base_url . 'marker.png',
             '3' => $base_url . 'marker_black.png',
@@ -71,8 +71,9 @@ class Util
             '8' => $base_url . 'marker_purple.png',
             '9' => $base_url . 'marker_green.png',
         );
-        if (array_key_exists($id, $path)) {
-            return $path[$id];
+
+        if (array_key_exists($id, $urls)) {
+            return $urls[$id];
         } else {
             return false;
         }

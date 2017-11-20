@@ -44,12 +44,12 @@ class Frontend
                 'lat' => $db['map_Lat'],
                 'lng' => $db['map_Lng'],
                 'zoom' => $db['map_zoom'],
-                'type' => $this->get_map_types()[$db['map_type']],
+                'type' => $this->get_map_types($db['map_type']),
                 'styles' => $this->util->get_style_by_id($db['map_style'])
             ),
             'marker' => array(
                 'enabled' => absint($db['marker_on']),
-                'animation' => $this->get_marker_animations()[$db['marker_anim']],
+                'animation' => $this->get_marker_animations($db['marker_anim']),
                 'title' => esc_js($db['marker_title']),
                 'color' => $this->util->get_marker_url($db['marker_color']),
                 'file' => empty($db['marker_file']) ? false : esc_url($db['marker_file']),
@@ -89,7 +89,7 @@ class Frontend
 
         $db = $this->db;
 
-        // Write canvas html always
+        // Print canvas html
         $width_unit = ($db["div_width_unit"] === 1) ? 'px' : '%';
         $border_color = ($db["div_border_color"] === '') ? '' : 'border:1px solid ' . esc_attr($db["div_border_color"]);
         echo '<div class="agm-canvas" id="agm-canvas" style="margin: 0 auto; width:' . esc_attr($db["div_width"]) . $width_unit . '; height:' . esc_attr($db["div_height"]) . 'px;' . $border_color . '"></div>';
@@ -115,23 +115,35 @@ class Frontend
     }
 
 
-    protected function get_map_types()
+    protected function get_map_types($id)
     {
-        return array(
+        $styles = array(
             1 => 'ROADMAP',
             2 => 'SATELLITE',
             3 => 'HYBRID',
             4 => 'TERRAIN',
         );
+
+        if (array_key_exists($id, $styles)) {
+            return $styles[$id];
+        } else {
+            return false;
+        }
     }
 
-    protected function get_marker_animations()
+    protected function get_marker_animations($id)
     {
-        return array(
+        $anims = array(
             1 => 'NONE',
             2 => 'BOUNCE',
             3 => 'DROP',
         );
+
+        if (array_key_exists($id, $anims)) {
+            return $anims[$id];
+        } else {
+            return false;
+        }
     }
 
 }
