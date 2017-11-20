@@ -6,7 +6,7 @@ namespace Ankur\Plugins\Ank_Google_Map;
  * Plugin Name: Google Map
  * Plugin URI: https://github.com/ankurk91/wp-google-map
  * Description: Simple, light weight and non-bloated Google Map Plugin. Short code : <code>[ank_google_map]</code>
- * Version: 2.6.1
+ * Version: 2.6.2
  * Author: Ankur Kumar
  * Author URI: https://ankurk91.github.io/
  * License: MIT
@@ -19,7 +19,7 @@ namespace Ankur\Plugins\Ank_Google_Map;
 // No direct access
 if (!defined('ABSPATH')) die;
 
-define('AGM_PLUGIN_VERSION', '2.6.1');
+define('AGM_PLUGIN_VERSION', '2.6.2');
 define('AGM_BASE_FILE', __FILE__);
 
 // @link https://developers.google.com/maps/documentation/javascript/releases

@@ -2,7 +2,7 @@
 Tags: google map, map, responsive, light weight, free
 Requires at least: 4.0.0
 Tested up to: 4.9.0
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -163,6 +163,9 @@ Please upgrade to v2.0.0 for better experience
 
 
 == Changelog ==
+
+= 2.6.2 =
+* Fix: php v5.3 related [issue](https://stackoverflow.com/questions/16358973/parse-error-syntax-error-unexpected-with-php-5-3)
 
 = 2.6.1 =
 * Compatible with WP v4.9.0
