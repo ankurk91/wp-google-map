@@ -7,7 +7,6 @@ namespace Ankur\Plugins\Ank_Google_Map;
  */
 class Frontend
 {
-
     /**
      * Stores database options
      * @var array|mixed|void
@@ -82,7 +81,6 @@ class Frontend
      */
     public function process_shortcode()
     {
-
         ob_start();// ob_start is here for a reason
         // Do something before shortcode
         do_action('agm-before-shortcode');

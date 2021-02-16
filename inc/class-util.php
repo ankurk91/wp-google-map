@@ -58,7 +58,6 @@ class Util
      */
     public function get_marker_url($id)
     {
-
         $base_url = 'https://maps.gstatic.com/intl/en_us/mapfiles/';
         $urls = array(
             // Key 1 is reserved for default
@@ -74,10 +73,9 @@ class Util
 
         if (array_key_exists($id, $urls)) {
             return $urls[$id];
-        } else {
-            return false;
         }
 
+        return false;
     }
 
 }

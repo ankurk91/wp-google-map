@@ -170,8 +170,7 @@
   var mapCanvas = document.querySelector('#agm-canvas');
   if (typeof google === 'object' && google.maps) {
     google.maps.event.addDomListener(window, 'load', loadGoogleMap)
-  }
-  else {
+  } else {
     mapCanvas.innerHTML = '<h4 class="map-not-loaded" style="text-align: center;color: #ba060b">Failed to load Google Map.<br>Refresh this page and try again.<br>Check your internet connection as well.</h4>'
   }
 

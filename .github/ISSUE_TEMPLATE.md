@@ -8,7 +8,7 @@
 **Tell about your platform**
 * php version : vx.x.x
 * WordPress version: vx.x.x
-* Browser name and Version : Chrome|Firefox|Safari vx.x.x
+* Browser name and Version : Chrome|Firefox|Edge vx.x.x
 * This plugin version : vx.x.x
 
 **Current behavior**
@@ -19,6 +19,5 @@
 
 **Minimal reproduction of the problem with instructions**
 <!--
-If the current behavior is a bug or you can illustrate your feature request better with an example, 
-please provide the *STEPS TO REPRODUCE* and if possible a *MINIMAL DEMO* of the problem via https://plnkr.co or similar 
+If the current behavior is a bug or you can illustrate your feature request better with an example. 
 -->

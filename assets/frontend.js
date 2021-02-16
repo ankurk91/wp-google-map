@@ -110,8 +110,7 @@
   if (typeof mapCanvas !== 'undefined' && mapCanvas) {
     if (typeof google === 'object' && google.maps) {
       google.maps.event.addDomListener(window, 'load', loadGoogleMap)
-    }
-    else {
+    } else {
       mapCanvas.innerHTML = '<p class="map-not-loaded" style="text-align: center">Failed to load Google Map.<br>Please try again.</p>';
       mapCanvas.style.height = 'auto';
     }

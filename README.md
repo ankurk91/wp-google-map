@@ -12,8 +12,8 @@
 - - -
 
 ## Prerequisites
-* php v5.3.0+ || v7.x
-* WordPress v4.0.0 or above
+* php v5.6.0+
+* WordPress v5.0.0 or above
 * Google MAP API [key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 

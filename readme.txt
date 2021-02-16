@@ -1,8 +1,9 @@
 === Google Map ===
-Tags: google map, map, responsive, light weight, free
-Requires at least: 4.0.0
-Tested up to: 4.9.0
-Stable tag: 2.6.2
+Tags: google map, map, responsive, light weight
+Requires at least: 5.0.0
+Requires PHP: 5.6
+Tested up to: 5.6.1
+Stable tag: 2.7.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: ankurk91
@@ -10,8 +11,7 @@ Contributors: ankurk91
 Simple, light-weight and non-bloated WordPress Google Map Plugin.
 
 == Description ==
-Simple, light-weight and non-bloated Google Map Plugin for WordPress.<br>
-Written in pure javascript, no jQuery at all, responsive, configurable, no ads and 100% free of cost.
+Simple, light-weight and non-bloated Google Map Plugin for WordPress.
 
 
 = Highlights =
@@ -30,49 +30,14 @@ Written in pure javascript, no jQuery at all, responsive, configurable, no ads a
 * Custom marker icon/image file
 * Cooperative Gesture Handling (Two fingers zoom on mobile devices)
 
-= php v7.x and Bedrock compatibility =
-* This plugin is is fully compatible with php 7.0 and roots' [bedrock](https://github.com/roots/bedrock).
-* Fallback support to php v5.3+
-
-= Featured on =
-* [wpnewsify.com](https://wpnewsify.com/plugins/best-wordpress-google-maps-plugins/)
-* [wpaisle.com](https://wpaisle.com/wordpress-widgets/google-map-widgets-for-wordpress/)
-* [webdesigncone.com](http://webdesigncone.com/2014/best-wordpress-plugins/)
-* [wpin.me](http://wpin.me/how-to-add-google-maps-wordpress/)
-* [onplugins.com](http://onplugins.com/most-active-wordpress-easy-map-plugins/)
-
-
-> <strong>Found bugs ?</strong><br>
-> I am happy to resolve bugs, report bugs [here](https://github.com/ankurk91/wp-google-map/issues)<br>
-> Please use WordPress forums for any kind of support.
 
 == Installation ==
-1. Search for 'ank google map' in WordPress Plugin Directory and Download the .zip file & extract it.
-2. Upload the folder `ank-google-map` to the `/wp-content/plugins/` directory
-3. Activate the plugin through the 'Plugins List' page in WordPress Admin Area.
-4. Configure this plugin via Settings-->Google Map
-5. Paste the `[ank_google_map]` short-code in your pages/posts/widgets.
-
 
 == Frequently Asked Questions ==
 
 = What is the short-code for this plugin =
 
 `[ank_google_map]`
-
-= Why did you call it Light Weight? =
-
-It utilize WordPress dash-icons, color picker, and text editor on plugin Options Page.<br>
-It does not create additional tables in your database, uses inbuilt 'wp_options' table.<br>
-The whole package is about 25 kb (zipped).
-
-= What do you mean by Non Bloated? =
-
-There are many of Map plugins in plugin directory, but most of them not written well.<br>
-Means they put lots of java script (uncompressed) code on every page of your website.
-They also loads jQuery file before them which effects your page speed.
-This plugin will enqueue its JS files on the required page only.
-It does not depends on external js library like: jQuery.
 
 = Map controls not shown correctly on front-end. =
 
@@ -83,34 +48,15 @@ Add this css code to your theme's style.css file to fix this
 
 `
 
-= Full screen control not visible. =
-
-This is because of you theme css, test with WP default theme first.
-
-= Shortcode does not work in text widget. =
-
-Add this line to your theme's functions.php
-`add_filter( 'widget_text', 'do_shortcode' );`
-
 = Changes does not reflect after saving settings. =
 
 Are you using some Cache/Performance plugin (eg:WP Super Cache/W3 Total Cache) ?
 Then flush your WP cache and refresh target page.
 
-= Where does it store settings and options? =
-
-WP Database->wp-options->ank_google_map.
-Uses a single row, stored in array for faster access.
-
 = From where does it loads additional Marker (colored) images? =
 
 Every marker image is loaded from official Google Server.
 You can also upload your own marker images.
-
-= What if i uninstall/remove this plugin? =
-
-No worry! It will remove its traces from database upon uninstall.
-You have to remove short-code from your pages by yourself.
 
 = How do i enter correct language code? =
 
@@ -121,14 +67,6 @@ If you don't specify language code then google will try to load the language req
 = How to make it responsive? =
 
 Set Map Canvas Width to 100 %. Map will auto center upon resize.
-
-= I don't want border on map canvas? =
-
-Leave the color field empty and it will not be applied.
-
-= Did you test it with old version of WordPress? =
-
-No, i always test with latest version only. So i recommend you to upgrade to latest WordPress today.
 
 = Failed to load Google Map. Refresh this page and try again. What is this ? =
 
@@ -150,10 +88,7 @@ Possible reasons are -
 * Multiple Maps with Multiple Markers.
 
 
-
-
 == Upgrade Notice ==
-Please upgrade to v2.0.0 for better experience
 
 == Screenshots ==
 1. General Options
@@ -163,6 +98,10 @@ Please upgrade to v2.0.0 for better experience
 
 
 == Changelog ==
+
+= 2.7.0 =
+* Tested on php 7.4 and WordPress 5.6
+* Requires php 5.6+
 
 = 2.6.2 =
 * Fix: php v5.3 related [issue](https://stackoverflow.com/questions/16358973/parse-error-syntax-error-unexpected-with-php-5-3)

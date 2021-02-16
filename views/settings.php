@@ -14,7 +14,7 @@
 
         <form action="<?php echo admin_url('options.php') ?>" method="post" id="agm-form" novalidate>
             <?php
-            //wp inbuilt nonce field , etc
+            // wp inbuilt nonce field , etc
             settings_fields($option_group);
             ?>
             <div class="tab-content-wrapper">
@@ -70,7 +70,7 @@
                         <tr>
                             <th scope="row"><?php _e('Disable Mouse Wheel Zoom', 'ank-google-map'); ?></th>
                             <td><input <?php checked($db['disable_mouse_wheel'], '1') ?>
-                                        type="checkbox" name="ank_google_map[disable_mouse_wheel]">
+                                    type="checkbox" name="ank_google_map[disable_mouse_wheel]">
                             </td>
                         </tr>
                         <tr>
@@ -79,13 +79,13 @@
                                 <select name="ank_google_map[gesture_handling]">
                                     <option disabled label="Gesture Handling"></option>
                                     <option <?php selected($db['gesture_handling'], 'none') ?>
-                                            value="none"> <?php _e('None', 'ank-google-map'); ?> </option>
+                                        value="none"> <?php _e('None', 'ank-google-map'); ?> </option>
                                     <option <?php selected($db['gesture_handling'], 'auto') ?>
-                                            value="auto"> <?php _e('Auto (recommended)', 'ank-google-map'); ?> </option>
+                                        value="auto"> <?php _e('Auto (recommended)', 'ank-google-map'); ?> </option>
                                     <option <?php selected($db['gesture_handling'], 'greedy') ?>
-                                            value="greedy"> <?php _e('Greedy', 'ank-google-map'); ?> </option>
+                                        value="greedy"> <?php _e('Greedy', 'ank-google-map'); ?> </option>
                                     <option <?php selected($db['gesture_handling'], 'cooperative') ?>
-                                            value="cooperative"> <?php _e('Cooperative', 'ank-google-map'); ?> </option>
+                                        value="cooperative"> <?php _e('Cooperative', 'ank-google-map'); ?> </option>
                                 </select>
                                 <a href="https://developers.google.com/maps/documentation/javascript/interaction#gesture-handling"
                                    target="_blank"><i class="dashicons-before dashicons-editor-help"></i></a>
@@ -99,7 +99,7 @@
                                        name="ank_google_map[map_lang_code]"
                                        value="<?php echo esc_attr($db['map_lang_code']); ?>">
                                 <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank"><i
-                                            class="dashicons-before dashicons-editor-help"></i></a>
+                                        class="dashicons-before dashicons-editor-help"></i></a>
                             </td>
                         </tr>
                     </table>
@@ -149,16 +149,16 @@
                             <td><select name="ank_google_map[map_type]">
                                     <option disabled label="Map type"></option>
                                     <option <?php selected($db['map_type'], '1') ?>
-                                            value="1"><?php _e('ROADMAP', 'ank-google-map'); ?>
+                                        value="1"><?php _e('ROADMAP', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['map_type'], '2') ?>
-                                            value="2"><?php _e('SATELLITE', 'ank-google-map'); ?>
+                                        value="2"><?php _e('SATELLITE', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['map_type'], '3') ?>
-                                            value="3"><?php _e('HYBRID', 'ank-google-map'); ?>
+                                        value="3"><?php _e('HYBRID', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['map_type'], '4') ?>
-                                            value="4"><?php _e('TERRAIN', 'ank-google-map'); ?>
+                                        value="4"><?php _e('TERRAIN', 'ank-google-map'); ?>
                                     </option>
                                 </select></td>
                         </tr>
@@ -171,11 +171,11 @@
                                     <?php
                                     foreach ($styles as $item) { ?>
                                         <option
-                                                value="<?php echo $item['id'] ?>" <?php selected($db['map_style'], $item['id']) ?>><?php echo ucwords(str_replace('-', ' ', $item['name'])) ?></option>
+                                            value="<?php echo $item['id'] ?>" <?php selected($db['map_style'], $item['id']) ?>><?php echo ucwords(str_replace('-', ' ', $item['name'])) ?></option>
                                     <?php } ?>
                                 </select>
                                 <p class="description"><?php _e('Styles taken from', 'ank-google-map') ?> <a
-                                            target="_blank" href="https://snazzymaps.com/">snazzymaps</a></p>
+                                        target="_blank" href="https://snazzymaps.com/">snazzymaps</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -211,13 +211,13 @@
                             <td><select name="ank_google_map[marker_anim]">
                                     <option disabled label="Marker Animation"></option>
                                     <option <?php selected($db['marker_anim'], '1') ?>
-                                            value="1"><?php _e('NONE', 'ank-google-map'); ?>
+                                        value="1"><?php _e('NONE', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_anim'], '2') ?>
-                                            value="2"><?php _e('BOUNCE', 'ank-google-map'); ?>
+                                        value="2"><?php _e('BOUNCE', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_anim'], '3') ?>
-                                            value="3"><?php _e('DROP', 'ank-google-map'); ?>
+                                        value="3"><?php _e('DROP', 'ank-google-map'); ?>
                                     </option>
                                 </select></td>
                         </tr>
@@ -226,29 +226,29 @@
                             <td><select name="ank_google_map[marker_color]">
                                     <option disabled label="Marker Color"></option>
                                     <option <?php selected($db['marker_color'], '1') ?>
-                                            value="1"><?php _e('Default', 'ank-google-map'); ?></option>
+                                        value="1"><?php _e('Default', 'ank-google-map'); ?></option>
                                     <option <?php selected($db['marker_color'], '2') ?>
-                                            value="2"><?php _e('Light Red', 'ank-google-map'); ?></option>
+                                        value="2"><?php _e('Light Red', 'ank-google-map'); ?></option>
                                     <option <?php selected($db['marker_color'], '3') ?>
-                                            value="3"><?php _e('Black', 'ank-google-map'); ?>
+                                        value="3"><?php _e('Black', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '4') ?>
-                                            value="4"><?php _e('Gray', 'ank-google-map'); ?>
+                                        value="4"><?php _e('Gray', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '5') ?>
-                                            value="5"><?php _e('Orange', 'ank-google-map'); ?>
+                                        value="5"><?php _e('Orange', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '6') ?>
-                                            value="6"><?php _e('White', 'ank-google-map'); ?>
+                                        value="6"><?php _e('White', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '7') ?>
-                                            value="7"><?php _e('Yellow', 'ank-google-map'); ?>
+                                        value="7"><?php _e('Yellow', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '8') ?>
-                                            value="8"><?php _e('Purple', 'ank-google-map'); ?>
+                                        value="8"><?php _e('Purple', 'ank-google-map'); ?>
                                     </option>
                                     <option <?php selected($db['marker_color'], '9') ?>
-                                            value="9"><?php _e('Green', 'ank-google-map'); ?>
+                                        value="9"><?php _e('Green', 'ank-google-map'); ?>
                                     </option>
                                 </select>
                             </td>
@@ -309,9 +309,7 @@
     </div>
     <hr>
     <p>
-        Developed with &hearts; by <a target="_blank"
-                                      href="https://ankurk91.github.io/?utm_source=<?php echo rawurlencode(get_home_url()) ?>&amp;utm_medium=plugin_options_page&amp;utm_campaign=ank-google-map">Ankur
-            Kumar</a> |
+        Developed with &hearts; by <a target="_blank" href="https://twitter.com/ankurk91">Ankur Kumar</a> |
         Contribute on <a target="_blank" href="https://github.com/ankurk91/wp-google-map">GitHub</a> |
         ★ Rate this on <a target="_blank"
                           href="https://wordpress.org/support/plugin/ank-google-map/reviews/?filter=5">WordPress</a>

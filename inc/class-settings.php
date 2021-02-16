@@ -77,11 +77,9 @@ class Settings
      */
     public function do_upon_plugin_activation()
     {
-
         if (false == get_option('ank_google_map')) {
             add_option('ank_google_map', $this->get_default_options());
         }
-
     }
 
     /**
@@ -122,7 +120,6 @@ class Settings
      */
     public function validate_form_post($in)
     {
-
         $out = array();
         $errors = array();
         //always store plugin version to db
